@@ -83,7 +83,7 @@ export class Index{
 
       webix.ui(tabbar)
 
-       this.init()
+      this.init()
     }
 }
 

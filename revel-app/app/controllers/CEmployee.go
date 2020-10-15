@@ -1,8 +1,11 @@
 package controllers
 
 import (
+	"encoding/json"
+	"fmt"
 	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
+	"strconv"
 
 	"github.com/revel/revel"
 )
@@ -25,46 +28,81 @@ type CEmployee struct {
 
 //GetEmployees метод получения всех сотрудников
 func (controller *CEmployee) GetEmployees() revel.Result {
-	//var employees []*entities.Employee = controller.employeeProvider.GetEmployees()
-
-	return nil
+	controller.employeeProvider = &providers.PEmployee{}
+	employees, err := controller.employeeProvider.GetEmployees()
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(employees)
 }
 
 //GetEmployeeByID метод получения сотрудника по ID
 func (controller *CEmployee) GetEmployeeByID() revel.Result {
-	return nil
+	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	controller.employeeProvider = &providers.PEmployee{}
+	employee, err := controller.employeeProvider.GetEmployeeByID(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(employee)
 }
 
 //GetEmployeesByEvent метод получения сотрудников по ID мероприятия
 func (controller *CEmployee) GetEmployeesByEvent() revel.Result {
-	return nil
+	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	controller.employeeProvider = &providers.PEmployee{}
+	employees, err := controller.employeeProvider.GetEmployeesByEventID(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.Render(employees)
 }
 
 //CreateEmployee метод создания сотрудника
 func (controller *CEmployee) CreateEmployee() revel.Result {
-	return nil
-}
+	employee := &entities.Employee{}
+	err := json.Unmarshal(controller.Params.JSON, employee)
+	if err != nil {
+		fmt.Println("Unmarshalling: ", err)
+		return nil
+	}
+	controller.employeeProvider = &providers.PEmployee{}
+	result, err := controller.employeeProvider.CreateEmployee(employee)
 
-//CreateLinkToEvent метод создания свяязи между сотрудником и мероприятием
-func (controller *CEmployee) CreateLinkToEvent() revel.Result {
-	return nil
+	return controller.RenderJSON(result)
 }
 
 //UpdateEmployee метод изменения сотрудника
 func (controller *CEmployee) UpdateEmployee() revel.Result {
-	return nil
+	employee := &entities.Employee{}
+	err := json.Unmarshal(controller.Params.JSON, employee)
+	if err != nil {
+		fmt.Println("Unmarshalling: ", err)
+		return nil
+	}
+	fmt.Println(*employee)
+	controller.employeeProvider = &providers.PEmployee{}
+	result, err := controller.employeeProvider.UpdateEmployee(employee)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return controller.RenderJSON(result)
 }
 
 //DeleteEmployee метод удаления сотрудника
 func (controller *CEmployee) DeleteEmployee() revel.Result {
-	return nil
-}
-
-//DeleteEmployeesFromEvent метод удаления сотрудников из мероприятия
-func (controller *CEmployee) DeleteEmployeesFromEvent() revel.Result {
-	return nil
-}
-
-func (controller *CEmployee) fetchPost() (e entities.Employee, err error) {
-	return
+	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	fmt.Println(id)
+	controller.employeeProvider = &providers.PEmployee{}
+	err := controller.employeeProvider.DeleteEmployee(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.Render()
 }

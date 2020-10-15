@@ -3,7 +3,6 @@ package controllers
 import (
 	"fmt"
 	"revel-app/app/helpers"
-	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
 
 	"github.com/revel/revel"
@@ -17,18 +16,18 @@ type CCandidate struct {
 
 //Before интерцептор BEFOR контроллера CCandidate для открытия соединения с БД
 func (controller *CCandidate) Before() revel.Result {
-	connector, err := helpers.GetConnector()
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-	db, err := connector.GetDBConnection()
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-	controller.candidateProvider = new(providers.PCandidate)
-	controller.candidateProvider.Init(db)
+	// connector, err := helpers.GetConnector()
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	panic(err)
+	// }
+	// db, err := connector.GetDBConnection()
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	panic(err)
+	// }
+	// controller.candidateProvider = new(providers.PCandidate)
+	// controller.candidateProvider.Init(db)
 
 	return nil
 }
@@ -77,11 +76,6 @@ func (controller *CCandidate) CreateCandidate() revel.Result {
 	return nil
 }
 
-//CreateLinkToEvent метод создания связи между кандидатом и мероприятием
-func (controller *CCandidate) CreateLinkToEvent() revel.Result {
-	return nil
-}
-
 //UpdateCandidate метод изменения кандидатов
 func (controller *CCandidate) UpdateCandidate() revel.Result {
 	return nil
@@ -90,13 +84,4 @@ func (controller *CCandidate) UpdateCandidate() revel.Result {
 //DeleteCandidate метод удаления кандидатов
 func (controller *CCandidate) DeleteCandidate() revel.Result {
 	return nil
-}
-
-// DeleteCandidatesFromEvent метод удаления связи между кандидатами и мероприятием
-func (controller *CCandidate) DeleteCandidatesFromEvent() revel.Result {
-	return nil
-}
-
-func (controller *CCandidate) fetchPost() (e entities.Candidate, err error) {
-	return
 }

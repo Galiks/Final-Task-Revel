@@ -3,9 +3,9 @@ import {Employee} from './entities/Employee.js'
 export class EmployeeModel{
     //key - id, value - employee
     constructor(){
-        this.employees = new Map();
-        this.employees.set(1, new Employee(1, "ivan", "ivanov", "ivanovich", "programmer", "email@email.com", "888888", ))
-        this.employees.set(2, new Employee(2, "ivan2", "ivanov2", "ivanovich2", "programmer2", "222email@email.com", "22888888", 2))
+        // this.employees = new Map();
+        // this.employees.set(1, new Employee(1, "ivan", "ivanov", "ivanovich", "programmer", "email@email.com", "888888", ))
+        // this.employees.set(2, new Employee(2, "ivan2", "ivanov2", "ivanovich2", "programmer2", "222email@email.com", "22888888", 2))
     }
 
     /**
@@ -26,9 +26,21 @@ export class EmployeeModel{
      * Метод возвращает список сотрудников в виде массива
      * @returns список сотрдуников в виде массива
      */
-    getEmloyees() {
+    async getEmloyees() {
+        let request = await fetch(`/employee`)
+        let response = await request.json()
+        if (response.Err != null){
+            webix.message("ОШИБКА");
+            return
+        }
+
         return new Promise((resolve, reject)=>{
-            resolve(Array.from(this.employees.values()))
+            let employees = []
+            for (const item of response) {
+                let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
+                employees.push(employee)
+            }
+            resolve(employees)
         })
     }
 
@@ -53,9 +65,21 @@ export class EmployeeModel{
      * @param {number} id ID сотрудника
      * @returns сотрудника
      */
-    getEmployeeByID(id) {
+    async getEmployeeByID(id) {
+        let request = await fetch(`employee/${id}`)
+        let response = await request.json()
+        if (response.Err != null){
+            webix.message("ОШИБКА");
+            return
+        }
+
         return new Promise((resolve, reject)=>{
-            resolve(this.employees.get(Number(id)))
+            let employees = []
+            for (const item of response) {
+                let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
+                employees.push(employee)
+            }
+            resolve(employees)
         })
     }
 
@@ -64,13 +88,29 @@ export class EmployeeModel{
      * @param {{ id: number; firstname: string; lastname: string; patronymic: string; position: string; email: string; phone: string; id_user: number; }} employee объект класса Employee
      * @returns нового сотрудника
      */
-    createEmployee(employee) {
+    async createEmployee(employee) {
+        let request = await fetch(`/employee`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                firstname: employee.firstname,
+                lastname: employee.lastname,
+                patronymic: employee.patronymic,
+                position: employee.position,
+                email: employee.email,
+                phone: employee.phone,
+                id_user: employee.id_user
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
         return new Promise((resolve, reject)=>{
-            let id = this.getLastID() + 1
-            let newEmployee = new Employee(id, employee.firstname, employee.lastname, employee.patronymic, 
-                employee.position, employee.email, employee.phone, employee.id_user)
-            this.employees.set(id, newEmployee)  
-            resolve(newEmployee)
+            resolve(request.json())
         })
     }
 
@@ -79,14 +119,30 @@ export class EmployeeModel{
      * @param {Employee} employee объект класса Employee
      * @returns сотрудника
      */
-    updateEmployee(employee){
-        return new Promise((resolve, reject)=>{
-            this.getEmployeeByID(employee.ID).then((updatingEmployee)=>{
-                if (updatingEmployee != null) {
-                    this.employees.set(employee.ID, employee)
-                    resolve(employee)
-                }
+    async updateEmployee(employee){
+        let request = await fetch(`/employee/${employee.ID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                ID:employee.ID,
+                firstname: employee.firstname,
+                lastname: employee.lastname,
+                patronymic: employee.patronymic,
+                position: employee.position,
+                email: employee.email,
+                phone: employee.phone,
+                id_user: employee.id_user
             })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve(request.json())
         })
     }
 
@@ -94,14 +150,23 @@ export class EmployeeModel{
      * Метод удаляет сотрудника по его ID
      * @param {number} id ID сотрудника
      */
-    deleteEmployee(id){
+    async deleteEmployee(id){
+        let request = await fetch(`/employee/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
         return new Promise((resolve, reject)=>{
-            this.getEmployeeByID(id).then((deletingEmployee)=>{
-                if (deletingEmployee != null) {
-                    this.employees.delete(Number(id))
-                    resolve()
-                }
-            })  
+            resolve()
         })
     }
 }

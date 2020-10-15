@@ -13,7 +13,7 @@ type MEvent struct {
 }
 
 //SelectAll получение всех мероприятий
-func (m *MEvent) SelectAll() (e []entities.Event, err error) {
+func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
 		panic(err)
@@ -34,8 +34,6 @@ func (m *MEvent) SelectAll() (e []entities.Event, err error) {
 
 	defer rows.Close()
 
-	result := []entities.Event{}
-
 	for rows.Next() {
 		p := entities.Event{}
 		err := rows.Scan(&p.ID, &p.Theme, &p.Beginning, &p.Status)
@@ -44,10 +42,10 @@ func (m *MEvent) SelectAll() (e []entities.Event, err error) {
 			continue
 		}
 		fmt.Println(rows)
-		result = append(result, p)
+		es = append(es, &p)
 	}
 
-	return result, nil
+	return es, nil
 }
 
 //SelectByID получение мероприятия по ID
@@ -93,5 +91,61 @@ func (m *MEvent) Update(event entities.Event) (e *entities.Event, err error) {
 
 //Delete удаление мероприятия
 func (m *MEvent) Delete(ID int64) (err error) {
+	return
+}
+
+//InsertEmployeeToEvent связывание сотрудника и мероприятия
+func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err error) {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		return err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		return err
+	}
+
+	query := `INSERT INTO public."EmployeeEvent"(
+		id_employee, id_event)
+		VALUES ($1, $2);`
+
+	err = db.QueryRow(query, IDEmployee, IDEvent).Scan()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//DeleteEmployeesFromEvent удаляет всех сотрудников из мероприятия
+func (m *MEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
+
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		return err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		return err
+	}
+
+	query := `DELETE FROM public."EmployeeEvent"
+	WHERE id_event = $1;`
+
+	err = db.QueryRow(query, IDEvent).Scan()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	return nil
+}
+
+//InsertCandidateToEvent связывание кандидата и мероприятия
+func (m *MEvent) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err error) {
+	return
+}
+
+//DeleteCandidatesFromEvent удаляет всех кандидатов из мероприятия
+func (m *MEvent) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
 	return
 }

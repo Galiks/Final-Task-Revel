@@ -26,23 +26,13 @@ func (p *PEmployee) GetEmployeesByEventID(ID int64) (es []*entities.Employee, er
 }
 
 //CreateEmployee метод создания сотрудника
-func (p *PEmployee) CreateEmployee(employee entities.Employee) (e *entities.Employee, err error) {
+func (p *PEmployee) CreateEmployee(employee *entities.Employee) (e *entities.Employee, err error) {
 	return p.employeeMapper.Insert(employee)
 }
 
-//CreateLinkToEvent метод создания связи между сотрудником и мероприятием
-func (p *PEmployee) CreateLinkToEvent(IDEmployee int64, IDEvent int64) (err error) {
-	return p.employeeMapper.InsertEmployeeToEvent(IDEmployee, IDEvent)
-}
-
 //UpdateEmployee метод изменения сотрудника
-func (p *PEmployee) UpdateEmployee(employee entities.Employee) (e *entities.Employee, err error) {
+func (p *PEmployee) UpdateEmployee(employee *entities.Employee) (e *entities.Employee, err error) {
 	return p.employeeMapper.Update(employee)
-}
-
-//DeleteEmployeesFromEvent метод удаления всех сотрудников из мероприятия
-func (p *PEmployee) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
-	return p.employeeMapper.DeleteEmployeesFromEvent(IDEvent)
 }
 
 //DeleteEmployee метод удаления сотрудника по ID

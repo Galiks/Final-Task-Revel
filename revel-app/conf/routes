@@ -11,6 +11,14 @@ GET     /                                       App.Index
 GET     /event/all                              CEvent.GetEvents
 GET     /event/:id                              CEvent.GetEventByID
 
+GET     /employee                               CEmployee.GetEmployees
+GET     /employee/:id                           CEmployee.GetEmployeeByID
+GET     /employee/event/:id                     CEmployee.GetEmployeesByEvent
+POST    /employee                               CEmployee.CreateEmployee
+POST    /employee/:id                           CEmployee.UpdateEmployee
+DELETE  /employee/:id                           CEmployee.DeleteEmployee
+
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

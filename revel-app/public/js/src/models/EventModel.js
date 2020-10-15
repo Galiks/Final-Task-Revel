@@ -3,24 +3,8 @@ import {Event} from './entities/Event.js';
 
 export class EventModel{
 
-    //key - id, value - event
     constructor(){
-        // this.events = new Map()
-        // this.events.set(1, new Event(1, "StandUp", new Date(), EVENT_STATUS.planned))
-        // this.events.set(2, new Event(2, "Собеседование", new Date(), EVENT_STATUS.planned))
 
-        // this.candidateEvent = [
-        //     {
-        //         candidateID:1,
-        //         eventID:1
-        //     }
-        // ]
-        // this.employeeEvent = [
-        //     {
-        //         employeeID:1,
-        //         eventID:1
-        //     }
-        // ]
     }
 
     /**
@@ -36,10 +20,10 @@ export class EventModel{
     }
 
     /**
-     * Метод возвращает список кандидатов и мероприятий в виде массива
-     * @returns список кандидатов и мероприятий в виде массива
+     * Метод возвращает список кандидатов мероприятия
+     * @returns список кандидатов в виде массива
      */
-    getCandidatesToEvents(){
+    getCandidatesByEvent(eventID){
         return new Promise((resolve, reject)=>{
             resolve(this.candidateEvent)
         })
@@ -50,18 +34,33 @@ export class EventModel{
      * @param {number} employeeID ID сотрудника
      * @param {number} eventID ID мероприятия
      */
-    setEmployeeToEvent(employeeID, eventID){
+    async setEmployeeToEvent(employeeID, eventID){
+        let request = await fetch(`/employee/${employeeID}/event/${eventID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                IDEmployee : employeeID,
+                IDEvent: eventID
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
         return new Promise((resolve, reject)=>{
-            this.employeeEvent.push({employeeID:Number(employeeID), eventID: Number(eventID)})
             resolve()
         })
     }
 
     /**
-     * Метод возвращает список сотрудников и мероприятий в виде массива
-     * @returns список сотрудников и мероприятий в виде массива
+     * Метод возвращает список сотрудников мероприятия
+     * @returns список сотрудников в виде массива
      */
-    getEmployeesToEvents(){
+    getEmployeesByEvent(eventID){
+        let request = await fetch(`/employee/event/${eventID}`)
+
         return new Promise((resolve, reject)=>{
             resolve(this.employeeEvent)
         })

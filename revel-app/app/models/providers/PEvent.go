@@ -11,7 +11,7 @@ type PEvent struct {
 }
 
 //GetEvents метод получения мероприятий
-func (e *PEvent) GetEvents() (es []entities.Event, err error) {
+func (e *PEvent) GetEvents() (es []*entities.Event, err error) {
 	e.eventMapper = &mappers.MEvent{}
 	return e.eventMapper.SelectAll()
 }
@@ -34,4 +34,24 @@ func (e *PEvent) UpdateEvent(event entities.Event) (en *entities.Event, err erro
 //DeleteEvent метод удаления мероприятия по ID
 func (e *PEvent) DeleteEvent(ID int64) (err error) {
 	return e.eventMapper.Delete(ID)
+}
+
+//CreateLinkEmployeeToEvent метод создания связи между сотрудником и мероприятием
+func (e *PEvent) CreateLinkEmployeeToEvent(IDEmployee int64, IDEvent int64) (err error) {
+	return e.eventMapper.InsertEmployeeToEvent(IDEmployee, IDEvent)
+}
+
+//DeleteEmployeesFromEvent метод удаления всех сотрудников из мероприятия
+func (e *PEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
+	return e.eventMapper.DeleteEmployeesFromEvent(IDEvent)
+}
+
+//CreateLinkCandidateToEvent связывание кандидата и мероприятия
+func (e *PEvent) CreateLinkCandidateToEvent(IDcandidate int64, IDevent int64) (err error) {
+	return e.eventMapper.InsertCandidateToEvent(IDcandidate, IDevent)
+}
+
+//DeleteCandidatesFromEvent удаляет всех кандидатов из мероприятия
+func (e *PEvent) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
+	return e.eventMapper.DeleteCandidatesFromEvent(IDEvent)
 }

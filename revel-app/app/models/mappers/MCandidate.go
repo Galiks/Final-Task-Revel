@@ -35,18 +35,8 @@ func (m *MCandidate) Insert(candidate entities.Candidate) (c *entities.Candidate
 	return
 }
 
-//InsertCandidateToEvent связывание кандидата и мероприятия
-func (m *MCandidate) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err error) {
-	return
-}
-
 //Update изменение кандидата
 func (m *MCandidate) Update(candidate entities.Candidate) (c *entities.Candidate, err error) {
-	return
-}
-
-//DeleteCandidatesFromEvent удаляет всех кандидатов из мероприятия
-func (m *MCandidate) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
 	return
 }
 

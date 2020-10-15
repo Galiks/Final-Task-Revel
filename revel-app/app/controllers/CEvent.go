@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"fmt"
-	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
+	"strconv"
 
 	"github.com/revel/revel"
 )
@@ -60,7 +60,30 @@ func (controller *CEvent) DeleteEvent() revel.Result {
 	return nil
 }
 
-//Метод для взятия параметров из метода POST
-func (controller *CEvent) fetchPost() (e entities.Event, err error) {
-	return
+//CreateLinkEmployeeToEvent метод создания свяязи между сотрудником и мероприятием
+func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
+	IDEmployee, _ := strconv.ParseInt(controller.Params.Get("employeeID"), 10, 64)
+	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
+	controller.eventProvider = &providers.PEvent{}
+	err := controller.eventProvider.CreateLinkEmployeeToEvent(IDEmployee, IDEvent)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.Render()
+}
+
+//CreateLinkCandidateToEvent метод создания связи между кандидатом и мероприятием
+func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
+	return nil
+}
+
+//DeleteEmployeesFromEvent метод удаления сотрудников из мероприятия
+func (controller *CEvent) DeleteEmployeesFromEvent() revel.Result {
+	return nil
+}
+
+// DeleteCandidatesFromEvent метод удаления связи между кандидатами и мероприятием
+func (controller *CEvent) DeleteCandidatesFromEvent() revel.Result {
+	return nil
 }

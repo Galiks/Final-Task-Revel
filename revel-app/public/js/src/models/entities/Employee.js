@@ -8,9 +8,9 @@ export class Employee{
      * @param {string} position 
      * @param {string} email 
      * @param {string} phone 
-     * @param {string} id_user 
+     * @param {number} id_user 
      */
-    constructor(id,firstname, lastname, patronymic, position, email, phone, id_user){
+    constructor(id, firstname, lastname, patronymic, position, email, phone, id_user){
         this.ID = id
         this.firstname = firstname
         this.lastname = lastname
