@@ -51,14 +51,14 @@ func (controller *CEmployee) GetEmployeeByID() revel.Result {
 
 //GetEmployeesByEvent метод получения сотрудников по ID мероприятия
 func (controller *CEmployee) GetEmployeesByEvent() revel.Result {
-	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	id, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
 	controller.employeeProvider = &providers.PEmployee{}
 	employees, err := controller.employeeProvider.GetEmployeesByEventID(id)
 	if err != nil {
 		fmt.Println(err)
 		return nil
 	}
-	return controller.Render(employees)
+	return controller.RenderJSON(employees)
 }
 
 //CreateEmployee метод создания сотрудника
@@ -83,7 +83,6 @@ func (controller *CEmployee) UpdateEmployee() revel.Result {
 		fmt.Println("Unmarshalling: ", err)
 		return nil
 	}
-	fmt.Println(*employee)
 	controller.employeeProvider = &providers.PEmployee{}
 	result, err := controller.employeeProvider.UpdateEmployee(employee)
 	if err != nil {

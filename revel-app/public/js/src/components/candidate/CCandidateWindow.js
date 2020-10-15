@@ -47,7 +47,7 @@ export class CCandidateWindow{
 }
 
 export const CANDIDATE_STATUS = {
-    empty: "",
+    empty: "Не назначен",
     invite: "Приглашен",
     showUp: "Явился",
     dontShowUp: "Не явился",

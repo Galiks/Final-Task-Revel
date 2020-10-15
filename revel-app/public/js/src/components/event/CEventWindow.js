@@ -72,7 +72,6 @@ export class CEventWindow{
         this.createWindowController.init(this.eventModel, (datatableName) => {
             this.refreshDatatable(datatableName)
         })
-        this.createWindowController.attachEventOnCreateWindow()
         this.setMultiselectOptions();   
     }
     

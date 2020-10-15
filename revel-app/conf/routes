@@ -6,18 +6,35 @@
 module:testrunner
 # module:jobs
 
-
+# INDEX
 GET     /                                       App.Index
+
+# EVENTS
 GET     /event/all                              CEvent.GetEvents
 GET     /event/:id                              CEvent.GetEventByID
+PUT     /event                                  CEvent.CreateEvent
+POST    /event/:id                              CEvent.UpdateEvent
+DELETE  /event/:id                              CEvent.DeleteEvent
+PUT     /event/:id/employee/:id                 CEvent.CreateLinkEmployeeToEvent
+PUT     /event/:id/candidate/:id                CEvent.CreateLinkCandidateToEvent
+DELETE  /event/:id/employee                     CEvent.DeleteEmployeesFromEvent
+DELETE  /event/:id/candidate                    CEvent.DeleteCandidatesFromEvent
 
-GET     /employee                               CEmployee.GetEmployees
+# EMPLOYEE
+GET     /employee/all                           CEmployee.GetEmployees
 GET     /employee/:id                           CEmployee.GetEmployeeByID
 GET     /employee/event/:id                     CEmployee.GetEmployeesByEvent
-POST    /employee                               CEmployee.CreateEmployee
+PUT     /employee                               CEmployee.CreateEmployee
 POST    /employee/:id                           CEmployee.UpdateEmployee
 DELETE  /employee/:id                           CEmployee.DeleteEmployee
 
+# CANDIDATE
+GET     /candidate/all                          CCandidate.GetCandidates
+GET     /candidate/:id                          CCandidate.GetCandidateByID
+GET     /candidate/event/:id                    CCandidate.GetCandidatesByEvent
+PUT     /candidate                              CCandidate.CreateCandidate
+POST    /candidate/:id                          CCandidate.UpdateCandidate
+DELETE  /candidate/:id                          CCandidate.DeleteCandidate
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

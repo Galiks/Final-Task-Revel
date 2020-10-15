@@ -3,33 +3,28 @@ import {Candidate} from './entities/Candidate.js'
 
 export class CandidateModel{
     constructor(){
-        this.candidates = new Map()
 
-        this.candidates.set(Number(1), new Candidate(1, "ivan", "ivanov", "ivanovich", "email@email.com", "888888", CANDIDATE_STATUS.empty))
-        this.candidates.set(Number(2), new Candidate(2, "ivan2", "ivanov2", "ivanovich2", "222email@email.com", "22888888", CANDIDATE_STATUS.empty))
-    }
-
-    /**
-     * Метод возвращает последний индекс коллекции
-     * @returns последний индекс коллекции
-     */
-    getLastID(){
-        if (this.candidates.size == 0) {
-            return 0
-        }
-        else{
-            let keys = Array.from(this.candidates.keys());
-            return Math.max.apply(null, keys)
-        }
     }
 
     /**
      * Метод возвращает список кандиидатов в виде массива
      * @returns список кандидата в виде массива
      */
-    getCandidates(){
-        return new Promise((resolve, refect) =>{ 
-            resolve(Array.from(this.candidates.values()))
+    async getCandidates(){
+        let request = await fetch(`/candidate/all`)
+        let response = await request.json()
+        if (response.Err != null){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            let candidates = []
+            for (const item of response) {
+                let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
+                candidates.push(candidate)
+            }
+            resolve(candidates)
         })
     }
 
@@ -38,9 +33,21 @@ export class CandidateModel{
      * @param {number} id ID кандидата
      * @returns кандидата
      */
-    getCandidateByID(id){
-        return new Promise((resolve, reject) => {
-            resolve(this.candidates.get(Number(id)))
+    async getCandidateByID(id){
+        let request = await fetch(`/candidate/${id}`)
+        let response = await request.json()
+        if (response.Err != null){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            let candidates = []
+            for (const item of response) {
+                let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
+                candidates.push(candidate)
+            }
+            resolve(candidates)
         })
     }
 
@@ -51,12 +58,14 @@ export class CandidateModel{
      * @returns {Array} Массив объектов {ID, VALUE}
      */
     getCandidatesLikeIDValue(){
-        return new Promise((resolve, reject) =>{
+        return new Promise((resolve, reject)=>{
             let result = []
-            this.candidates.forEach(e => {
-                result.push({id:e.ID, value:e.lastname + ' ' + e.firstname + ' ' + e.patronymic})
-            });
-            resolve(result)
+            this.getCandidates().then((candidates) =>{
+                candidates.forEach(candidate => {
+                    result.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
+                });
+                resolve(result)
+            })
         })
     }
 
@@ -65,15 +74,28 @@ export class CandidateModel{
      * @param {{ id: number; firstname: string; lastname: string; patronymic: string; email: string; phone: string; id_candidates_status: number; }} candidate объект класса Candidate
      * @returns кандидата
      */
-    createCandidate(candidate){
+    async createCandidate(candidate){
+        let request = await fetch(`/candidate`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                firstname: candidate.firstname,
+                lastname: candidate.lastname,
+                patronymic: candidate.patronymic,
+                email: candidate.email,
+                phone: candidate.phone,
+                status:candidate.status
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
 
-        return new Promise((resolve, reject) => {
-            let id = this.getLastID() + 1
-            let newCandidate = new Candidate(id, candidate.firstname, candidate.lastname, candidate.patronymic, 
-                candidate.email, candidate.phone, candidate.status)
-            this.candidates.set(id, newCandidate)
-
-            resolve(newCandidate)
+        return new Promise((resolve, reject)=>{
+            resolve(request.json())
         })
     }
 
@@ -82,16 +104,29 @@ export class CandidateModel{
      * @param {{ id: number; firstname: string; lastname: string; patronymic: string; email: string; phone: string; id_candidates_status: number; }} candidate объект класса Candidate
      * @returns кандидата
      */
-    updateCandidate(candidate){
-        return new Promise((resolve, reject) => {
-            this.getCandidateByID(candidate.ID).then((updatingCandidate)=>{
-                if (updatingCandidate != null) {
-                    this.candidates.set(updatingCandidate.ID, new Candidate(
-                        updatingCandidate.ID, candidate.firstname, candidate.lastname, 
-                        candidate.patronymic, candidate.email, candidate.phone, candidate.status))
-                    resolve(candidate) 
-                }
+    async updateCandidate(candidate){
+        let request = await fetch(`/candidate/${candidate.ID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                ID:Number(candidate.ID),
+                firstname: candidate.firstname,
+                lastname: candidate.lastname,
+                patronymic: candidate.patronymic,
+                email: candidate.email,
+                phone: candidate.phone,
+                status:candidate.status
             })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve(request.json())
         })
     }
 
@@ -103,13 +138,17 @@ export class CandidateModel{
      */
     updateCandidateStatus(candidateID, status){
         return new Promise((resolve, reject) => {
-            this.getCandidateByID(candidateID).then((candidate) => {
-                if (candidate != null) {
-                    candidate.status = status
-                    this.candidates.set(candidate.ID, candidate)
-                    console.log(this.candidates)
-                    resolve(candidate)   
-                }
+            this.getCandidateByID(candidateID).then((candidate)=>{
+                return candidate
+            })
+            .then((candidate)=>{
+                candidate.status = status
+                this.updateCandidate(candidate).then((updatingCandidate)=>{
+                    return updatingCandidate
+                })
+            })
+            .then((updatingCandidate)=>{
+                resolve(updatingCandidate)
             })
         })
     }
@@ -118,14 +157,23 @@ export class CandidateModel{
      * Метод удаляет кандидата по ID
      * @param {number} id ID кандидата
      */
-    deleteCandidate(id){
-        return new Promise((resolve, reject)=>{
-            this.getCandidateByID(id).then((deletingCandidate)=>{
-                if (deletingCandidate != null) {
-                    this.candidates.delete(Number(id))
-                    resolve()      
-                }
+    async deleteCandidate(id){
+        let request = await fetch(`/candidate/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                
             })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve()
         })
     }
 }

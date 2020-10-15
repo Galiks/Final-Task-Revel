@@ -1,4 +1,5 @@
 import { EVENT_STATUS } from '../components/event/CEventWindow.js';
+import { Candidate } from './entities/Candidate.js';
 import {Event} from './entities/Event.js';
 
 export class EventModel{
@@ -12,9 +13,22 @@ export class EventModel{
      * @param {number} candidateID ID кандидата
      * @param {number} eventID ID мероприятия
      */
-    setCandidateToEvent(candidateID, eventID){
+    async setCandidateToEvent(candidateID, eventID){
+        let request = await fetch(`/event/${eventID}/candidate/${candidateID}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                IDEntity : candidateID,
+                IDEvent: eventID
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
         return new Promise((resolve, reject)=>{
-            this.candidateEvent.push({candidateID:Number(candidateID), eventID: Number(eventID)})
             resolve()
         })
     }
@@ -23,9 +37,20 @@ export class EventModel{
      * Метод возвращает список кандидатов мероприятия
      * @returns список кандидатов в виде массива
      */
-    getCandidatesByEvent(eventID){
+    async getCandidatesByEvent(eventID){
+        let request = await fetch(`/candidate/event/${eventID} `)
+        let response = await request.json()
+        if (response.Err != null){
+            webix.message("ОШИБКА");
+            return
+        }
         return new Promise((resolve, reject)=>{
-            resolve(this.candidateEvent)
+            let candidates = []
+            for (const item of response) {
+                let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
+                candidates.push(candidate)
+            }
+            resolve(candidates)
         })
     }
 
@@ -35,13 +60,13 @@ export class EventModel{
      * @param {number} eventID ID мероприятия
      */
     async setEmployeeToEvent(employeeID, eventID){
-        let request = await fetch(`/employee/${employeeID}/event/${eventID}`, {
-            method: 'POST',
+        let request = await fetch(`/event/${eventID}/employee/${employeeID}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type':'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                IDEmployee : employeeID,
+                IDEntity : employeeID,
                 IDEvent: eventID
             })
         })
@@ -58,39 +83,23 @@ export class EventModel{
      * Метод возвращает список сотрудников мероприятия
      * @returns список сотрудников в виде массива
      */
-    getEmployeesByEvent(eventID){
+    async getEmployeesByEvent(eventID){
         let request = await fetch(`/employee/event/${eventID}`)
-
+        let response = await request.json()
+        if (response.Err != null){
+            webix.message("ОШИБКА");
+            return
+        }
         return new Promise((resolve, reject)=>{
-            resolve(this.employeeEvent)
+            let employees = []
+            for (const item of response) {
+                let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
+                employees.push(employee)
+            }
+            resolve(employees)
         })
     }
 
-    /**
-     * Метод возвращает ID сотрудников определённого мероприятия в виде строки
-     * @param {number} eventID ID мероприятия
-     * @returns список ID сотрудников в виде строки
-     */
-    getEmployeeIDByEventIDLikeString(eventID){
-        return new Promise((resolve, reject)=>{
-            this.getEmployeeIDByEventID(eventID).then((employees) =>{
-                resolve(String(Array.from(employees)))
-            })
-        })
-    }
-
-    /**
-     * Метод возвращает ID кандидатов определённого мероприятия в виде строки
-     * @param {number} eventID ID мероприятия
-     * @returns список ID кандидатов в виде строки
-     */
-    getCandidateIDByEventIDLikeString(eventID){
-        return new Promise((resolve, reject)=>{
-            this.getCandidateIDByEventID(eventID).then((candidates) =>{
-                resolve(String(Array.from(candidates)))
-            })
-        })
-    }
 
     /**
      * Метод возвращает ID кандидатов определённого мероприятия в виде массива
@@ -100,9 +109,10 @@ export class EventModel{
     getCandidateIDByEventID(eventID){
         return new Promise((resolve, reject)=>{
             let result = []
-            let candidates = this.candidateEvent.filter(element => element.eventID == eventID)
-            candidates.forEach(element =>{
-                result.push(element.candidateID)
+            this.getCandidatesByEvent(eventID).then((candidates)=>{
+                candidates.forEach((candidate)=>{
+                    result.push(candidate.ID)
+                })
             })
             resolve(result)
         })
@@ -116,11 +126,38 @@ export class EventModel{
     getEmployeeIDByEventID(eventID){
         return new Promise((resolve, reject)=>{
             let result = []
-            let employees = this.employeeEvent.filter(element => element.eventID == eventID)
-            employees.forEach(element =>{
-                result.push(element.employeeID)
+            this.getEmployeesByEvent(eventID).then((employees)=>{
+                employees.forEach((employee)=>{
+                    result.push(employee.ID)
+                })
             })
             resolve(result)
+        })
+    }
+
+    /**
+     * Метод возвращает ID сотрудников определённого мероприятия в виде строки
+     * @param {number} eventID ID мероприятия
+     * @returns список ID сотрудников в виде строки
+     */
+    getEmployeeIDByEventIDLikeString(eventID){
+        return new Promise((resolve, reject)=>{
+            this.getEmployeeIDByEventID(eventID).then((employees) =>{
+                resolve(String(employees))
+            })
+        })
+    }
+
+    /**
+     * Метод возвращает ID кандидатов определённого мероприятия в виде строки
+     * @param {number} eventID ID мероприятия
+     * @returns список ID кандидатов в виде строки
+     */
+    getCandidateIDByEventIDLikeString(eventID){
+        return new Promise((resolve, reject)=>{
+            this.getCandidateIDByEventID(eventID).then((candidates) =>{
+                resolve(String(candidates))
+            })
         })
     }
 
@@ -129,16 +166,26 @@ export class EventModel{
      * @param {number} candidateIDs ID кандидата
      * @param {number} eventID ID мероприятия
      */
-    updateCandidateEvent(candidateIDs, eventID){
+    updateCandidateEvent(candidateIDs, eventID){     
         return new Promise((resolve, reject)=>{
-            this.candidateEvent = this.candidateEvent.filter(element => element.eventID != eventID)
-            candidateIDs.split(',').forEach(element => {
-                this.setCandidateToEvent(element, eventID).then(()=>{
+           Promise.all([
+               this.deleteCandidateEventByEventID(eventID),
 
-                })
-            })
-            resolve()
+               candidateIDs.split(',').forEach(id =>{
+                    this.setCandidateToEvent(id, eventID)
+               })
+           ]).then(()=>{
+               resolve()
+           })
+
         })
+
+         // this.candidateEvent = this.candidateEvent.filter(element => element.eventID != eventID)
+            // candidateIDs.split(',').forEach(element => {
+            //     this.setCandidateToEvent(element, eventID).then(()=>{
+            //         resolve()
+            //     })
+            // })
     }
 
     /**
@@ -148,28 +195,24 @@ export class EventModel{
      */
     updateEmployeeEvent(employeeIDs, eventID){
         return new Promise((resolve, reject)=>{
-            this.employeeEvent = this.employeeEvent.filter(element => element.eventID != eventID)
-            employeeIDs.split(',').forEach(element => {
-                this.setEmployeeToEvent(element, eventID).then(()=>{
+            Promise.all([
+                this.deleteEmployeeEventByEventID(eventID),
 
+                employeeIDs.split(',').forEach(id=>{
+                    this.setEmployeeToEvent(id, eventID)
                 })
+            ]).then(()=>{
+                resolve()
             })
-            resolve()
         })
-    }
 
-    /**
-     Метод возвращает последний номер коллекции
-     * @returns последний номер коллекции
-     */
-    getLastID(){
-        if (this.events.size == 0) {
-            return 0
-        }
-        else{
-            let keys = Array.from(this.events.keys());
-            return Math.max.apply(null, keys)
-        }
+        // this.employeeEvent = this.employeeEvent.filter(element => element.eventID != eventID)
+            // employeeIDs.split(',').forEach(element => {
+            //     this.setEmployeeToEvent(element, eventID).then(()=>{
+
+            //     })
+            // })
+            // resolve()
     }
 
     /**
@@ -217,13 +260,25 @@ export class EventModel{
      * @param {{ID: number; theme: string; beginning: Date; status: EVENT_STATUS}} event объект класса Event
      * @returns мероприятие
      */
-    createEvent(event) {
-        return new Promise((resolve, reject)=>{
-            let id = this.getLastID() + 1
-            let newEvent = new Event(id, event.theme, event.beginning, event.status)
-            this.events.set(id, newEvent)
+    async createEvent(event) {
+        let request = await fetch(`/event`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                theme:event.theme,
+                beginning:event.beginning,
+                status:event.status
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
 
-            resolve(newEvent)
+        return new Promise((resolve, reject)=>{
+            resolve(request.json())
         })
     }
 
@@ -232,14 +287,26 @@ export class EventModel{
      * @param {Event} event объект класса Event
      * @returns мероприятие
      */
-    updateEvent(event) {
-        return new Promise((resolve, reject)=>{
-            this.getEventByID(event.ID).then((updatingEvent) =>{
-                if (updatingEvent != null) {
-                    this.events.set(event.ID, event)
-                    resolve(event)
-                }
+    async updateEvent(event) {
+        let request = await fetch(`/event/${event.ID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                ID:event.ID,
+                theme:event.theme,
+                beginning:event.beginning,
+                status:event.status
             })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve(request.json())
         })
     }
 
@@ -247,47 +314,70 @@ export class EventModel{
      * Метод удаляет мероприятие по ID
      * @param {number} id ID мероприятия
      */
-    deleteEvent(id) {
-        return new Promise((resolve, reject)=>{
-            this.getEventByID(id).then((deletingEvent)=>{
-                if (deletingEvent != null) {
-                    this.events.delete(id)
-                    this.deleteCandidateEventByEventID(id).then(()=>{})
-                    this.deleteEmployeeEventByEventID(id).then(()=>{})
-                    resolve()   
-                }
+    async deleteEvent(id) {
+        let request = await fetch(`/event/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                
             })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve()
         })
     }
 
     /**
      * Метод удаляет связи между кандидатами и мероприятием
-     * @param {number} eventID ID мероприятия 
+     * @param {number} id ID мероприятия 
      */
-    deleteCandidateEventByEventID(eventID){
+    async deleteCandidateEventByEventID(id){
+        let request = await fetch(`/event/${id}/candidate`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
         return new Promise((resolve, reject)=>{
-            for (let index = 0; index < this.candidateEvent.length; index++) {
-                const element = this.candidateEvent[index];
-                if (element.eventID == eventID){
-                    this.candidateEvent.splice(index, 1)
-                }
-            }
             resolve()
         })
     }
 
     /**
      * Метод удаляет связи между сотрудником и мероприятием
-     * @param {number} eventID ID мероприятия 
+     * @param {number} id ID мероприятия 
      */
-    deleteEmployeeEventByEventID(eventID){
+    async deleteEmployeeEventByEventID(id){
+        let request = await fetch(`/event/${id}/employee`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
         return new Promise((resolve, reject)=>{
-            for (let index = 0; index < this.employeeEvent.length; index++) {
-                const element = this.employeeEvent[index];
-                if (element.eventID == eventID){
-                    this.employeeEvent.splice(index, 1)
-                }
-            }
             resolve()
         })
     }

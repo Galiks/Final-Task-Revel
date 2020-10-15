@@ -49,6 +49,24 @@ func (e EmployeeSQL) ToEmployee() entities.Employee {
 		IDUser:     idUser}
 }
 
+//ToEmployeeSQL метод конвентирует Employee в EmployeeSQL
+func ToEmployeeSQL(e entities.Employee) EmployeeSQL {
+	var patronymic *string = &e.Patronymic
+	var idUser *int64
+	if e.IDUser == 0 {
+		idUser = nil
+	}
+	return EmployeeSQL{
+		ID:         e.ID,
+		Firstname:  e.Firstname,
+		Lastname:   e.Lastname,
+		Patronymic: patronymic,
+		Position:   e.Position,
+		Email:      e.Email,
+		Phone:      e.Phone,
+		IDUser:     idUser}
+}
+
 //MEmployee маппер сотрудников
 type MEmployee struct {
 	db *sql.DB
@@ -84,8 +102,6 @@ func (m *MEmployee) SelectAll() (es []*entities.Employee, err error) {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println("ROWS THERE!")
-		fmt.Println(rows)
 
 		employee := p.ToEmployee()
 
@@ -127,8 +143,6 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println("ROWS THERE!")
-		fmt.Println(rows)
 
 		employee := p.ToEmployee()
 
@@ -193,7 +207,7 @@ func (m *MEmployee) Insert(employee *entities.Employee) (e *entities.Employee, e
 		employee.Patronymic,
 		employee.Position,
 		employee.Email,
-		employee.Phone).Scan(id)
+		employee.Phone).Scan(&id)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -219,21 +233,22 @@ func (m *MEmployee) Update(employee *entities.Employee) (e *entities.Employee, e
 		return nil, err
 	}
 
+	fmt.Println("UPDATING EMPLOYEE: ", employee)
+	var employeeSQL EmployeeSQL = ToEmployeeSQL(*employee)
+
 	query := `UPDATE public."Employee"
 	SET "Firstname"=$1, "Lastname"=$2, "Patronymic"=$3, "Position"=$4, "Email"=$5, "Phone"=$6, id_user=$7
 	WHERE id = $8;`
 
-	fmt.Println("ID - ", employee.ID)
-
 	_, err = db.Exec(query,
-		employee.Firstname,
-		employee.Lastname,
-		employee.Patronymic,
-		employee.Position,
-		employee.Email,
-		employee.Phone,
-		employee.IDUser,
-		employee.ID)
+		employeeSQL.Firstname,
+		employeeSQL.Lastname,
+		employeeSQL.Patronymic,
+		employeeSQL.Position,
+		employeeSQL.Email,
+		employeeSQL.Phone,
+		employeeSQL.IDUser,
+		employeeSQL.ID)
 	if err != nil {
 		fmt.Println("EXEC: ")
 		fmt.Println(err)
@@ -260,10 +275,21 @@ func (m *MEmployee) Delete(ID int64) (err error) {
 		return err
 	}
 
-	query := `DELETE FROM public."Employee"
+	fmt.Println("ID FOR DELETE EMPLOYEE: ", ID)
+
+	query := `DELETE FROM public."EmployeeEvent"
+	WHERE "id_employee" = $1;`
+
+	_, err = db.Exec(query, ID)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	query = `DELETE FROM public."Employee"
 	WHERE id = $1;`
 
-	err = db.QueryRow(query, ID).Scan()
+	_, err = db.Exec(query, ID)
 	if err != nil {
 		fmt.Println(err)
 		return err

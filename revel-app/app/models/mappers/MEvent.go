@@ -25,7 +25,7 @@ func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 
 	query := `SELECT e.id, "Theme", "Beginning", es."Status"
 	FROM public."Event" as e
-	JOIN public."EventsStatus" as es ON e.id = es.id`
+	JOIN public."EventsStatus" as es ON e."id_eventsStatus" = es.id`
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -41,7 +41,6 @@ func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println(rows)
 		es = append(es, &p)
 	}
 
@@ -80,18 +79,121 @@ func (m *MEvent) SelectByID(ID int64) (e *entities.Event, err error) {
 }
 
 //Insert добавление мероприятия
-func (m *MEvent) Insert(event entities.Event) (e *entities.Event, err error) {
-	return
+func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		panic(err)
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		panic(err)
+	}
+
+	query := `INSERT INTO public."Event"(
+		"Theme", "Beginning", "id_eventsStatus")
+		VALUES ($1, $2, (SELECT id
+							   FROM public."EventsStatus"
+							   WHERE "Status" = $3))
+							   RETURNING id;`
+
+	var id int64
+	err = db.QueryRow(query,
+		event.Theme,
+		event.Beginning,
+		event.Status).Scan(&id)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	e, err = m.SelectByID(id)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	return e, nil
 }
 
 //Update изменение мероприятия
-func (m *MEvent) Update(event entities.Event) (e *entities.Event, err error) {
-	return
+func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		panic(err)
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		panic(err)
+	}
+
+	query := `UPDATE public."Event"
+	SET "Theme"=$1, "Beginning"=$2, "id_eventsStatus"=(SELECT id
+														FROM public."EventsStatus"
+														WHERE "Status" = $3)
+	WHERE id = $4;`
+
+	_, err = db.Exec(query,
+		event.Theme,
+		event.Beginning,
+		event.Status,
+		event.ID)
+
+	if err != nil {
+		fmt.Println("ERROR UPDATE: ", err)
+		return nil, err
+	}
+
+	e, err = m.SelectByID(event.ID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	return e, nil
 }
 
 //Delete удаление мероприятия
 func (m *MEvent) Delete(ID int64) (err error) {
-	return
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		panic(err)
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		panic(err)
+	}
+
+	query := `DELETE FROM public."CandidateEvent"
+	WHERE "id_event" = $1;`
+
+	_, err = db.Exec(query, ID)
+
+	if err != nil {
+		fmt.Println("ERROR UPDATE: ", err)
+		return err
+	}
+
+	query = `DELETE FROM public."EmployeeEvent"
+		WHERE "id_event" = $1;`
+
+	_, err = db.Exec(query, ID)
+
+	if err != nil {
+		fmt.Println("ERROR UPDATE: ", err)
+		return err
+	}
+
+	query = `DELETE FROM public."Event"
+		WHERE id = $1;`
+
+	_, err = db.Exec(query, ID)
+
+	if err != nil {
+		fmt.Println("ERROR UPDATE: ", err)
+		return err
+	}
+
+	return nil
 }
 
 //InsertEmployeeToEvent связывание сотрудника и мероприятия
@@ -105,11 +207,14 @@ func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err err
 		return err
 	}
 
+	fmt.Println("ID candidate: ", IDEmployee)
+	fmt.Println("ID event: ", IDEvent)
+
 	query := `INSERT INTO public."EmployeeEvent"(
 		id_employee, id_event)
 		VALUES ($1, $2);`
 
-	err = db.QueryRow(query, IDEmployee, IDEvent).Scan()
+	_, err = db.Exec(query, IDEmployee, IDEvent)
 	if err != nil {
 		return err
 	}
@@ -142,10 +247,50 @@ func (m *MEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
 
 //InsertCandidateToEvent связывание кандидата и мероприятия
 func (m *MEvent) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err error) {
-	return
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		return err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("ID candidate: ", IDcandidate)
+	fmt.Println("ID event: ", IDevent)
+
+	query := `INSERT INTO public."CandidateEvent"(
+		id_candidate, id_event, "id_candidateStatus")
+		VALUES ($1, $2, (SELECT "id_candidatesStatus"
+					  FROM public."Candidate"
+					  WHERE id = $1));`
+
+	_, err = db.Exec(query, IDcandidate, IDevent)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 //DeleteCandidatesFromEvent удаляет всех кандидатов из мероприятия
 func (m *MEvent) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
-	return
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		return err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		return err
+	}
+
+	query := `DELETE FROM public."CandidateEvent"
+	WHERE id_event = $1;`
+
+	err = db.QueryRow(query, IDEvent).Scan()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	return nil
 }

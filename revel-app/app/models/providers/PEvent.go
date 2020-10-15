@@ -22,12 +22,12 @@ func (e *PEvent) GetEventByID(ID int64) (en *entities.Event, err error) {
 }
 
 //CreateEvent метод создния мероприятия
-func (e *PEvent) CreateEvent(event entities.Event) (en *entities.Event, err error) {
+func (e *PEvent) CreateEvent(event *entities.Event) (en *entities.Event, err error) {
 	return e.eventMapper.Insert(event)
 }
 
 //UpdateEvent метод изменения мероприятия
-func (e *PEvent) UpdateEvent(event entities.Event) (en *entities.Event, err error) {
+func (e *PEvent) UpdateEvent(event *entities.Event) (en *entities.Event, err error) {
 	return e.eventMapper.Update(event)
 }
 

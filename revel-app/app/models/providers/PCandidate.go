@@ -1,7 +1,6 @@
 package providers
 
 import (
-	"database/sql"
 	"revel-app/app/models/entities"
 	"revel-app/app/models/mappers"
 )
@@ -11,12 +10,12 @@ type PCandidate struct {
 	candidateMapper *mappers.MCandidate
 }
 
-//Init метод инициализации провайдера PCandidate
-func (p *PCandidate) Init(db *sql.DB) error {
-	p.candidateMapper = new(mappers.MCandidate)
-	p.candidateMapper.Init(db)
-	return nil
-}
+// //Init метод инициализации провайдера PCandidate
+// func (p *PCandidate) Init(db *sql.DB) error {
+// 	p.candidateMapper = new(mappers.MCandidate)
+// 	p.candidateMapper.Init(db)
+// 	return nil
+// }
 
 //GetCandidates метод получения всех кандидатов
 func (p *PCandidate) GetCandidates() (cs []*entities.Candidate, err error) {
@@ -34,12 +33,12 @@ func (p *PCandidate) GetCandidatesByEventID(eventID int64) (cs []*entities.Candi
 }
 
 //CreateCandidate метод создаёт кандидата
-func (p *PCandidate) CreateCandidate(candidate entities.Candidate) (c *entities.Candidate, err error) {
+func (p *PCandidate) CreateCandidate(candidate *entities.Candidate) (c *entities.Candidate, err error) {
 	return p.candidateMapper.Insert(candidate)
 }
 
 //UpdateCandidate метод изменения кандидата
-func (p *PCandidate) UpdateCandidate(candidate entities.Candidate) (c *entities.Candidate, err error) {
+func (p *PCandidate) UpdateCandidate(candidate *entities.Candidate) (c *entities.Candidate, err error) {
 	return p.candidateMapper.Update(candidate)
 }
 

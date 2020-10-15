@@ -54,11 +54,11 @@ export class CCreateEventWindow{
                         
                     })
                 });
-
                 this.refreshDatatable("events")
                 this.createWindow.close()
                 this.mainTab.enable()
             })
+            
         })
 
         this.createWindow.show()

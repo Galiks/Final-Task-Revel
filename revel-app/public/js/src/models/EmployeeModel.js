@@ -1,25 +1,9 @@
 import {Employee} from './entities/Employee.js'
 
 export class EmployeeModel{
-    //key - id, value - employee
+    
     constructor(){
-        // this.employees = new Map();
-        // this.employees.set(1, new Employee(1, "ivan", "ivanov", "ivanovich", "programmer", "email@email.com", "888888", ))
-        // this.employees.set(2, new Employee(2, "ivan2", "ivanov2", "ivanovich2", "programmer2", "222email@email.com", "22888888", 2))
-    }
-
-    /**
-     * Метод возвращает последний номер коллекции
-     * @returns последний номер коллекции
-     */
-    getLastID(){
-            if (this.employees.size == 0) {
-                return 0
-            }
-            else{
-                let keys = Array.from(this.employees.keys());
-                return Math.max.apply(null, keys)
-            }
+        
     }
 
     /**
@@ -27,7 +11,7 @@ export class EmployeeModel{
      * @returns список сотрдуников в виде массива
      */
     async getEmloyees() {
-        let request = await fetch(`/employee`)
+        let request = await fetch(`/employee/all`)
         let response = await request.json()
         if (response.Err != null){
             webix.message("ОШИБКА");
@@ -53,10 +37,12 @@ export class EmployeeModel{
     getEmployeesLikeIDValue(){
         return new Promise((resolve, reject)=>{
             let result = []
-            this.employees.forEach(e => {
-                result.push({id:e.ID, value:e.position + ' ' + e.lastname + ' ' + e.firstname + ' ' + e.patronymic})
-            });
-            resolve(result)
+            this.getEmloyees().then((employees) =>{
+                employees.forEach(employee => {
+                    result.push({id:employee.ID, value:employee.position + ' ' + employee.lastname + ' ' + employee.firstname + ' ' + employee.patronymic})
+                });
+                resolve(result)
+            })
         })
     }
 
@@ -90,7 +76,7 @@ export class EmployeeModel{
      */
     async createEmployee(employee) {
         let request = await fetch(`/employee`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type':'application/json;charset=utf-8'
             },

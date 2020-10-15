@@ -1,9 +1,12 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"revel-app/app/helpers"
+	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
+	"strconv"
 
 	"github.com/revel/revel"
 )
@@ -57,31 +60,82 @@ func (controller *CCandidate) Finally() revel.Result {
 
 //GetCandidates метод получения всех кандидатов
 func (controller *CCandidate) GetCandidates() revel.Result {
-	//var Candidates []*entities.Candidate = controller.CandidateProvider.GetCandidates()
-	return nil
+	controller.candidateProvider = &providers.PCandidate{}
+	candidates, err := controller.candidateProvider.GetCandidates()
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(candidates)
 }
 
 //GetCandidateByID метод получения кандидатов по ID
 func (controller *CCandidate) GetCandidateByID() revel.Result {
-	return nil
+	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	controller.candidateProvider = &providers.PCandidate{}
+	candidate, err := controller.candidateProvider.GetCandidateByID(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(candidate)
 }
 
-//GetCanadidatesByEvent метод получения кандидатов по ID мероприятия
-func (controller *CCandidate) GetCanadidatesByEvent() revel.Result {
-	return nil
+//GetCandidatesByEvent метод получения кандидатов по ID мероприятия
+func (controller *CCandidate) GetCandidatesByEvent() revel.Result {
+	id, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
+	controller.candidateProvider = &providers.PCandidate{}
+	candidates, err := controller.candidateProvider.GetCandidatesByEventID(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(candidates)
 }
 
 //CreateCandidate метод создания кандидатов
 func (controller *CCandidate) CreateCandidate() revel.Result {
-	return nil
+	candidate := &entities.Candidate{}
+	err := json.Unmarshal(controller.Params.JSON, candidate)
+	if err != nil {
+		fmt.Println("Unmarshalling: ", err)
+		return nil
+	}
+	controller.candidateProvider = &providers.PCandidate{}
+	result, err := controller.candidateProvider.CreateCandidate(candidate)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(result)
 }
 
 //UpdateCandidate метод изменения кандидатов
 func (controller *CCandidate) UpdateCandidate() revel.Result {
-	return nil
+	candidate := &entities.Candidate{}
+	err := json.Unmarshal(controller.Params.JSON, candidate)
+	if err != nil {
+		fmt.Println("Unmarshalling: ", err)
+		return nil
+	}
+	controller.candidateProvider = &providers.PCandidate{}
+	result, err := controller.candidateProvider.UpdateCandidate(candidate)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.RenderJSON(result)
 }
 
 //DeleteCandidate метод удаления кандидатов
 func (controller *CCandidate) DeleteCandidate() revel.Result {
-	return nil
+	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	fmt.Println(id)
+	controller.candidateProvider = &providers.PCandidate{}
+	err := controller.candidateProvider.DeleteCandidate(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return controller.Render()
 }
