@@ -134,6 +134,8 @@ func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 		panic(err)
 	}
 
+	fmt.Println("Updating event: ", event)
+
 	query := `UPDATE public."Event"
 	SET "Theme"=$1, "Beginning"=$2, "id_eventsStatus"=(SELECT id
 														FROM public."EventsStatus"
@@ -152,6 +154,9 @@ func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 	}
 
 	e, err = m.SelectByID(event.ID)
+
+	fmt.Println("Result Updating event: ", e)
+
 	if err != nil {
 		fmt.Println(err)
 		return

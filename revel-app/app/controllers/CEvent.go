@@ -19,12 +19,6 @@ type EventJSON struct {
 	Status    string `json:"status"`
 }
 
-//OutputID пока что заглушка
-type OutputID struct {
-	IDEntity int64 `json:"IDEntity"`
-	IDEvent  int64 `json:"IDEvent"`
-}
-
 //CEvent контроллер для мероприятий
 type CEvent struct {
 	*revel.Controller
@@ -43,6 +37,7 @@ type CEvent struct {
 
 //GetEvents метод получения всех мероприятий
 func (controller *CEvent) GetEvents() revel.Result {
+	fmt.Println("GetEvents()")
 	controller.eventProvider = &providers.PEvent{}
 	events, err := controller.eventProvider.GetEvents()
 	if err != nil {
@@ -53,6 +48,7 @@ func (controller *CEvent) GetEvents() revel.Result {
 
 //GetEventByID метод получения мероприятия по ID
 func (controller *CEvent) GetEventByID(ID int64) revel.Result {
+	fmt.Println("GetEventByID(ID int64): ", ID)
 	controller.eventProvider = &providers.PEvent{}
 	event, err := controller.eventProvider.GetEventByID(ID)
 	if err != nil {
@@ -63,7 +59,7 @@ func (controller *CEvent) GetEventByID(ID int64) revel.Result {
 
 //CreateEvent метод создания мероприятия
 func (controller *CEvent) CreateEvent() revel.Result {
-	//event := &entities.Event{}
+	fmt.Println("CreateEvent()")
 	eventJSON := &EventJSON{}
 
 	err := json.Unmarshal(controller.Params.JSON, eventJSON)
@@ -91,6 +87,7 @@ func (controller *CEvent) CreateEvent() revel.Result {
 
 //UpdateEvent метод изменения мероприятия
 func (controller *CEvent) UpdateEvent() revel.Result {
+	fmt.Println("UpdateEvent()")
 	eventJSON := &EventJSON{}
 	err := json.Unmarshal(controller.Params.JSON, eventJSON)
 	if err != nil {
@@ -116,6 +113,7 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 
 //DeleteEvent метод удаления мероприятия
 func (controller *CEvent) DeleteEvent() revel.Result {
+	fmt.Println("DeleteEvent()")
 	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
 	controller.eventProvider = &providers.PEvent{}
 	err := controller.eventProvider.DeleteEvent(id)
@@ -130,8 +128,7 @@ func (controller *CEvent) DeleteEvent() revel.Result {
 func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
 	IDEmployee, _ := strconv.ParseInt(controller.Params.Get("employeeID"), 10, 64)
-	fmt.Println("CONTROLLER. EventID: ", IDEvent)
-	fmt.Println("CONTROLLER. EmployeeID: ", IDEmployee)
+	fmt.Println("CreateLinkEmployeeToEvent IDEvent: ", IDEvent, " IDEmployee: ", IDEmployee)
 
 	controller.eventProvider = &providers.PEvent{}
 	err := controller.eventProvider.CreateLinkEmployeeToEvent(IDEmployee, IDEvent)
@@ -146,8 +143,7 @@ func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
 	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
 	IDCandidate, _ := strconv.ParseInt(controller.Params.Get("candidateID"), 10, 64)
-	fmt.Println("CONTROLLER. EventID: ", IDEvent)
-	fmt.Println("CONTROLLER. CandidateID: ", IDCandidate)
+	fmt.Println("CreateLinkEmployeeToEvent IDEvent: ", IDEvent, " IDCndidate: ", IDCandidate)
 
 	controller.eventProvider = &providers.PEvent{}
 	err := controller.eventProvider.CreateLinkCandidateToEvent(IDCandidate, IDEvent)
@@ -162,6 +158,7 @@ func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
 func (controller *CEvent) DeleteEmployeesFromEvent() revel.Result {
 	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
 	controller.eventProvider = &providers.PEvent{}
+	fmt.Println("DeleteEmployeesFromEvent ID: ", id)
 	err := controller.eventProvider.DeleteEmployeesFromEvent(id)
 	if err != nil {
 		fmt.Println(err)
@@ -173,6 +170,7 @@ func (controller *CEvent) DeleteEmployeesFromEvent() revel.Result {
 // DeleteCandidatesFromEvent метод удаления связи между кандидатами и мероприятием
 func (controller *CEvent) DeleteCandidatesFromEvent() revel.Result {
 	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	fmt.Println("DeleteCandidatesFromEvent ID: ", id)
 	controller.eventProvider = &providers.PEvent{}
 	err := controller.eventProvider.DeleteCandidatesFromEvent(id)
 	if err != nil {

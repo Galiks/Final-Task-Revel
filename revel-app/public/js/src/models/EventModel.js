@@ -110,8 +110,9 @@ export class EventModel{
                 candidates.forEach((candidate)=>{
                     result.push(candidate.ID)
                 })
+                resolve(result)
             })
-            resolve(result)
+            
         })
     }
 
@@ -127,8 +128,8 @@ export class EventModel{
                 employees.forEach((employee)=>{
                     result.push(employee.ID)
                 })
+                resolve(result)
             })
-            resolve(result)
         })
     }
 

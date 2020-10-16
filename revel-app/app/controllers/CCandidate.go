@@ -84,7 +84,7 @@ func (controller *CCandidate) GetCandidateByID() revel.Result {
 //GetCandidatesByEvent метод получения кандидатов по ID мероприятия
 func (controller *CCandidate) GetCandidatesByEvent() revel.Result {
 	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
-	fmt.Println("CONTROLLER ID: ", id)
+	fmt.Println("GetCandidatesByEvent ID: ", id)
 	controller.candidateProvider = &providers.PCandidate{}
 	candidates, err := controller.candidateProvider.GetCandidatesByEventID(id)
 	if err != nil {
