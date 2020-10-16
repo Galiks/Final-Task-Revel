@@ -215,7 +215,7 @@ func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err err
 		return err
 	}
 
-	fmt.Println("ID candidate: ", IDEmployee)
+	fmt.Println("ID employee: ", IDEmployee)
 	fmt.Println("ID event: ", IDEvent)
 
 	query := `INSERT INTO public."EmployeeEvent"(

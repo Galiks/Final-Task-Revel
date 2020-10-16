@@ -16,9 +16,11 @@ export class CandidateModel{
 
         return new Promise((resolve, reject)=>{
             let candidates = []
-            for (const item of response) {
-                let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
-                candidates.push(candidate)
+            if (response != null) {
+                for (const item of response) {
+                    let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
+                    candidates.push(candidate)
+                }
             }
             resolve(candidates)
         })
@@ -38,12 +40,14 @@ export class CandidateModel{
         }
 
         return new Promise((resolve, reject)=>{
-            let candidates = []
-            for (const item of response) {
-                let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
-                candidates.push(candidate)
-            }
-            resolve(candidates)
+            // let candidates = []
+            // if (response != null) {
+            //     for (const item of response) {
+            //         let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
+            //         candidates.push(candidate)
+            //     }
+            // }
+            resolve(response)
         })
     }
 

@@ -24,27 +24,12 @@ export class CAboutEventWindow{
         let employees = [];
         let candidates = [];
         Promise.all([
-            // this.eventModel.getEmployeeIDByEventID(event.ID).then((IDs) => {
-            //     IDs.forEach((id) => {
-            //         this.employeeModel.getEmployeeByID(id).then((employee) => {
-            //             employees.push(employee);
-            //         });
-            //     });
-            // }),
 
             this.eventModel.getCandidatesByEvent(Number(event.ID)).then((result)=>{
                 result.forEach((candidate)=>{
                     candidates.push(candidate)
                 })
             }),
-
-            // this.eventModel.getCandidateIDByEventID(event.ID).then((IDs) => {
-            //     IDs.forEach((id) => {
-            //         this.candidateModel.getCandidateByID(id).then((candidate) => {
-            //             candidates.push(candidate);
-            //         });
-            //     });
-            // })
 
             this.eventModel.getEmployeesByEvent(Number(event.ID)).then((result)=>{
                 result.forEach((employee)=>{

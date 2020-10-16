@@ -127,17 +127,27 @@ export class CEventWindow{
 
     /**
      * Метод обновляет статус кандидата
+     * @param {Number} eventID ID мероприятия
      * @param {CANDIDATE_STATUS} status статус кандидата
      */
     updateCandidateStatus(eventID, status) {
-        let candidateIDsEvent = this.eventModel.getCandidateIDByEventID(Number(eventID));
-        candidateIDsEvent.then((IDs) => {
-            IDs.forEach(candidateID => {
-                this.candidateModel.updateCandidateStatus(candidateID, status).then(() => {
+        this.eventModel.getCandidatesByEvent(Number(eventID)).then((candidates)=>{
+            return candidates
+        }).then((candidates)=>{
+            candidates.forEach(element => {
+                this.candidateModel.updateCandidateStatus(element.ID, status).then(()=>{
                     this.refreshDatatable("candidates")
-                });
+                })
             });
-        });
+        })
+        // let candidateIDsEvent = this.eventModel.getCandidateIDByEventID(Number(eventID));
+        // candidateIDsEvent.then((IDs) => {
+        //     IDs.forEach(candidateID => {
+        //         this.candidateModel.updateCandidateStatus(candidateID, status).then(() => {
+        //             this.refreshDatatable("candidates")
+        //         });
+        //     });
+        // });
     }
 }
 

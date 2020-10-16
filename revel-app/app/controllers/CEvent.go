@@ -128,20 +128,13 @@ func (controller *CEvent) DeleteEvent() revel.Result {
 
 //CreateLinkEmployeeToEvent метод создания свяязи между сотрудником и мероприятием
 func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
-	outputID := &OutputID{}
-	err := json.Unmarshal(controller.Params.JSON, outputID)
-	if err != nil {
-		fmt.Println("Unmarshalling: ", err)
-		return nil
-	}
-
-	fmt.Println(outputID)
-
-	fmt.Println("CONTROLLER. EventID: ", outputID.IDEvent)
-	fmt.Println("CONTROLLER. EmployeeID: ", outputID.IDEntity)
+	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
+	IDEmployee, _ := strconv.ParseInt(controller.Params.Get("employeeID"), 10, 64)
+	fmt.Println("CONTROLLER. EventID: ", IDEvent)
+	fmt.Println("CONTROLLER. EmployeeID: ", IDEmployee)
 
 	controller.eventProvider = &providers.PEvent{}
-	err = controller.eventProvider.CreateLinkEmployeeToEvent(outputID.IDEntity, outputID.IDEvent)
+	err := controller.eventProvider.CreateLinkEmployeeToEvent(IDEmployee, IDEvent)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -151,18 +144,13 @@ func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 
 //CreateLinkCandidateToEvent метод создания связи между кандидатом и мероприятием
 func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
-	outputID := &OutputID{}
-	err := json.Unmarshal(controller.Params.JSON, outputID)
-	if err != nil {
-		fmt.Println("Unmarshalling: ", err)
-		return nil
-	}
-
-	fmt.Println("CONTROLLER. EventID: ", outputID.IDEvent)
-	fmt.Println("CONTROLLER. EmployeeID: ", outputID.IDEntity)
+	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
+	IDCandidate, _ := strconv.ParseInt(controller.Params.Get("candidateID"), 10, 64)
+	fmt.Println("CONTROLLER. EventID: ", IDEvent)
+	fmt.Println("CONTROLLER. CandidateID: ", IDCandidate)
 
 	controller.eventProvider = &providers.PEvent{}
-	err = controller.eventProvider.CreateLinkCandidateToEvent(outputID.IDEntity, outputID.IDEvent)
+	err := controller.eventProvider.CreateLinkCandidateToEvent(IDCandidate, IDEvent)
 	if err != nil {
 		fmt.Println(err)
 		return nil

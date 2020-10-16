@@ -43,9 +43,11 @@ export class EventModel{
         let response = await request.json()
         return new Promise((resolve, reject)=>{
             let candidates = []
-            for (const item of response) {
-                let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
-                candidates.push(candidate)
+            if (response != null){
+                for (const item of response) {
+                    let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
+                    candidates.push(candidate)
+                }
             }
             resolve(candidates)
         })
@@ -85,9 +87,11 @@ export class EventModel{
         let response = await request.json()
         return new Promise((resolve, reject)=>{
             let employees = []
-            for (const item of response) {
-                let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
-                employees.push(employee)
+            if (response != null){
+                for (const item of response) {
+                    let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
+                    employees.push(employee)
+                }
             }
             resolve(employees)
         })
@@ -218,9 +222,11 @@ export class EventModel{
 
         return new Promise((resolve, reject)=>{
             let events = []
-            for (const item of response) {
-                let event = new Event(item.ID, item.theme, item.beginning, item.status)
-                events.push(event)
+            if (response != null){
+                for (const item of response) {
+                    let event = new Event(item.ID, item.theme, item.beginning, item.status)
+                    events.push(event)
+                }
             }
             resolve(events)
         })
@@ -286,7 +292,7 @@ export class EventModel{
                 'Content-Type':'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                ID:event.ID,
+                ID:Number(event.ID),
                 theme:event.theme,
                 beginning:event.beginning,
                 status:event.status
@@ -296,9 +302,10 @@ export class EventModel{
             webix.message("ОШИБКА");
             return
         }
+        let response = request.json()
 
         return new Promise((resolve, reject)=>{
-            resolve(request.json())
+            resolve(response)
         })
     }
 
