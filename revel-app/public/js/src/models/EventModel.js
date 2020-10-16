@@ -1,6 +1,7 @@
 import { EVENT_STATUS } from '../components/event/CEventWindow.js';
 import { Candidate } from './entities/Candidate.js';
-import {Event} from './entities/Event.js';
+import { Event } from './entities/Event.js';
+import { Employee } from "./entities/Employee.js";
 
 export class EventModel{
 
@@ -20,8 +21,8 @@ export class EventModel{
                 'Content-Type':'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                IDEntity : candidateID,
-                IDEvent: eventID
+                IDEntity : Number(candidateID),
+                IDEvent: Number(eventID)
             })
         })
         if (request.status != 200){
@@ -38,12 +39,8 @@ export class EventModel{
      * @returns список кандидатов в виде массива
      */
     async getCandidatesByEvent(eventID){
-        let request = await fetch(`/candidate/event/${eventID} `)
+        let request = await fetch(`/candidate/event/${eventID}`)
         let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
-            return
-        }
         return new Promise((resolve, reject)=>{
             let candidates = []
             for (const item of response) {
@@ -66,8 +63,8 @@ export class EventModel{
                 'Content-Type':'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                IDEntity : employeeID,
-                IDEvent: eventID
+                IDEntity : Number(employeeID),
+                IDEvent: Number(eventID)
             })
         })
         if (request.status != 200){
@@ -86,10 +83,6 @@ export class EventModel{
     async getEmployeesByEvent(eventID){
         let request = await fetch(`/employee/event/${eventID}`)
         let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
-            return
-        }
         return new Promise((resolve, reject)=>{
             let employees = []
             for (const item of response) {
@@ -222,10 +215,6 @@ export class EventModel{
     async getEvents() {
         let request = await fetch(`event/all`)
         let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
-            return
-        }
 
         return new Promise((resolve, reject)=>{
             let events = []
@@ -276,10 +265,13 @@ export class EventModel{
             webix.message("ОШИБКА");
             return
         }
-
-        return new Promise((resolve, reject)=>{
-            resolve(request.json())
-        })
+        else{
+            //let response = request.json()
+            return new Promise((resolve, reject)=>{
+                //let event = new Event(response.ID, response.theme, response.beginning, response.status)
+                resolve(request.json())
+            })
+        }
     }
 
     /**

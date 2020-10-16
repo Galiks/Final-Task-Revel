@@ -43,10 +43,13 @@ export class CCreateEventWindow{
             }
             let employees = $$("employeesMultiselect").getValue()
             let candidates = $$("candidatesMultiselect").getValue()
+
             this.eventModel.createEvent(values).then((newEvent)=>{
+                
+    
                 employees.split(',').forEach(elem => {
                     this.eventModel.setEmployeeToEvent(elem, newEvent.ID).then(()=>{
-
+    
                     })
                 });
                 candidates.split(',').forEach(elem => {
@@ -54,6 +57,7 @@ export class CCreateEventWindow{
                         
                     })
                 });
+
                 this.refreshDatatable("events")
                 this.createWindow.close()
                 this.mainTab.enable()

@@ -60,8 +60,10 @@ func (m *MEvent) SelectByID(ID int64) (e *entities.Event, err error) {
 
 	query := `SELECT e.id, "Theme", "Beginning", es."Status"
 	FROM public."Event" as e
-	JOIN public."EventsStatus" as es ON e.id = es.id
+	JOIN public."EventsStatus" as es ON e."id_eventsStatus" = es.id
 	WHERE e.id = $1`
+
+	fmt.Println("ID IN GetByID: ", ID)
 
 	row, err := db.Query(query, ID)
 
@@ -74,6 +76,8 @@ func (m *MEvent) SelectByID(ID int64) (e *entities.Event, err error) {
 	row.Next()
 	result := entities.Event{}
 	err = row.Scan(&result.ID, &result.Theme, &result.Beginning, &result.Status)
+
+	fmt.Println("Result IN GetByID: ", result)
 
 	return &result, nil
 }
@@ -106,11 +110,15 @@ func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
 		return
 	}
 
+	fmt.Println("ID NEW EVENT: ", id)
+
 	e, err = m.SelectByID(id)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+
+	fmt.Println("INSERT EVENT: ", e)
 
 	return e, nil
 }

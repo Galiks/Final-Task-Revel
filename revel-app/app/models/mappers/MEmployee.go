@@ -122,6 +122,8 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 		panic(err)
 	}
 
+	fmt.Println("IDEvent in getEmployeeByID: ", IDEvent)
+
 	defer db.Close()
 
 	query := `SELECT e.id, "Firstname", "Lastname", "Patronymic", "Position", "Email", "Phone", id_user
@@ -133,6 +135,7 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(rows)
 
 	defer rows.Close()
 

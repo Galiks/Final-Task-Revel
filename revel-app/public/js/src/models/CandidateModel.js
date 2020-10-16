@@ -13,10 +13,6 @@ export class CandidateModel{
     async getCandidates(){
         let request = await fetch(`/candidate/all`)
         let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
-            return
-        }
 
         return new Promise((resolve, reject)=>{
             let candidates = []

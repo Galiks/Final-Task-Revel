@@ -13,10 +13,6 @@ export class EmployeeModel{
     async getEmloyees() {
         let request = await fetch(`/employee/all`)
         let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
-            return
-        }
 
         return new Promise((resolve, reject)=>{
             let employees = []
@@ -94,6 +90,7 @@ export class EmployeeModel{
             webix.message("ОШИБКА");
             return
         }
+        
 
         return new Promise((resolve, reject)=>{
             resolve(request.json())

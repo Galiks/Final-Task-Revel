@@ -130,7 +130,7 @@ export class CEventWindow{
      * @param {CANDIDATE_STATUS} status статус кандидата
      */
     updateCandidateStatus(eventID, status) {
-        let candidateIDsEvent = this.eventModel.getCandidateIDByEventID(eventID);
+        let candidateIDsEvent = this.eventModel.getCandidateIDByEventID(Number(eventID));
         candidateIDsEvent.then((IDs) => {
             IDs.forEach(candidateID => {
                 this.candidateModel.updateCandidateStatus(candidateID, status).then(() => {

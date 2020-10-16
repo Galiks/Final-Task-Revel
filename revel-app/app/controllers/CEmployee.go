@@ -51,7 +51,7 @@ func (controller *CEmployee) GetEmployeeByID() revel.Result {
 
 //GetEmployeesByEvent метод получения сотрудников по ID мероприятия
 func (controller *CEmployee) GetEmployeesByEvent() revel.Result {
-	id, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
+	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
 	controller.employeeProvider = &providers.PEmployee{}
 	employees, err := controller.employeeProvider.GetEmployeesByEventID(id)
 	if err != nil {

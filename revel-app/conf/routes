@@ -15,8 +15,8 @@ GET     /event/:id                              CEvent.GetEventByID
 PUT     /event                                  CEvent.CreateEvent
 POST    /event/:id                              CEvent.UpdateEvent
 DELETE  /event/:id                              CEvent.DeleteEvent
-PUT     /event/:id/employee/:id                 CEvent.CreateLinkEmployeeToEvent
-PUT     /event/:id/candidate/:id                CEvent.CreateLinkCandidateToEvent
+PUT     /event/:eventID/employee/:employeeID                 CEvent.CreateLinkEmployeeToEvent
+PUT     /event/:eventID/candidate/:employeeID                CEvent.CreateLinkCandidateToEvent
 DELETE  /event/:id/employee                     CEvent.DeleteEmployeesFromEvent
 DELETE  /event/:id/candidate                    CEvent.DeleteCandidatesFromEvent
 

@@ -78,12 +78,14 @@ func (controller *CEvent) CreateEvent() revel.Result {
 		Beginning: normalTime,
 		Status:    eventJSON.Status}
 
+	fmt.Println("Try create event: ", event)
 	controller.eventProvider = &providers.PEvent{}
 	result, err := controller.eventProvider.CreateEvent(event)
 	if err != nil {
 		fmt.Println(err)
 		return nil
 	}
+	fmt.Println("Create result: ", result)
 	return controller.RenderJSON(result)
 }
 
@@ -132,6 +134,8 @@ func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 		fmt.Println("Unmarshalling: ", err)
 		return nil
 	}
+
+	fmt.Println(outputID)
 
 	fmt.Println("CONTROLLER. EventID: ", outputID.IDEvent)
 	fmt.Println("CONTROLLER. EmployeeID: ", outputID.IDEntity)

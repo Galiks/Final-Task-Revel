@@ -32,7 +32,7 @@ export class CAboutEventWindow{
             //     });
             // }),
 
-            this.eventModel.getCandidatesByEvent(event.ID).then((result)=>{
+            this.eventModel.getCandidatesByEvent(Number(event.ID)).then((result)=>{
                 result.forEach((candidate)=>{
                     candidates.push(candidate)
                 })
@@ -46,7 +46,7 @@ export class CAboutEventWindow{
             //     });
             // })
 
-            this.eventModel.getEmployeesByEvent(event.ID).then((result)=>{
+            this.eventModel.getEmployeesByEvent(Number(event.ID)).then((result)=>{
                 result.forEach((employee)=>{
                     employees.push(employee)
                 })
@@ -68,10 +68,6 @@ export class CAboutEventWindow{
         this.aboutWindow.attachEvent("onHide", ()=> {
             this.aboutWindow.close()
             this.mainTab.enable()
-        })
-
-        $$("aboutWindow").attachEvent("onDestruct", ()=>{
-            this.refreshDatatable("events")
         })
 
         $$("aboutWindowClose").attachEvent("onItemClick", ()=>{
