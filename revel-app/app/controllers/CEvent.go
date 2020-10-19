@@ -94,7 +94,7 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 		fmt.Println("Unmarshalling: ", err)
 		return nil
 	}
-	normalTime, err := time.Parse(`"`+time.RFC3339+`"`, string(eventJSON.Beginning))
+	normalTime, err := time.Parse(time.RFC3339, eventJSON.Beginning)
 
 	event := &entities.Event{
 		ID:        eventJSON.ID,
@@ -143,7 +143,7 @@ func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
 	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
 	IDCandidate, _ := strconv.ParseInt(controller.Params.Get("candidateID"), 10, 64)
-	fmt.Println("CreateLinkEmployeeToEvent IDEvent: ", IDEvent, " IDCndidate: ", IDCandidate)
+	fmt.Println("CreateLinkCandidateToEvent IDEvent: ", IDEvent, " IDCndidate: ", IDCandidate)
 
 	controller.eventProvider = &providers.PEvent{}
 	err := controller.eventProvider.CreateLinkCandidateToEvent(IDCandidate, IDEvent)

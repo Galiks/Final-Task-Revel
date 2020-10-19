@@ -1,13 +1,15 @@
-
+import { EVENT_STATUS } from "./../CEventWindow.js";
+import { CANDIDATE_STATUS } from "./../../candidate/CCandidateWindow.js";
 
 export class CCreateEventWindow{
     constructor(){
         
     }
 
-    init(eventModel, refreshDatatable){
+    init(eventModel, refreshDatatable, updateCandidateStatus){
         this.eventModel = eventModel
         this.refreshDatatable = refreshDatatable
+        this.updateCandidateStatus = updateCandidateStatus
         this.createWindow = $$("createWindow")
         this.createWindowButton = $$("createWindowButton")
         this.createForm = $$("createForm")
@@ -36,33 +38,31 @@ export class CCreateEventWindow{
         })
 
         $$("createWindowButton").attachEvent("onItemClick", ()=>{
-            let values = this.fetch()
-            if (this.isEmptyString(values.theme, values.beginning, values.status)) {
+            if (!this.createForm.validate()) {
                 webix.message("Один из параметров оказался пустым!")
                 return
             }
+
+            // if (this.isEmptyString(values.theme, values.beginning, values.status)) {
+            //     webix.message("Один из параметров оказался пустым!")
+            //     return
+            // }
+
+            let values = this.fetch()
             let employees = $$("employeesMultiselect").getValue()
             let candidates = $$("candidatesMultiselect").getValue()
-
             this.eventModel.createEvent(values).then((newEvent)=>{
-                
-    
-                employees.split(',').forEach(elem => {
-                    this.eventModel.setEmployeeToEvent(elem, newEvent.ID).then(()=>{
-    
-                    })
-                });
-                candidates.split(',').forEach(elem => {
-                    this.eventModel.setCandidateToEvent(elem, newEvent.ID).then(()=>{
-                        
-                    })
-                });
+                employees.split(',').forEach((employee)=>{
+                    this.eventModel.setEmployeeToEvent(employee, newEvent.ID)
+                })
 
-                this.refreshDatatable("events")
-                this.createWindow.close()
-                this.mainTab.enable()
+                candidates.split(',').forEach(elem => {
+                    this.eventModel.setCandidateToEvent(elem, newEvent.ID)
+                })
             })
-            
+
+            this.createWindow.close()
+            this.mainTab.enable()
         })
 
         this.createWindow.show()

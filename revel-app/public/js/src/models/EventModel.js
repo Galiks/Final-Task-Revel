@@ -27,11 +27,7 @@ export class EventModel{
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
-            return
         }
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
     }
 
     /**
@@ -42,14 +38,14 @@ export class EventModel{
         let request = await fetch(`/candidate/event/${eventID}`)
         let response = await request.json()
         return new Promise((resolve, reject)=>{
-            let candidates = []
             if (response != null){
+                let candidates = []
                 for (const item of response) {
                     let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
                     candidates.push(candidate)
                 }
+                resolve(candidates)
             }
-            resolve(candidates)
         })
     }
 
@@ -71,11 +67,7 @@ export class EventModel{
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
-            return
         }
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
     }
 
     /**
@@ -103,17 +95,14 @@ export class EventModel{
      * @param {number} eventID ID мероприятия
      * @returns список ID кандидатов в виде массива
      */
-    getCandidateIDByEventID(eventID){
-        return new Promise((resolve, reject)=>{
-            let result = []
-            this.getCandidatesByEvent(eventID).then((candidates)=>{
+    async getCandidateIDByEventID(eventID){ 
+        return this.getCandidatesByEvent(eventID).then((candidates)=>{
+                let result = []
                 candidates.forEach((candidate)=>{
                     result.push(candidate.ID)
                 })
-                resolve(result)
+                return result
             })
-            
-        })
     }
 
     /**
@@ -121,16 +110,14 @@ export class EventModel{
      * @param {number} eventID ID мероприятия
      * @returns список ID кандидатов в виде массива 
      */
-    getEmployeeIDByEventID(eventID){
-        return new Promise((resolve, reject)=>{
-            let result = []
-            this.getEmployeesByEvent(eventID).then((employees)=>{
+    async getEmployeeIDByEventID(eventID){         
+        return this.getEmployeesByEvent(eventID).then((employees)=>{
+                let result = []
                 employees.forEach((employee)=>{
                     result.push(employee.ID)
                 })
-                resolve(result)
+                return result
             })
-        })
     }
 
     /**
@@ -138,11 +125,9 @@ export class EventModel{
      * @param {number} eventID ID мероприятия
      * @returns список ID сотрудников в виде строки
      */
-    getEmployeeIDByEventIDLikeString(eventID){
-        return new Promise((resolve, reject)=>{
-            this.getEmployeeIDByEventID(eventID).then((employees) =>{
-                resolve(String(employees))
-            })
+    async getEmployeeIDByEventIDLikeString(eventID){
+        return this.getEmployeeIDByEventID(eventID).then((employees)=>{
+            return String(employees)
         })
     }
 
@@ -151,12 +136,9 @@ export class EventModel{
      * @param {number} eventID ID мероприятия
      * @returns список ID кандидатов в виде строки
      */
-    getCandidateIDByEventIDLikeString(eventID){
-        return new Promise((resolve, reject)=>{
-            this.getCandidateIDByEventID(eventID).then((candidates) =>{
-                resolve(String(candidates))
-            })
-        })
+    async getCandidateIDByEventIDLikeString(eventID){
+        let candidates = await this.getCandidateIDByEventID(eventID)
+        return String(candidates)
     }
 
     /**
@@ -164,26 +146,18 @@ export class EventModel{
      * @param {number} candidateIDs ID кандидата
      * @param {number} eventID ID мероприятия
      */
-    updateCandidateEvent(candidateIDs, eventID){     
-        return new Promise((resolve, reject)=>{
-           Promise.all([
-               this.deleteCandidateEventByEventID(eventID),
+    async updateCandidateEvent(candidateIDs, eventID){
+        await this.deleteCandidateEventByEventID(eventID)
+        let IDs = candidateIDs.split(',')
 
-               candidateIDs.split(',').forEach(id =>{
-                    this.setCandidateToEvent(id, eventID)
-               })
-           ]).then(()=>{
-               resolve()
-           })
+        for (let index = 0; index < IDs.length; index++) {
+            const id = IDs[index];
+            await this.setCandidateToEvent(Number(id), Number(eventID))
+        }
 
-        })
-
-         // this.candidateEvent = this.candidateEvent.filter(element => element.eventID != eventID)
-            // candidateIDs.split(',').forEach(element => {
-            //     this.setCandidateToEvent(element, eventID).then(()=>{
-            //         resolve()
-            //     })
-            // })
+        // candidateIDs.split(',').forEach((id)=>{
+        //     await this.setCandidateToEvent(Number(id), Number(eventID))
+        // })
     }
 
     /**
@@ -191,26 +165,19 @@ export class EventModel{
      * @param {number} employeeIDs ID сотрудника
      * @param {number} eventID ID мероприятия 
      */
-    updateEmployeeEvent(employeeIDs, eventID){
-        return new Promise((resolve, reject)=>{
-            Promise.all([
-                this.deleteEmployeeEventByEventID(eventID),
+    async updateEmployeeEvent(employeeIDs, eventID){
+        await this.deleteEmployeeEventByEventID(eventID)
+        let IDs = employeeIDs.split(',')
 
-                employeeIDs.split(',').forEach(id=>{
-                    this.setEmployeeToEvent(id, eventID)
-                })
-            ]).then(()=>{
-                resolve()
-            })
-        })
+        for (let index = 0; index < IDs.length; index++) {
+            const id = IDs[index];
+            await this.setEmployeeToEvent(Number(id), Number(eventID))
+        }
 
-        // this.employeeEvent = this.employeeEvent.filter(element => element.eventID != eventID)
-            // employeeIDs.split(',').forEach(element => {
-            //     this.setEmployeeToEvent(element, eventID).then(()=>{
 
-            //     })
-            // })
-            // resolve()
+        // employeeIDs.split(',').forEach((id)=>{
+        //     await this.setEmployeeToEvent(Number(id), Number(eventID))
+        // })
     }
 
     /**
@@ -268,6 +235,7 @@ export class EventModel{
                 status:event.status
             })
         })
+        let response = request.json()
         if (request.status != 200){
             webix.message("ОШИБКА");
             return
@@ -276,7 +244,7 @@ export class EventModel{
             //let response = request.json()
             return new Promise((resolve, reject)=>{
                 //let event = new Event(response.ID, response.theme, response.beginning, response.status)
-                resolve(request.json())
+                resolve(response)
             })
         }
     }
@@ -328,10 +296,6 @@ export class EventModel{
             webix.message("ОШИБКА");
             return
         }
-
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
     }
 
     /**
@@ -350,12 +314,7 @@ export class EventModel{
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
-            return
         }
-
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
     }
 
     /**
@@ -376,9 +335,5 @@ export class EventModel{
             webix.message("ОШИБКА");
             return
         }
-
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
     }
 }

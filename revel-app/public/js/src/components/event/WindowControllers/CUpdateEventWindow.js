@@ -42,7 +42,7 @@ export class CUpdateEventWindow{
 
         this.parse(event)
 
-        $$("updateWindowButton").attachEvent("onItemClick", ()=>{
+        $$("updateWindowButton").attachEvent("onItemClick", async ()=>{
             let values = this.fetch()
             if (this.isEmptyString(values.theme, values.beginning, values.status)) {
                 webix.message("Один из параметров оказался пустым!")
@@ -50,24 +50,19 @@ export class CUpdateEventWindow{
             }
             let employees = $$("employeesMultiselect").getValue()
             let candidates = $$("candidatesMultiselect").getValue()
-            this.eventModel.updateEvent(values).then((updatingEvent) =>{
+
+            let updatingEvent = await this.eventModel.updateEvent(values)
+            await this.eventModel.updateCandidateEvent(candidates, updatingEvent.ID)
+            await this.eventModel.updateEmployeeEvent(employees, updatingEvent.ID)
                 if (updatingEvent.status == EVENT_STATUS.planned) {
                     this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.invite);
                 }
                 else if (updatingEvent.status == EVENT_STATUS.finished) {
                     this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.wait)
                 }
-            })
 
-            this.eventModel.updateCandidateEvent(candidates, event.ID).then(()=>{
-                this.refreshDatatable("events");
-            })
-            this.eventModel.updateEmployeeEvent(employees, event.ID).then(()=>{
-                this.refreshDatatable("events");
-            })
-
-            this.updateWindow.close()
-            this.mainTab.enable()
+                this.updateWindow.close()
+                this.mainTab.enable()
         })
 
         this.updateWindow.show()

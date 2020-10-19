@@ -132,25 +132,29 @@ export class CandidateModel{
 
     /**
      * Метод обновляет статус кандидата
-     * @param {number} candidateID ID кандидата
+     * @param {number} candidate кандидат
      * @param {CANDIDATE_STATUS} status новый статус
      * @returns кандидата
      */
-    updateCandidateStatus(candidateID, status){
-        return new Promise((resolve, reject) => {
-            this.getCandidateByID(candidateID).then((candidate)=>{
-                return candidate
-            })
-            .then((candidate)=>{
-                candidate.status = status
-                this.updateCandidate(candidate).then((updatingCandidate)=>{
-                    return updatingCandidate
-                })
-            })
-            .then((updatingCandidate)=>{
-                resolve(updatingCandidate)
-            })
+    async updateCandidateStatus(candidate, status){
+        candidate.status = status
+        await this.updateCandidate(candidate).then((updatingCandidate)=>{
+            return updatingCandidate
         })
+        // return new Promise((resolve, reject) => {
+        //     this.getCandidateByID(candidateID).then((candidate)=>{
+        //         return candidate
+        //     })
+        //     .then((candidate)=>{
+        //         candidate.status = status
+        //         this.updateCandidate(candidate).then((updatingCandidate)=>{
+        //             return updatingCandidate
+        //         })
+        //     })
+        //     .then((updatingCandidate)=>{
+        //         resolve(updatingCandidate)
+        //     })
+        // })
     }
 
     /**

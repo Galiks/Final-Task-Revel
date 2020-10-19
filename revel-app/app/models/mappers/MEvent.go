@@ -38,7 +38,7 @@ func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 		p := entities.Event{}
 		err := rows.Scan(&p.ID, &p.Theme, &p.Beginning, &p.Status)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("SelectAll получение всех мероприятий: ", err)
 			continue
 		}
 		es = append(es, &p)
@@ -106,7 +106,7 @@ func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
 		event.Beginning,
 		event.Status).Scan(&id)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Insert добавление мероприятия: ", err)
 		return
 	}
 
@@ -114,7 +114,7 @@ func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
 
 	e, err = m.SelectByID(id)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Insert добавление мероприятия - SelectByID: ", err)
 		return
 	}
 
@@ -149,7 +149,7 @@ func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 		event.ID)
 
 	if err != nil {
-		fmt.Println("ERROR UPDATE: ", err)
+		fmt.Println("ERROR UPDATE event: ", err)
 		return nil, err
 	}
 
@@ -158,7 +158,7 @@ func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 	fmt.Println("Result Updating event: ", e)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("ERROR UPDATE event: ", err)
 		return
 	}
 
@@ -182,7 +182,7 @@ func (m *MEvent) Delete(ID int64) (err error) {
 	_, err = db.Exec(query, ID)
 
 	if err != nil {
-		fmt.Println("ERROR UPDATE: ", err)
+		fmt.Println("ERROR DELETE event: ", err)
 		return err
 	}
 
@@ -192,7 +192,7 @@ func (m *MEvent) Delete(ID int64) (err error) {
 	_, err = db.Exec(query, ID)
 
 	if err != nil {
-		fmt.Println("ERROR UPDATE: ", err)
+		fmt.Println("ERROR UPDATE event: ", err)
 		return err
 	}
 
@@ -202,7 +202,7 @@ func (m *MEvent) Delete(ID int64) (err error) {
 	_, err = db.Exec(query, ID)
 
 	if err != nil {
-		fmt.Println("ERROR UPDATE: ", err)
+		fmt.Println("ERROR UPDATE event: ", err)
 		return err
 	}
 
@@ -251,7 +251,7 @@ func (m *MEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
 
 	err = db.QueryRow(query, IDEvent).Scan()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("DeleteEmployeesFromEvent ", err)
 		return err
 	}
 
@@ -280,7 +280,7 @@ func (m *MEvent) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err e
 
 	_, err = db.Exec(query, IDcandidate, IDevent)
 	if err != nil {
-		return err
+		fmt.Println("InsertCandidateToEvent ", err)
 	}
 	return nil
 }
@@ -301,7 +301,7 @@ func (m *MEvent) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
 
 	err = db.QueryRow(query, IDEvent).Scan()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("DeleteCandidatesFromEvent ", err)
 		return err
 	}
 

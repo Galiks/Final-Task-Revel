@@ -125,12 +125,12 @@ func (m *MCandidate) SelectByEventID(IDEvent int64) (cs []*entities.Candidate, e
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(rows)
 
 	defer rows.Close()
 
 	for rows.Next() {
 		p := CandidateSQL{}
+		fmt.Println("SelectCandidatesByEventID: ", rows)
 		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Email, &p.Phone, &p.Status)
 		if err != nil {
 			fmt.Println(err)

@@ -6,7 +6,7 @@ export class CFinishEventWindow{
         
     }
 
-    init(event, eventModel, candidateModel, refreshDatatable, updateCandidateStatus){
+    async init(event, eventModel, candidateModel, refreshDatatable, updateCandidateStatus){
         this.eventModel = eventModel,
         this.candidateModel = candidateModel
         this.refreshDatatable = refreshDatatable
@@ -16,6 +16,8 @@ export class CFinishEventWindow{
         this.mainTab = $$("main")
 
         this.attachEventOnFinishWindow(event)
+
+        this.candidates = await this.getCandidatesToFinishWindow(event)
     }
 
     /**
@@ -23,10 +25,10 @@ export class CFinishEventWindow{
      * @param {Event} event объект класса Event
      * @param {Candidate[]} candidates массив объекто класса Candidate
      */
-    attachEventOnFinishWindow(event){
+    async attachEventOnFinishWindow(event){
 
         $$("finishWindowButton").attachEvent("onItemClick", ()=>{
-            this.setCandidatesToFinishWindow(event)
+            this.finishEvent(event, this.candidates)
         });
 
         this.finishWindow.attachEvent("onDestruct", () => {
@@ -68,9 +70,9 @@ export class CFinishEventWindow{
                 //Если кандидат не "явился", то "не успешно"
                 if (flagOnCandidateStatus) {
                     event.status = EVENT_STATUS.archive;
-                    this.eventModel.updateEvent(event).then(() => {
+                    this.eventModel.updateEvent(event).then((updatingEvent) => {
                         this.refreshDatatable("events");
-                        this.updateCandidateStatus(event.ID, CANDIDATE_STATUS.empty)
+                        this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.empty)
                         this.finishWindow.close()
                         this.mainTab.enable()
                     });
@@ -89,19 +91,25 @@ export class CFinishEventWindow{
      * Метод для добавления данных в окно
      * @param {Event} event event объект класса Event
      */
-    setCandidatesToFinishWindow(event){
-        let candidates = [];
-        Promise.all([
-            this.eventModel.getCandidateIDByEventID(event.ID).then((IDs) => {
-                IDs.forEach((id) => {
-                    this.candidateModel.getCandidateByID(id).then((candidate) => {
-                        candidates.push(candidate);
-                    });
-                });
-            })
-        ]).then(() => {
-            $$("finishCandidates").parse(candidates)
-            this.finishEvent(event, candidates)
-        });
+    async getCandidatesToFinishWindow(event){
+        let IDs = await this.eventModel.getCandidateIDByEventID(event.ID)
+        let candidates = []
+        for (let index = 0; index < IDs.length; index++) {
+            const id = IDs[index];
+            let candidate = await this.candidateModel.getCandidateByID(id)
+            candidates.push(candidate)
+        }
+        $$("finishCandidates").parse(candidates)
+        return candidates
+        // this.eventModel.getCandidateIDByEventID(event.ID).then((IDs) => {
+        //     let candidates = []
+        //     IDs.forEach((id) => {
+        //         this.candidateModel.getCandidateByID(id).then((candidate) => {
+        //             candidates.push(candidate)
+        //         })
+        //     })
+        //     $$("finishCandidates").parse(candidates)
+        //     this.finishEvent(event, candidates)
+        // })
     }
 }

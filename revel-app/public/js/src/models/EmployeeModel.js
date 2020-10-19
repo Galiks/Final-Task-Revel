@@ -30,16 +30,14 @@ export class EmployeeModel{
      * VALUE - position + lastname + firstname + patronymic
      * @returns {Array} Массив объектов {ID, VALUE}
      */
-    getEmployeesLikeIDValue(){
-        return new Promise((resolve, reject)=>{
-            let result = []
-            this.getEmloyees().then((employees) =>{
+    async getEmployeesLikeIDValue(){      
+            return this.getEmloyees().then((employees) =>{
+                let result = []
                 employees.forEach(employee => {
                     result.push({id:employee.ID, value:employee.position + ' ' + employee.lastname + ' ' + employee.firstname + ' ' + employee.patronymic})
                 });
-                resolve(result)
+                return result
             })
-        })
     }
 
     /**

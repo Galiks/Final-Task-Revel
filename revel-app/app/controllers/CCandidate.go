@@ -87,6 +87,7 @@ func (controller *CCandidate) GetCandidatesByEvent() revel.Result {
 	fmt.Println("GetCandidatesByEvent ID: ", id)
 	controller.candidateProvider = &providers.PCandidate{}
 	candidates, err := controller.candidateProvider.GetCandidatesByEventID(id)
+	fmt.Println(&candidates)
 	if err != nil {
 		fmt.Println(err)
 		return nil

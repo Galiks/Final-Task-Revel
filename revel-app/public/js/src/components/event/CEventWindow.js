@@ -38,11 +38,11 @@ export class CEventWindow{
     /**
      * Метод устанавливает значения для свойства options
      */
-    setMultiselectOptions() {
-        this.employeeModel.getEmployeesLikeIDValue().then((result) => {
-            $$("employeesMultiselect").define("options", result);
-            $$("employeesMultiselect").refresh();
-        });
+    async setMultiselectOptions() {
+        let result = await this.employeeModel.getEmployeesLikeIDValue()
+        $$("employeesMultiselect").define("options", result);
+        $$("employeesMultiselect").refresh();
+        
         this.candidateModel.getCandidatesLikeIDValue().then((result) => {
             $$("candidatesMultiselect").define("options", result);
             $$("candidatesMultiselect").refresh();
@@ -53,15 +53,21 @@ export class CEventWindow{
      * Метод устанавливает значения для свойства value
      * @param {number} eventID номер мероприятия
      */
-    setMultiselectValue(eventID) {
-        let employeesMultiselectValue = this.eventModel.getEmployeeIDByEventIDLikeString(eventID);
-        employeesMultiselectValue.then((value) => {
-            $$("employeesMultiselect").setValue(value);
-        });
-        let candidatesMultiselectValue = this.eventModel.getCandidateIDByEventIDLikeString(eventID);
-        candidatesMultiselectValue.then((value) => {
-            $$("candidatesMultiselect").setValue(value);
-        });
+    async setMultiselectValue(eventID) {
+        let employees = await this.eventModel.getEmployeeIDByEventIDLikeString(eventID)
+        $$("employeesMultiselect").setValue(employees);
+
+        let candidates = await this.eventModel.getCandidateIDByEventIDLikeString(eventID)
+        $$("candidatesMultiselect").setValue(candidates);
+
+        // let employeesMultiselectValue = this.eventModel.getEmployeeIDByEventIDLikeString(eventID);
+        // employeesMultiselectValue.then((value) => {
+        //     $$("employeesMultiselect").setValue(value);
+        // });
+        // let candidatesMultiselectValue = this.eventModel.getCandidateIDByEventIDLikeString(eventID);
+        // candidatesMultiselectValue.then((value) => {
+        //     $$("candidatesMultiselect").setValue(value);
+        // });
     }
 
     /**
@@ -71,6 +77,9 @@ export class CEventWindow{
         webix.ui(this.eventWindowView.viewCreateWindow())     
         this.createWindowController.init(this.eventModel, (datatableName) => {
             this.refreshDatatable(datatableName)
+        },
+        (eventID, status)=>{
+            this.updateCandidateStatus(eventID, status)
         })
         this.setMultiselectOptions();   
     }
@@ -135,10 +144,11 @@ export class CEventWindow{
             return candidates
         }).then((candidates)=>{
             candidates.forEach(element => {
-                this.candidateModel.updateCandidateStatus(element.ID, status).then(()=>{
-                    this.refreshDatatable("candidates")
+                this.candidateModel.updateCandidateStatus(element, status).then((result)=>{
+                    return result
                 })
             });
+            this.refreshDatatable("candidates")
         })
         // let candidateIDsEvent = this.eventModel.getCandidateIDByEventID(Number(eventID));
         // candidateIDsEvent.then((IDs) => {

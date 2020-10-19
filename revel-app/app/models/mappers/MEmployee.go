@@ -135,11 +135,11 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(rows)
 
 	defer rows.Close()
 
 	for rows.Next() {
+		fmt.Println("SelectEmployeeByEventID: ", rows)
 		p := EmployeeSQL{}
 		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Position, &p.Email, &p.Phone, &p.IDUser)
 		if err != nil {
