@@ -94,7 +94,7 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 		fmt.Println("Unmarshalling: ", err)
 		return nil
 	}
-	normalTime, err := time.Parse(time.RFC3339, eventJSON.Beginning)
+	normalTime, err := time.Parse(time.RFC3339, eventJSON.Beginning+":00Z")
 
 	event := &entities.Event{
 		ID:        eventJSON.ID,

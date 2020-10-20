@@ -192,12 +192,22 @@ export class EventModel{
             let events = []
             if (response != null){
                 for (const item of response) {
-                    let event = new Event(item.ID, item.theme, item.beginning, item.status)
+                    let event = new Event(item.ID, item.theme, this.toDate(item.beginning), item.status)
                     events.push(event)
                 }
             }
             resolve(events)
         })
+    }
+
+    toDate(ISOdate){ 
+        let date = ISOdate.split('T')
+        let time = date[1].split(':')
+        let hh = time[0]
+        let mm = time[1]
+
+
+        return date[0] + " " + hh + ":" + mm
     }
 
     /**

@@ -59,6 +59,8 @@ export class CCreateEventWindow{
                 candidates.split(',').forEach(elem => {
                     this.eventModel.setCandidateToEvent(elem, newEvent.ID)
                 })
+
+                this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)
             })
 
             this.createWindow.close()
