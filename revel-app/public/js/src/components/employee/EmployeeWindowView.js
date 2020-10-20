@@ -24,7 +24,7 @@ export class EmployeeWindowView{
           { "view": "text", "label": "Отчество", "name": "patronymic", "type": "text", labelWidth: labelWidth },
           { "view": "text", "label": "Должность", "name": "position", "type": "text", required: true, labelWidth: labelWidth },
           { "view": "text", "label": "Email", "name": "email", "type": "text", required: true, labelWidth: labelWidth },
-          { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required: true, pattern: { mask: "# ### ### ## ##", allow: /[0-9]/g }, labelWidth: labelWidth },
+          { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required: true, pattern: { mask: "# ###-###-##-##", allow: /[0-9]/g }, labelWidth: labelWidth },
           { "view": "button", "css": "webix_primary", "label": "Создать", "id": "createWindowButton" },
         ]
       };
@@ -118,7 +118,7 @@ export class EmployeeWindowView{
               { "view": "text", "label": "Отчество", "name": "patronymic", "type": "text", labelWidth: labelWidth },
               { "view": "text", "label": "Должность", "name": "position", "type": "text", required:true, labelWidth: labelWidth },
               { "view": "text", "label": "Email", "name": "email", "type": "text", required:true, labelWidth: labelWidth },
-              { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required:true, pattern: { mask: "# ### ### ## ##", allow: /[0-9]/g }, labelWidth: labelWidth },
+              { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required:true, pattern: { mask: "# ###-###-##-##", allow: /[0-9]/g }, labelWidth: labelWidth },
               { "view": "button", "css": "webix_primary", "label": "Изменить", "id": "updateWindowButton" }
             ]
           };

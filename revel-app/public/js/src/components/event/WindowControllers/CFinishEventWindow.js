@@ -101,15 +101,5 @@ export class CFinishEventWindow{
         }
         $$("finishCandidates").parse(candidates)
         return candidates
-        // this.eventModel.getCandidateIDByEventID(event.ID).then((IDs) => {
-        //     let candidates = []
-        //     IDs.forEach((id) => {
-        //         this.candidateModel.getCandidateByID(id).then((candidate) => {
-        //             candidates.push(candidate)
-        //         })
-        //     })
-        //     $$("finishCandidates").parse(candidates)
-        //     this.finishEvent(event, candidates)
-        // })
     }
 }

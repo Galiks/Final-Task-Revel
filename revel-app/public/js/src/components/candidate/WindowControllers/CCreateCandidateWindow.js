@@ -33,10 +33,6 @@ export class CCreateCandidateWindow{
                 return
             }
             let values = this.fetch()
-            // if (this.isEmptyString(values.firstname, values.lastname, values.email, values.phone)) {
-            //     webix.message("Один из параметров оказался пустым!")
-            //     return
-            // }
             this.candidateModel.createCandidate(values).then(()=>{
                 this.refreshDatatable()
                 this.window.close()

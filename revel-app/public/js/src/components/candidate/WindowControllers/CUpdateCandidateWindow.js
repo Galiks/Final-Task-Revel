@@ -34,11 +34,6 @@ export class CUpdateCandidateWindow{
                 // this.form.clear()
                 return
             }
-            // let values = this.fetch()
-            // if (this.isEmptyString(values.firstname, values.lastname, values.patronymic, values.email, values.phone)) {
-            //     webix.message("Один из параметров оказался пустым!")
-            //     return
-            // }
             this.candidateModel.updateCandidate(values).then(()=>{
                 this.window.close()
                 this.main.enable()    

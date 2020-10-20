@@ -251,15 +251,14 @@ export class EventWindowView{
         ]
       }
       let candidatesDatatable = {
-        // "data": candidates,
         "columns": [
           { "id": "ID", "header":"Номер", "sort":"number", "fillspace": true,},
-          { "id": "firstname", "header": "Имя",  },
-          { "id": "lastname", "header": "Фамилия",  },
-          { "id": "patronymic", "header": "Отчество",  },
-          { "id": "email", "header": "Email", "sort": "string" },
-          { "id": "phone", "header": "Телефон", "sort": "string", "fillspace": true,},
-          { "id": "status", "header": "Статус", "sort": "string", "fillspace": true, }
+          { "id": "firstname", "header": "Имя", "fillspace": true,  },
+          { "id": "lastname", "header": "Фамилия", "fillspace": true, },
+          { "id": "patronymic", "header": "Отчество", "fillspace": true, },
+          { "id": "email", "header": "Email", "fillspace": true,},
+          { "id": "phone", "header": "Телефон", "fillspace": true,},
+          { "id": "status", "header": "Статус", "fillspace": true, }
         ],
         "view": "datatable",
         "id":"finishCandidates"

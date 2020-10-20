@@ -26,8 +26,8 @@ export class CandidateTabView{
                 { "id": "lastname", "header": "Фамилия",  "fillspace": true},
                 { "id": "patronymic", "header": "Отчество", "fillspace": true },
                 { "id": "email", "header": "Email", "fillspace": true},
-                { "id": "phone", "header": "Телефон", "fillspace": true,},
-                { "id": "status", "header": "Статус", "fillspace": true, }
+                { "id": "phone", "header": "Телефон", "fillspace": true, "format":"1-11"},
+                { "id": "status", "header": "Статус", "fillspace": true}
             ],
             "view": "datatable",
             "height": 0,

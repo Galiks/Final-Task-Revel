@@ -48,10 +48,6 @@ export class CUpdateEventWindow{
                 return
             }
             let values = this.fetch()
-            // if (this.isEmptyString(values.theme, values.beginning, values.status)) {
-            //     webix.message("Один из параметров оказался пустым!")
-            //     return
-            // }
             let employees = $$("employeesMultiselect").getValue()
             let candidates = $$("candidatesMultiselect").getValue()
 

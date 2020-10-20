@@ -43,11 +43,6 @@ export class CCreateEventWindow{
                 return
             }
 
-            // if (this.isEmptyString(values.theme, values.beginning, values.status)) {
-            //     webix.message("Один из параметров оказался пустым!")
-            //     return
-            // }
-
             let values = this.fetch()
             let employees = $$("employeesMultiselect").getValue().split(',')
             if (employees.length == 0 || employees.length > 3 || employees[0] == ""){
@@ -69,18 +64,6 @@ export class CCreateEventWindow{
             }
 
             this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)
-
-            // this.eventModel.createEvent(values).then((newEvent)=>{
-            //     employees.split(',').forEach((employee)=>{
-            //         this.eventModel.setEmployeeToEvent(employee, newEvent.ID)
-            //     })
-
-            //     candidates.split(',').forEach(elem => {
-            //         this.eventModel.setCandidateToEvent(elem, newEvent.ID)
-            //     })
-
-            //     this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)
-            // })
 
             this.createWindow.close()
             this.mainTab.enable()

@@ -19,7 +19,7 @@ export class CandidateWindowView{
         { "view": "text", "label": "Имя", "name": "firstname", "type":"text", required:true, labelWidth:labelWidth },
         { "view": "text", "label": "Отчество", "name": "patronymic", "type":"text", labelWidth:labelWidth },
         { "view": "text", "label": "Email", "name": "email", "type":"text", required:true, labelWidth:labelWidth },
-        { "view": "text", "label": "Телефон", "name": "phone", "type":"text", required:true, labelWidth:labelWidth, pattern:{ mask:"# ### ### ## ##", allow:/[0-9]/g} },
+        { "view": "text", "label": "Телефон", "name": "phone", "type":"text", required:true, labelWidth:labelWidth, pattern:{ mask:"# ###-###-##-##", allow:/[0-9]/g} },
         { "view":"select", "label":"Статус", labelWidth:labelWidth, "name":"status", "options":[
           CANDIDATE_STATUS.empty,
           CANDIDATE_STATUS.invite,
@@ -124,7 +124,7 @@ export class CandidateWindowView{
             { "view": "text", "label": "Имя", "name": "firstname", "type":"text", required:true, labelWidth:labelWidth },
             { "view": "text", "label": "Отчество", "name": "patronymic", "type":"text", labelWidth:labelWidth },
             { "view": "text", "label": "Email", "name": "email", "type":"text", required:true, labelWidth:labelWidth },
-            { "view": "text", "label": "Телефон", "name": "phone", "type":"text", required:true, labelWidth:labelWidth, pattern:{ mask:"# ### ### ## ##", allow:/[0-9]/g} },
+            { "view": "text", "label": "Телефон", "name": "phone", "type":"text", required:true, labelWidth:labelWidth, pattern:{ mask:"# ###-###-##-##", allow:/[0-9]/g} },
             { "view":"select", "label":"Статус", labelWidth:labelWidth, "name":"status", "options":[
               CANDIDATE_STATUS.empty,
               CANDIDATE_STATUS.invite,

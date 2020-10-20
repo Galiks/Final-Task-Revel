@@ -121,7 +121,7 @@ func (controller *CEvent) DeleteEvent() revel.Result {
 		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }
 
 //CreateLinkEmployeeToEvent метод создания свяязи между сотрудником и мероприятием
@@ -136,7 +136,7 @@ func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }
 
 //CreateLinkCandidateToEvent метод создания связи между кандидатом и мероприятием
@@ -151,7 +151,7 @@ func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
 		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }
 
 //DeleteEmployeesFromEvent метод удаления сотрудников из мероприятия
@@ -164,7 +164,7 @@ func (controller *CEvent) DeleteEmployeesFromEvent() revel.Result {
 		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }
 
 // DeleteCandidatesFromEvent метод удаления связи между кандидатами и мероприятием

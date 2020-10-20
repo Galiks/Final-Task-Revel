@@ -20,7 +20,7 @@ export class EmployeeTabView{
                 { "id": "patronymic", "header": "Отчество", "fillspace": true },
                 { "id": "position", "header": "Должность", "fillspace": true },
                 { "id": "email", "header": "Email", "fillspace": true },
-                { "id": "phone", "header": "Телефон", "fillspace": true }
+                { "id": "phone", "header": "Телефон", "fillspace": true, "format":"1-11" }
             ],
             "view": "datatable",
             "height": 0,
