@@ -14,13 +14,13 @@ export class EmployeeTabView{
 
         return {
             "columns": [
-                { "id": "ID", "header":"Номер", "sort":"number"},
-                { "id": "firstname", "header": "Имя", "fillspace": true, "sort": "string" },
-                { "id": "lastname", "header": "Фамилия", "fillspace": true, "sort": "string" },
-                { "id": "patronymic", "header": "Отчество", "fillspace": true, "sort": "string" },
-                { "id": "position", "header": "Должность", "sort": "string" },
-                { "id": "email", "header": "Email", "sort": "string" },
-                { "id": "phone", "header": "Телефон", "sort": "string" }
+                { "id": "ID", "header":"Номер", "fillspace": true},
+                { "id": "firstname", "header": "Имя", "fillspace": true },
+                { "id": "lastname", "header": "Фамилия", "fillspace": true},
+                { "id": "patronymic", "header": "Отчество", "fillspace": true },
+                { "id": "position", "header": "Должность", "fillspace": true },
+                { "id": "email", "header": "Email", "fillspace": true },
+                { "id": "phone", "header": "Телефон", "fillspace": true }
             ],
             "view": "datatable",
             "height": 0,

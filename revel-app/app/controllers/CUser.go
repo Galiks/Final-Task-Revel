@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
 
 	"github.com/revel/revel"
@@ -49,8 +48,4 @@ func (controller *CUser) UpdateUser() revel.Result {
 //DeleteUser метод удаления пользователя
 func (controller *CUser) DeleteUser() revel.Result {
 	return nil
-}
-
-func (controller *CUser) fetchPost() (e entities.User, err error) {
-	return
 }

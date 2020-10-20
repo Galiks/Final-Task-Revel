@@ -11,8 +11,30 @@ export class EmployeeWindowView{
     viewCreateWindow(){
       let labelWidth = 100
 
+      const body = {
+        "autoheight": false,
+        "id": "createForm",
+        "view": "form",
+        rules: {
+          "email": webix.rules.isEmail,
+        },
+        "rows": [
+          { "view": "text", "label": "Фамилия", "name": "lastname", "type": "text", required: true, labelWidth: labelWidth, },
+          { "view": "text", "label": "Имя", "name": "firstname", "type": "text", required: true, labelWidth: labelWidth },
+          { "view": "text", "label": "Отчество", "name": "patronymic", "type": "text", labelWidth: labelWidth },
+          { "view": "text", "label": "Должность", "name": "position", "type": "text", required: true, labelWidth: labelWidth },
+          { "view": "text", "label": "Email", "name": "email", "type": "text", required: true, labelWidth: labelWidth },
+          { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required: true, pattern: { mask: "# ### ### ## ##", allow: /[0-9]/g }, labelWidth: labelWidth },
+          { "view": "button", "css": "webix_primary", "label": "Создать", "id": "createWindowButton" },
+        ]
+      };
+
+
+
         let createWindow = {
             view:"window",
+            move:true,
+            resize: true,
             height:400,
             width:300,
             head:{
@@ -22,23 +44,7 @@ export class EmployeeWindowView{
                   ]
             },
             position:"center",
-            body:{
-              "autoheight": false,
-              "id":"createForm",
-              "view": "form",
-              rules:{
-                "email":webix.rules.isEmail,
-              },
-              "rows": [
-                { "view": "text", "label": "Фамилия", "name": "lastname", "type":"text", required:true, labelWidth:labelWidth, },
-                { "view": "text", "label": "Имя", "name": "firstname", "type":"text", required:true, labelWidth:labelWidth },
-                { "view": "text", "label": "Отчество", "name": "patronymic", "type":"text", labelWidth:labelWidth},
-                { "view": "text", "label": "Должность", "name": "position", "type":"text", required:true, labelWidth:labelWidth },
-                { "view": "text", "label": "Email", "name": "email", "type":"text", required:true, labelWidth:labelWidth},
-                { "view": "text", "label": "Телефон", "name": "phone", "type":"text", required:true, pattern:{ mask:"# ### ### ## ##", allow:/[0-9]/g}, labelWidth:labelWidth },
-                { "view": "button", "css": "webix_primary", "label": "Создать", "id":"createWindowButton" },
-              ]
-            },
+            body:body,
             close: true,
             id: "createWindow"
           }
@@ -53,6 +59,8 @@ export class EmployeeWindowView{
         viewDeleteWindow(employee){
           let deleteWindow = {
             view:"window",
+            move:true,
+            resize: true,
             height: 300,
             width: 300,
             head:{
@@ -96,9 +104,30 @@ export class EmployeeWindowView{
 
           let labelWidth = 100
 
+          const body = {
+            "autoheight": false,
+            "view": "form",
+            rules: {
+              "email": webix.rules.isEmail,
+            },
+            "id": "updateForm",
+            "rows": [
+              { "view": "text", "label": "Номер", "name": "ID", "type": "number", "readonly": true, labelWidth: labelWidth, hidden: true },
+              { "view": "text", "label": "Фамилия", "name": "lastname", "type": "text", required:true, labelWidth: labelWidth },
+              { "view": "text", "label": "Имя", "name": "firstname", "type": "text", required:true, labelWidth: labelWidth },
+              { "view": "text", "label": "Отчество", "name": "patronymic", "type": "text", labelWidth: labelWidth },
+              { "view": "text", "label": "Должность", "name": "position", "type": "text", required:true, labelWidth: labelWidth },
+              { "view": "text", "label": "Email", "name": "email", "type": "text", required:true, labelWidth: labelWidth },
+              { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required:true, pattern: { mask: "# ### ### ## ##", allow: /[0-9]/g }, labelWidth: labelWidth },
+              { "view": "button", "css": "webix_primary", "label": "Изменить", "id": "updateWindowButton" }
+            ]
+          };
+
           let updateWindow = {
             view:"window",
             height:400,
+            move:true,
+            resize: true,
             width:300,
             head:{
                 view:"toolbar", cols:[
@@ -107,24 +136,7 @@ export class EmployeeWindowView{
                   ]
             },
             position:"center",
-            body:{
-              "autoheight": false,
-              "view": "form",
-              rules:{
-                "email":webix.rules.isEmail,
-              },
-              "id":"updateForm",
-              "rows": [
-                { "view":"text", "label":"Номер", "name":"ID", "type":"number", "readonly":true, labelWidth:labelWidth, hidden:true},
-                { "view": "text", "label": "Фамилия", "name": "lastname", "type":"text", labelWidth:labelWidth },
-                { "view": "text", "label": "Имя", "name": "firstname", "type":"text", labelWidth:labelWidth },
-                { "view": "text", "label": "Отчество", "name": "patronymic", "type":"text", labelWidth:labelWidth },
-                { "view": "text", "label": "Должность", "name": "position", "type":"text", labelWidth:labelWidth },
-                { "view": "text", "label": "Email", "name": "email", "type":"text", labelWidth:labelWidth },
-                { "view": "text", "label": "Телефон", "name": "phone", "type":"text", pattern:{ mask:"# ### ### ## ##", allow:/[0-9]/g}, labelWidth:labelWidth  },
-                { "view": "button", "css": "webix_primary", "label": "Изменить", "id":"updateWindowButton" }
-              ]
-            },
+            body:body,
             close: true,
             id: "updateWindow"
           }
@@ -135,6 +147,8 @@ export class EmployeeWindowView{
         viewAboutWindow(employee){
           let aboutWindow = {
             view:"window",
+            move:true,
+            resize: true,
             height:300,
             width:300,
             head:{

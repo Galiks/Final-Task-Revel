@@ -30,12 +30,6 @@ export class UserModel{
                     resolve(user)
                 }
             });
-            // for (let index = 0; index < this.users.values().length; index++) {
-            //     const user = this.users.values()[index];
-            //     if (user.login == login && user.password == password) {
-            //         resolve(user)
-            //     }
-            // }
         })
     }
 

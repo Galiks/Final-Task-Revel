@@ -30,19 +30,12 @@ export class CUpdateEmployeeWindow{
 
         $$("updateWindowButton").attachEvent("onItemClick", ()=>{
 
-            var form = $$("updateForm");
-            if (!form.validate()){
-                webix.message("Email имеет неверный формат!")
-                $$("updateForm").clear()
+            if (!this.form.validate()){
+                webix.message("Проверьте поля!")
                 return
             }
 
-            let values = this.fetch("updateForm")
-            if (this.isEmptyString(values.firstname, values.lastname, values.patronymic, values.position, values.email, values.phone)) {
-                webix.message("Один из параметров оказался пустым!")
-                $$("updateForm").clear()
-                return
-            }
+            let values = this.fetch()
             this.employeeModel.updateEmployee(values).then(()=>{
                 this.window.close()
                 this.main.enable()   
@@ -68,19 +61,5 @@ export class CUpdateEmployeeWindow{
      */
     parse(values){
         this.form.setValues(values)
-    }
-
-    /**
-     * Метод для проверки строк на пустоту
-     * @returns true/false
-     */
-    isEmptyString(){
-        for (let index = 0; index < arguments.length; index++) {
-            const element = arguments[index];
-            if (element.trim() == ''){
-                return true
-            }
-        }
-        return false
     }
 }

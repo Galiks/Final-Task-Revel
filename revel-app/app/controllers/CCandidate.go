@@ -64,7 +64,7 @@ func (controller *CCandidate) GetCandidates() revel.Result {
 	candidates, err := controller.candidateProvider.GetCandidates()
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(candidates)
 }
@@ -76,7 +76,7 @@ func (controller *CCandidate) GetCandidateByID() revel.Result {
 	candidate, err := controller.candidateProvider.GetCandidateByID(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(candidate)
 }
@@ -90,7 +90,7 @@ func (controller *CCandidate) GetCandidatesByEvent() revel.Result {
 	fmt.Println(&candidates)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(candidates)
 }
@@ -101,13 +101,13 @@ func (controller *CCandidate) CreateCandidate() revel.Result {
 	err := json.Unmarshal(controller.Params.JSON, candidate)
 	if err != nil {
 		fmt.Println("Unmarshalling: ", err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	controller.candidateProvider = &providers.PCandidate{}
 	result, err := controller.candidateProvider.CreateCandidate(candidate)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(result)
 }
@@ -118,13 +118,13 @@ func (controller *CCandidate) UpdateCandidate() revel.Result {
 	err := json.Unmarshal(controller.Params.JSON, candidate)
 	if err != nil {
 		fmt.Println("Unmarshalling: ", err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	controller.candidateProvider = &providers.PCandidate{}
 	result, err := controller.candidateProvider.UpdateCandidate(candidate)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(result)
 }
@@ -137,7 +137,7 @@ func (controller *CCandidate) DeleteCandidate() revel.Result {
 	err := controller.candidateProvider.DeleteCandidate(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }

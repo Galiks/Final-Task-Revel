@@ -65,7 +65,7 @@ func (controller *CEvent) CreateEvent() revel.Result {
 	err := json.Unmarshal(controller.Params.JSON, eventJSON)
 	if err != nil {
 		fmt.Println("Unmarshalling: ", err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	normalTime, err := time.Parse(time.RFC3339, eventJSON.Beginning+":00Z")
 	event := &entities.Event{
@@ -79,7 +79,7 @@ func (controller *CEvent) CreateEvent() revel.Result {
 	result, err := controller.eventProvider.CreateEvent(event)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	fmt.Println("Create result: ", result)
 	return controller.RenderJSON(result)
@@ -92,7 +92,7 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 	err := json.Unmarshal(controller.Params.JSON, eventJSON)
 	if err != nil {
 		fmt.Println("Unmarshalling: ", err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	normalTime, err := time.Parse(time.RFC3339, eventJSON.Beginning+":00Z")
 
@@ -106,7 +106,7 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 	result, err := controller.eventProvider.UpdateEvent(event)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(result)
 }
@@ -119,7 +119,7 @@ func (controller *CEvent) DeleteEvent() revel.Result {
 	err := controller.eventProvider.DeleteEvent(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.Render()
 }
@@ -134,7 +134,7 @@ func (controller *CEvent) CreateLinkEmployeeToEvent() revel.Result {
 	err := controller.eventProvider.CreateLinkEmployeeToEvent(IDEmployee, IDEvent)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.Render()
 }
@@ -149,7 +149,7 @@ func (controller *CEvent) CreateLinkCandidateToEvent() revel.Result {
 	err := controller.eventProvider.CreateLinkCandidateToEvent(IDCandidate, IDEvent)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.Render()
 }
@@ -162,7 +162,7 @@ func (controller *CEvent) DeleteEmployeesFromEvent() revel.Result {
 	err := controller.eventProvider.DeleteEmployeesFromEvent(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.Render()
 }
@@ -175,7 +175,7 @@ func (controller *CEvent) DeleteCandidatesFromEvent() revel.Result {
 	err := controller.eventProvider.DeleteCandidatesFromEvent(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }

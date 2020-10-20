@@ -55,6 +55,8 @@ export class EventWindowView{
       let createWindow = {
             view:"window",
             height:300,
+            move:true,
+            resize: true,
             width:1100,
             head:{
                 view:"toolbar", cols:[
@@ -74,6 +76,8 @@ export class EventWindowView{
     viewDeleteWindow(event){
           let deleteWindow = {
             view:"window",
+            move:true,
+            resize: true,
             height: 250,
             width: 300,
             head:{
@@ -125,6 +129,8 @@ export class EventWindowView{
       
       let updateWindow = {
             view:"window",
+            move:true,
+            resize: true,
             height:300,
             width:1100,
             head:{
@@ -206,6 +212,8 @@ export class EventWindowView{
       }
       let aboutWindow = {
             view:"window",
+            move:true,
+            resize: true,
             height:500,
             width:1100,
             head:{
@@ -256,8 +264,11 @@ export class EventWindowView{
         "view": "datatable",
         "id":"finishCandidates"
       }
+
       let finishWindow = {
         view:"window",
+        move:true,
+        resize: true,
         height:500,
         width:1100,
         head:{

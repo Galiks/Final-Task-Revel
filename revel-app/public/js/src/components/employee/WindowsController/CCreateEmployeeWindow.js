@@ -28,18 +28,16 @@ export class CCreateEmployeeWindow{
         })
 
         $$("createWindowButton").attachEvent("onItemClick", ()=>{
-
-            var form = $$("createForm");
-            if (!form.validate()){
-                webix.message("Email имеет неверный формат!")
-                $$("createForm").clear()
+            if (!this.form.validate()){
+                webix.message("Проверьте поля!")
+                // $$("createForm").clear()
                 return
             }
-            let values = this.fetch("createForm")
-            if (this.isEmptyString(values.firstname, values.lastname, values.position, values.email, values.phone)) {
-                webix.message("Один из параметров оказался пустым!")
-                return
-            }
+            let values = this.fetch()
+            // if (this.isEmptyString(values.firstname, values.lastname, values.position, values.email, values.phone)) {
+            //     webix.message("Один из параметров оказался пустым!")
+            //     return
+            // }
             this.employeeModel.createEmployee(values).then(()=>{
                 this.refreshDatatable()
                 this.window.close()

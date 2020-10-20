@@ -25,12 +25,12 @@ export class CDeleteCandidateWindow{
         })
 
         $$("deleteWindowButtonYes").attachEvent("onItemClick", () =>{
-            this.candidateModel.deleteCandidate(candidate.ID).then(()=>{
-                this.window.close()
+            this.candidateModel.deleteCandidate(candidate.ID)
+            this.window.close()
             this.main.enable()
-                this.refreshDatatable()
-            })
+            this.refreshDatatable()
         })
+
         $$("deleteWindowButtonNo").attachEvent("onItemClick", () =>{
             this.window.close()
             this.main.enable()

@@ -21,7 +21,7 @@ export class CCreateEventWindow{
     /**
      * Метод для привязки событий к окну создания мероприятия
      */
-    attachEventOnCreateWindow(){
+    async attachEventOnCreateWindow(){
 
         this.createWindow.attachEvent("onHide", ()=> {
             this.createWindow.close()
@@ -37,7 +37,7 @@ export class CCreateEventWindow{
             this.mainTab.enable()
         })
 
-        $$("createWindowButton").attachEvent("onItemClick", ()=>{
+        $$("createWindowButton").attachEvent("onItemClick", async ()=>{
             if (!this.createForm.validate()) {
                 webix.message("Один из параметров оказался пустым!")
                 return
@@ -49,19 +49,38 @@ export class CCreateEventWindow{
             // }
 
             let values = this.fetch()
-            let employees = $$("employeesMultiselect").getValue()
-            let candidates = $$("candidatesMultiselect").getValue()
-            this.eventModel.createEvent(values).then((newEvent)=>{
-                employees.split(',').forEach((employee)=>{
-                    this.eventModel.setEmployeeToEvent(employee, newEvent.ID)
-                })
+            let employees = $$("employeesMultiselect").getValue().split(',')
+            if (employees.length == 0 || employees.length > 3 || employees[0] == ""){
+                webix.message("Число сотрудников должно быть от 1 до 3!")
+                return
+            }
+            let candidates = $$("candidatesMultiselect").getValue().split(',')
 
-                candidates.split(',').forEach(elem => {
-                    this.eventModel.setCandidateToEvent(elem, newEvent.ID)
-                })
+            let newEvent = await this.eventModel.createEvent(values)
 
-                this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)
-            })
+            for (let index = 0; index < employees.length; index++) {
+                const id = employees[index];
+                await this.eventModel.setEmployeeToEvent(id, newEvent.ID)
+            }
+
+            for (let index = 0; index < candidates.length; index++) {
+                const id = candidates[index];
+                await this.eventModel.setCandidateToEvent(id, newEvent.ID)
+            }
+
+            this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)
+
+            // this.eventModel.createEvent(values).then((newEvent)=>{
+            //     employees.split(',').forEach((employee)=>{
+            //         this.eventModel.setEmployeeToEvent(employee, newEvent.ID)
+            //     })
+
+            //     candidates.split(',').forEach(elem => {
+            //         this.eventModel.setCandidateToEvent(elem, newEvent.ID)
+            //     })
+
+            //     this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)
+            // })
 
             this.createWindow.close()
             this.mainTab.enable()

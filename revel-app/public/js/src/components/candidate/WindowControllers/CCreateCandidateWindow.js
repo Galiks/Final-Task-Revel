@@ -28,15 +28,15 @@ export class CCreateCandidateWindow{
 
         $$("createWindowButton").attachEvent("onItemClick", ()=>{
             if (!this.form.validate()){
-                webix.message("Email имеет неверный формат!")
+                webix.message("Проверьте поля!")
                 this.form.clear()
                 return
             }
             let values = this.fetch()
-            if (this.isEmptyString(values.firstname, values.lastname, values.email, values.phone)) {
-                webix.message("Один из параметров оказался пустым!")
-                return
-            }
+            // if (this.isEmptyString(values.firstname, values.lastname, values.email, values.phone)) {
+            //     webix.message("Один из параметров оказался пустым!")
+            //     return
+            // }
             this.candidateModel.createCandidate(values).then(()=>{
                 this.refreshDatatable()
                 this.window.close()

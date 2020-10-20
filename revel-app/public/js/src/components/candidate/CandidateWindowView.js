@@ -112,26 +112,27 @@ export class CandidateWindowView{
        * @returns
        */
       viewUpdateWindow(){
-
+        let labelWidth = 90
+        
         let body = {
           "autoheight": false,
           "view": "form",
           "id":"updateForm",
           "rows": [
             { "view":"text", "label":"Номер", "name":"ID", "type":"number", "readonly":true, hidden:true},
-            { "view": "text", "label": "Фамилия", "name": "lastname", "type":"text" },
-            { "view": "text", "label": "Имя", "name": "firstname", "type":"text" },
-            { "view": "text", "label": "Отчество", "name": "patronymic", "type":"text" },
-            { "view": "text", "label": "Email", "name": "email", "type":"text" },
-            { "view": "text", "label": "Телефон", "name": "phone", "type":"text" },
-            { view:"select", label:"Статус", name:"status", options:[
-                CANDIDATE_STATUS.empty,
-                CANDIDATE_STATUS.invite,
-                CANDIDATE_STATUS.showUp,
-                CANDIDATE_STATUS.dontShowUp,
-                CANDIDATE_STATUS.wait,
-                CANDIDATE_STATUS.success,
-                CANDIDATE_STATUS.unsuccess
+            { "view": "text", "label": "Фамилия", "name": "lastname", "type":"text", required:true, labelWidth:labelWidth },
+            { "view": "text", "label": "Имя", "name": "firstname", "type":"text", required:true, labelWidth:labelWidth },
+            { "view": "text", "label": "Отчество", "name": "patronymic", "type":"text", labelWidth:labelWidth },
+            { "view": "text", "label": "Email", "name": "email", "type":"text", required:true, labelWidth:labelWidth },
+            { "view": "text", "label": "Телефон", "name": "phone", "type":"text", required:true, labelWidth:labelWidth, pattern:{ mask:"# ### ### ## ##", allow:/[0-9]/g} },
+            { "view":"select", "label":"Статус", labelWidth:labelWidth, "name":"status", "options":[
+              CANDIDATE_STATUS.empty,
+              CANDIDATE_STATUS.invite,
+              CANDIDATE_STATUS.showUp,
+              CANDIDATE_STATUS.dontShowUp,
+              CANDIDATE_STATUS.wait,
+              CANDIDATE_STATUS.success,
+              CANDIDATE_STATUS.unsuccess
             ] },
             { "view": "button", "css": "webix_primary", "label": "Изменить", "id":"updateWindowButton" }
           ]

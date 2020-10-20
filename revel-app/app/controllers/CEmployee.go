@@ -32,7 +32,7 @@ func (controller *CEmployee) GetEmployees() revel.Result {
 	employees, err := controller.employeeProvider.GetEmployees()
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(employees)
 }
@@ -44,7 +44,7 @@ func (controller *CEmployee) GetEmployeeByID() revel.Result {
 	employee, err := controller.employeeProvider.GetEmployeeByID(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(employee)
 }
@@ -57,7 +57,7 @@ func (controller *CEmployee) GetEmployeesByEvent() revel.Result {
 	employees, err := controller.employeeProvider.GetEmployeesByEventID(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(employees)
 }
@@ -68,7 +68,7 @@ func (controller *CEmployee) CreateEmployee() revel.Result {
 	err := json.Unmarshal(controller.Params.JSON, employee)
 	if err != nil {
 		fmt.Println("Unmarshalling: ", err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	controller.employeeProvider = &providers.PEmployee{}
 	result, err := controller.employeeProvider.CreateEmployee(employee)
@@ -82,13 +82,13 @@ func (controller *CEmployee) UpdateEmployee() revel.Result {
 	err := json.Unmarshal(controller.Params.JSON, employee)
 	if err != nil {
 		fmt.Println("Unmarshalling: ", err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 	controller.employeeProvider = &providers.PEmployee{}
 	result, err := controller.employeeProvider.UpdateEmployee(employee)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
 
 	return controller.RenderJSON(result)
@@ -102,7 +102,7 @@ func (controller *CEmployee) DeleteEmployee() revel.Result {
 	err := controller.employeeProvider.DeleteEmployee(id)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return controller.RenderJSON(err)
 	}
-	return controller.Render()
+	return controller.RenderJSON(nil)
 }

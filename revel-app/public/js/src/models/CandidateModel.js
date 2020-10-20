@@ -12,7 +12,19 @@ export class CandidateModel{
      */
     async getCandidates(){
         let request = await fetch(`/candidate/all`)
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
+
         let response = await request.json()
+        
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
 
         return new Promise((resolve, reject)=>{
             let candidates = []
@@ -33,20 +45,20 @@ export class CandidateModel{
      */
     async getCandidateByID(id){
         let request = await fetch(`/candidate/${id}`)
-        let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
+        let response = await request.json()
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
         return new Promise((resolve, reject)=>{
-            // let candidates = []
-            // if (response != null) {
-            //     for (const item of response) {
-            //         let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
-            //         candidates.push(candidate)
-            //     }
-            // }
             resolve(response)
         })
     }
@@ -90,12 +102,20 @@ export class CandidateModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
+        let response = await request.json()
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
         return new Promise((resolve, reject)=>{
-            resolve(request.json())
+            resolve(response)
         })
     }
 
@@ -121,12 +141,20 @@ export class CandidateModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
+        let response = await request.json()
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
         return new Promise((resolve, reject)=>{
-            resolve(request.json())
+            resolve(response)
         })
     }
 
@@ -138,23 +166,9 @@ export class CandidateModel{
      */
     async updateCandidateStatus(candidate, status){
         candidate.status = status
-        await this.updateCandidate(candidate).then((updatingCandidate)=>{
+        return this.updateCandidate(candidate).then((updatingCandidate)=>{
             return updatingCandidate
         })
-        // return new Promise((resolve, reject) => {
-        //     this.getCandidateByID(candidateID).then((candidate)=>{
-        //         return candidate
-        //     })
-        //     .then((candidate)=>{
-        //         candidate.status = status
-        //         this.updateCandidate(candidate).then((updatingCandidate)=>{
-        //             return updatingCandidate
-        //         })
-        //     })
-        //     .then((updatingCandidate)=>{
-        //         resolve(updatingCandidate)
-        //     })
-        // })
     }
 
     /**
@@ -163,21 +177,19 @@ export class CandidateModel{
      */
     async deleteCandidate(id){
         let request = await fetch(`/candidate/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                
-            })
+            method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
     }
 }

@@ -43,11 +43,15 @@ export class CUpdateEventWindow{
         this.parse(event)
 
         $$("updateWindowButton").attachEvent("onItemClick", async ()=>{
-            let values = this.fetch()
-            if (this.isEmptyString(values.theme, values.beginning, values.status)) {
+            if (!this.updateForm.validate()) {
                 webix.message("Один из параметров оказался пустым!")
                 return
             }
+            let values = this.fetch()
+            // if (this.isEmptyString(values.theme, values.beginning, values.status)) {
+            //     webix.message("Один из параметров оказался пустым!")
+            //     return
+            // }
             let employees = $$("employeesMultiselect").getValue()
             let candidates = $$("candidatesMultiselect").getValue()
 
@@ -82,6 +86,7 @@ export class CUpdateEventWindow{
      * @param {*} values значения
      */
     parse(values){
+        values.beginning = values.beginning.replace(" ", "T")
         this.updateForm.setValues(values)
     }
 

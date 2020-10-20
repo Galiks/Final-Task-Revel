@@ -12,13 +12,27 @@ export class EmployeeModel{
      */
     async getEmloyees() {
         let request = await fetch(`/employee/all`)
-        let response = await request.json()
+
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
 
         return new Promise((resolve, reject)=>{
             let employees = []
-            for (const item of response) {
-                let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
-                employees.push(employee)
+            if (response != null) {
+                for (const item of response) {
+                    let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
+                    employees.push(employee)
+                }
             }
             resolve(employees)
         })
@@ -31,13 +45,13 @@ export class EmployeeModel{
      * @returns {Array} Массив объектов {ID, VALUE}
      */
     async getEmployeesLikeIDValue(){      
-            return this.getEmloyees().then((employees) =>{
-                let result = []
-                employees.forEach(employee => {
-                    result.push({id:employee.ID, value:employee.position + ' ' + employee.lastname + ' ' + employee.firstname + ' ' + employee.patronymic})
-                });
-                return result
-            })
+        return this.getEmloyees().then((employees) =>{
+            let result = []
+            employees.forEach(employee => {
+                result.push({id:employee.ID, value:employee.position + ' ' + employee.lastname + ' ' + employee.firstname + ' ' + employee.patronymic})
+            });
+            return result
+        })
     }
 
     /**
@@ -47,19 +61,21 @@ export class EmployeeModel{
      */
     async getEmployeeByID(id) {
         let request = await fetch(`employee/${id}`)
-        let response = await request.json()
-        if (response.Err != null){
-            webix.message("ОШИБКА");
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
-        return new Promise((resolve, reject)=>{
-            let employees = []
-            for (const item of response) {
-                let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
-                employees.push(employee)
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
             }
-            resolve(employees)
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve(response)
         })
     }
 
@@ -85,13 +101,20 @@ export class EmployeeModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
-        
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
 
         return new Promise((resolve, reject)=>{
-            resolve(request.json())
+            resolve(response)
         })
     }
 
@@ -118,12 +141,20 @@ export class EmployeeModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
         return new Promise((resolve, reject)=>{
-            resolve(request.json())
+            resolve(response)
         })
     }
 
@@ -133,21 +164,19 @@ export class EmployeeModel{
      */
     async deleteEmployee(id){
         let request = await fetch(`/employee/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                
-            })
+            method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
             return
         }
 
-        return new Promise((resolve, reject)=>{
-            resolve()
-        })
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
     }
 }

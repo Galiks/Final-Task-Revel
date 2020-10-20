@@ -27,6 +27,15 @@ export class EventModel{
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
     }
 
@@ -36,7 +45,19 @@ export class EventModel{
      */
     async getCandidatesByEvent(eventID){
         let request = await fetch(`/candidate/event/${eventID}`)
-        let response = await request.json()
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
         return new Promise((resolve, reject)=>{
             if (response != null){
                 let candidates = []
@@ -67,6 +88,15 @@ export class EventModel{
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
     }
 
@@ -76,7 +106,18 @@ export class EventModel{
      */
     async getEmployeesByEvent(eventID){
         let request = await fetch(`/employee/event/${eventID}`)
-        let response = await request.json()
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
         return new Promise((resolve, reject)=>{
             let employees = []
             if (response != null){
@@ -154,10 +195,6 @@ export class EventModel{
             const id = IDs[index];
             await this.setCandidateToEvent(Number(id), Number(eventID))
         }
-
-        // candidateIDs.split(',').forEach((id)=>{
-        //     await this.setCandidateToEvent(Number(id), Number(eventID))
-        // })
     }
 
     /**
@@ -173,11 +210,6 @@ export class EventModel{
             const id = IDs[index];
             await this.setEmployeeToEvent(Number(id), Number(eventID))
         }
-
-
-        // employeeIDs.split(',').forEach((id)=>{
-        //     await this.setEmployeeToEvent(Number(id), Number(eventID))
-        // })
     }
 
     /**
@@ -186,7 +218,18 @@ export class EventModel{
      */
     async getEvents() {
         let request = await fetch(`event/all`)
-        let response = await request.json()
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
 
         return new Promise((resolve, reject)=>{
             let events = []
@@ -217,10 +260,17 @@ export class EventModel{
      */
     async getEventByID(id) {
         let request = await fetch(`/event/${id}`);
-        let response = await request.json()
-        if (response.Err != null){
+        if (request.status != 200){
             webix.message("ОШИБКА");
             return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
 
         return new Promise((resolve, reject)=>{
@@ -245,18 +295,21 @@ export class EventModel{
                 status:event.status
             })
         })
-        let response = request.json()
         if (request.status != 200){
             webix.message("ОШИБКА");
             return
         }
-        else{
-            //let response = request.json()
-            return new Promise((resolve, reject)=>{
-                //let event = new Event(response.ID, response.theme, response.beginning, response.status)
-                resolve(response)
-            })
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
+        return new Promise((resolve, reject)=>{
+            resolve(response)        
+        })
     }
 
     /**
@@ -281,7 +334,14 @@ export class EventModel{
             webix.message("ОШИБКА");
             return
         }
-        let response = request.json()
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
 
         return new Promise((resolve, reject)=>{
             resolve(response)
@@ -294,17 +354,19 @@ export class EventModel{
      */
     async deleteEvent(id) {
         let request = await fetch(`/event/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                
-            })
+            method: 'DELETE'
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
             return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
     }
 
@@ -314,16 +376,19 @@ export class EventModel{
      */
     async deleteCandidateEventByEventID(id){
         let request = await fetch(`/event/${id}/candidate`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                
-            })
+            method: 'DELETE'
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
     }
 
@@ -333,17 +398,19 @@ export class EventModel{
      */
     async deleteEmployeeEventByEventID(id){
         let request = await fetch(`/event/${id}/employee`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                
-            })
+            method: 'DELETE'
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
             return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
         }
     }
 }
