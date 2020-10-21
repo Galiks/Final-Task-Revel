@@ -85,18 +85,4 @@ export class CUpdateEventWindow{
         values.beginning = values.beginning.replace(" ", "T")
         this.updateForm.setValues(values)
     }
-
-    /**
-     * Метод для проверки строк на пустоту
-     * @returns true/false
-     */
-    isEmptyString(){
-        for (let index = 0; index < arguments.length; index++) {
-            const element = arguments[index];
-            if (element.trim() == ''){
-                return true
-            }
-        }
-        return false
-    }
 }

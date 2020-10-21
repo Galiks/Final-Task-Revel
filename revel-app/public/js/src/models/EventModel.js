@@ -16,14 +16,7 @@ export class EventModel{
      */
     async setCandidateToEvent(candidateID, eventID){
         let request = await fetch(`/event/${eventID}/candidate/${candidateID}`,{
-            method: 'PUT',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                IDEntity : Number(candidateID),
-                IDEvent: Number(eventID)
-            })
+            method: 'PUT'
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
@@ -77,14 +70,7 @@ export class EventModel{
      */
     async setEmployeeToEvent(employeeID, eventID){
         let request = await fetch(`/event/${eventID}/employee/${employeeID}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type':'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                IDEntity : Number(employeeID),
-                IDEvent: Number(eventID)
-            })
+            method: 'PUT'
         })
         if (request.status != 200){
             webix.message("ОШИБКА");
@@ -399,6 +385,24 @@ export class EventModel{
     async deleteEmployeeEventByEventID(id){
         let request = await fetch(`/event/${id}/employee`, {
             method: 'DELETE'
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА");
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+    }
+
+    async updateCandidateStatusToFinishedEvent(candidateID, eventID){
+        let request = await fetch(`/event/${eventID}/candidate/${candidateID}`,{
+            method: 'POST',
         })
         if (request.status != 200){
             webix.message("ОШИБКА");

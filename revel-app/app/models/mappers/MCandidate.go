@@ -253,14 +253,25 @@ func (m *MCandidate) Update(candidate *entities.Candidate) (c *entities.Candidat
 		candidate.ID)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return nil, err
 	}
 
 	c, err = m.SelectByID(candidate.ID)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return nil, err
 	}
+
+	fmt.Println("UPDATING CandidateToEvent: ")
+
+	query = `UPDATE public."CandidateEvent"
+	SET "id_candidateStatus" = (SELECT id
+							FROM public."CandidatesStatus"
+							WHERE "Status" = $1)
+	WHERE id_candidate = $2
+	AND "candidatesStatusValue" is null`
+
+	_, err = db.Exec(query, c.Status, c.ID)
 
 	return c, nil
 }

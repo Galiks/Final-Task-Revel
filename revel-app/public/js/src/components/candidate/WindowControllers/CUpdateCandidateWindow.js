@@ -31,9 +31,9 @@ export class CUpdateCandidateWindow{
         $$("updateWindowButton").attachEvent("onItemClick", ()=>{
             if (!this.form.validate()){
                 webix.message("Проверьте поля!")
-                // this.form.clear()
                 return
             }
+            let values = this.fetch()
             this.candidateModel.updateCandidate(values).then(()=>{
                 this.window.close()
                 this.main.enable()    
@@ -61,19 +61,5 @@ export class CUpdateCandidateWindow{
      */
     parse(values){
         this.form.setValues(values)
-    }
-
-    /**
-     * Метод для проверки пустых строк
-     * @returns true/false
-     */
-    isEmptyString(){
-        for (let index = 0; index < arguments.length; index++) {
-            const element = arguments[index];
-            if (element.trim() == ''){
-                return true
-            }
-        }
-        return false
     }
 }

@@ -53,5 +53,5 @@ export const CANDIDATE_STATUS = {
     dontShowUp: "Не явился",
     wait: "Ожидает результат",
     success: "Успешно",
-    unsuccess: "Неуспешно"
+    unsuccess: "Не успешно"
 }

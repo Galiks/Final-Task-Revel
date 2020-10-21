@@ -19,6 +19,7 @@ PUT     /event/:eventID/employee/:employeeID    CEvent.CreateLinkEmployeeToEvent
 PUT     /event/:eventID/candidate/:candidateID  CEvent.CreateLinkCandidateToEvent
 DELETE  /event/:id/employee                     CEvent.DeleteEmployeesFromEvent
 DELETE  /event/:id/candidate                    CEvent.DeleteCandidatesFromEvent
+POST    /event/:eventID/candidate/:candidateID  CEvent.SetCandidateStatusToFinishedEvent
 
 # EMPLOYEE
 GET     /employee/all                           CEmployee.GetEmployees

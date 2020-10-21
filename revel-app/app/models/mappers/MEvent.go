@@ -209,6 +209,48 @@ func (m *MEvent) Delete(ID int64) (err error) {
 	return nil
 }
 
+// UpdateCandidateStatusToFinishedEvent обновляет статус кандидата в таблице связи между кандидатом и мероприятием
+func (m *MEvent) UpdateCandidateStatusToFinishedEvent(IDcandidate int64, IDevent int64) error {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		panic(err)
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("UpdateCandidateStatusToFinishedEvent : IDCandidate: ", IDcandidate, " IDEvent: ", IDevent)
+
+	query := `SELECT "id_candidateStatus"
+	FROM public."CandidateEvent"
+	WHERE "id_candidate" = $1
+	AND "id_event" = $2;`
+
+	var idCandidateStatus int
+
+	err = db.QueryRow(query, IDcandidate, IDevent).Scan(&idCandidateStatus)
+
+	fmt.Println("First query result: ", idCandidateStatus)
+
+	query = `UPDATE public."CandidateEvent"
+	SET "candidatesStatusValue" = (SELECT "Status"
+							FROM public."CandidatesStatus"
+							WHERE id = $1)
+	WHERE "id_candidate" = $2
+	AND "id_event" = $3;`
+
+	returnQuery, err := db.Exec(query, idCandidateStatus, IDcandidate, IDevent)
+
+	fmt.Println("Second query result: ", returnQuery)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //InsertEmployeeToEvent связывание сотрудника и мероприятия
 func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err error) {
 	connector, err := helpers.GetConnector()

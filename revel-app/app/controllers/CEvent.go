@@ -113,10 +113,27 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 
 //DeleteEvent метод удаления мероприятия
 func (controller *CEvent) DeleteEvent() revel.Result {
-	fmt.Println("DeleteEvent()")
+	fmt.Println("DeleteEvent")
 	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
 	controller.eventProvider = &providers.PEvent{}
 	err := controller.eventProvider.DeleteEvent(id)
+	if err != nil {
+		fmt.Println(err)
+		return controller.RenderJSON(err)
+	}
+	return controller.RenderJSON(nil)
+}
+
+//SetCandidateStatusToFinishedEvent метод для обновления статуса кандидата в таблице связи между кандидатом и мероприятием
+func (controller *CEvent) SetCandidateStatusToFinishedEvent() revel.Result {
+	fmt.Println("SetCandidateStatusToFinishedEvent")
+	IDEvent, _ := strconv.ParseInt(controller.Params.Get("eventID"), 10, 64)
+	IDCandidate, _ := strconv.ParseInt(controller.Params.Get("candidateID"), 10, 64)
+
+	fmt.Println("SetCandidateStatusToFinishedEvent: IDCandidate: ", IDCandidate, " IDEvent: ", IDEvent)
+
+	controller.eventProvider = &providers.PEvent{}
+	err := controller.eventProvider.SetCandidateStatusToFinishedEvent(IDCandidate, IDEvent)
 	if err != nil {
 		fmt.Println(err)
 		return controller.RenderJSON(err)

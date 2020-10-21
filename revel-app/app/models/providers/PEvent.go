@@ -36,6 +36,11 @@ func (e *PEvent) DeleteEvent(ID int64) (err error) {
 	return e.eventMapper.Delete(ID)
 }
 
+//SetCandidateStatusToFinishedEvent метод для обновления статуса кандидата в таблице связи между кандидатом и мероприятием
+func (e *PEvent) SetCandidateStatusToFinishedEvent(IDcandidate int64, IDevent int64) error {
+	return e.eventMapper.UpdateCandidateStatusToFinishedEvent(IDcandidate, IDevent)
+}
+
 //CreateLinkEmployeeToEvent метод создания связи между сотрудником и мероприятием
 func (e *PEvent) CreateLinkEmployeeToEvent(IDEmployee int64, IDEvent int64) (err error) {
 	return e.eventMapper.InsertEmployeeToEvent(IDEmployee, IDEvent)

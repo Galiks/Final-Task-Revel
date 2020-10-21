@@ -54,13 +54,14 @@ export class CFinishEventWindow{
      * @param {Event} event объект класса Event
      * @param {Candidate[]} candidates массив объектов класса Candidate
      */
-    finishEvent(event, candidates) {
+    async finishEvent(event, candidates) {
         let flagOnCandidateStatus = true;
         if ($$("finishWindowButton").isEnabled()) {
             if (event.status == EVENT_STATUS.finished) {
 
                 candidates.every(element => {
-                    if (element.status != CANDIDATE_STATUS.wait && element.status != CANDIDATE_STATUS.dontShowUp) {
+                    if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.dontShowUp) {
+                        webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не явился")
                         $$("finishWindowButton").disable();
                         flagOnCandidateStatus = false;
                         return false;
@@ -70,12 +71,23 @@ export class CFinishEventWindow{
                 //Если кандидат не "явился", то "не успешно"
                 if (flagOnCandidateStatus) {
                     event.status = EVENT_STATUS.archive;
-                    this.eventModel.updateEvent(event).then((updatingEvent) => {
-                        this.refreshDatatable("events");
-                        this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.empty)
-                        this.finishWindow.close()
-                        this.mainTab.enable()
-                    });
+                    event.beginning = event.beginning.replace(" ", "T")
+                    let updatingEvent = await this.eventModel.updateEvent(event)
+                                        
+                    for (let index = 0; index < candidates.length; index++) {
+                        const candidate = candidates[index];
+                        await this.eventModel.updateCandidateStatusToFinishedEvent(candidate.ID, updatingEvent.ID)
+                    }
+                    this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.empty)
+                    this.refreshDatatable("events");
+                    this.finishWindow.close()
+                    this.mainTab.enable()
+                    // this.eventModel.updateEvent(event).then((updatingEvent) => {
+                    //     this.refreshDatatable("events");
+                    //     this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.empty)
+                    //     this.finishWindow.close()
+                    //     this.mainTab.enable()
+                    // });
                 }
                 else {
                     webix.message("Условие не выполнилось: кандидаты не завершили мероприятие");

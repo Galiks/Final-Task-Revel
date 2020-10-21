@@ -143,6 +143,12 @@ export class CEventWindow{
         this.eventModel.getCandidatesByEvent(Number(eventID)).then((candidates)=>{
             return candidates
         }).then((candidates)=>{
+            for (let index = 0; index < candidates.length; index++) {
+                const candidate = candidates[index];
+                this.candidateModel.updateCandidateStatus(candidate, status).then(()=>{
+                    
+                })
+            }
             candidates.forEach(element => {
                 this.candidateModel.updateCandidateStatus(element, status).then((result)=>{
                     return result
@@ -150,14 +156,6 @@ export class CEventWindow{
             });
             this.refreshDatatable("candidates")
         })
-        // let candidateIDsEvent = this.eventModel.getCandidateIDByEventID(Number(eventID));
-        // candidateIDsEvent.then((IDs) => {
-        //     IDs.forEach(candidateID => {
-        //         this.candidateModel.updateCandidateStatus(candidateID, status).then(() => {
-        //             this.refreshDatatable("candidates")
-        //         });
-        //     });
-        // });
     }
 }
 
