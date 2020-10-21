@@ -173,9 +173,6 @@ func (m *MEmployee) SelectByID(ID int64) (e *entities.Employee, err error) {
 	row, err := db.Query(query, ID)
 	if err != nil {
 		fmt.Println(err)
-		return
-	}
-	if err != nil {
 		return nil, err
 	}
 

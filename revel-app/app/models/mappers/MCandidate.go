@@ -213,13 +213,13 @@ func (m *MCandidate) Insert(candidate *entities.Candidate) (c *entities.Candidat
 		candidateSQL.Status).Scan(&id)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return nil, err
 	}
 
 	c, err = m.SelectByID(id)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return nil, err
 	}
 
 	return c, nil

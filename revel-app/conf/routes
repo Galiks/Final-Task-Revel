@@ -37,6 +37,15 @@ PUT     /candidate                              CCandidate.CreateCandidate
 POST    /candidate/:id                          CCandidate.UpdateCandidate
 DELETE  /candidate/:id                          CCandidate.DeleteCandidate
 
+# USER
+GET     /user/all                               CUser.GetUsers
+GET     /user/:id                               CUser.GetUserByID
+POST    /user/auth                              CUser.GetUserByAuth
+PUT     /user                                   CUser.CreateUser
+POST    /user/:id                               CUser.UpdateUser
+DELETE  /user/:id                               CUser.DeleteUser
+
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

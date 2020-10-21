@@ -2,8 +2,6 @@ import { User } from "./entities/User.js";
 
 export class UserModel{
     constructor(){
-        this.users = new Map()
-        this.users.set(1, new User(1, "admin", "admin", null, new Date()))
     }
 
     /**
@@ -11,10 +9,37 @@ export class UserModel{
      * @param {number} id 
      * @returns пользователь
      */
-    getUserById(id){
-        return new Promise((resolve, reject) =>{
-            resolve(this.users.get(id))
+    async getUserById(id){
+        let request = await fetch(`/user/${id}`)
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
+
+        let response = await request.json()
+        
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
+        return new Promise((resolve, reject)=>{
+            let users = []
+            if (response != null) {
+                for (const item of response) {
+                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, item.lastVisited)
+                    users.push(user)
+                }
+            }
+            resolve(users)
         })
+    }
+
+    async getUsers(){
+        let request = await fetch(`/user/all`)
+
     }
 
     /**
@@ -22,29 +47,65 @@ export class UserModel{
      * @param {string} login логин пользователя
      * @param {string} password пароль пользователя
      */
-    getUserByLoginAndPassword(login, password){
+    async getUserByLoginAndPassword(login, password){
+        let user = new User(0, login, password, "", null, null)
+        let request = await fetch(`/user/auth`, {
+            method: "POST",
+            body: JSON.stringify(user)
+        })
+
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
+
+        let response = await request.json()
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
         return new Promise((resolve, reject)=>{
-            let users = Array.from(this.users.values())
-            users.forEach(user => {
-                if (user.login == login && user.password == password) {
-                    resolve(user)
-                }
-            });
+            resolve(response)
         })
     }
 
     /**
      * Метод создаёт пользователя по заданным параметрам
-     * @param {{login: string; password: string; userPhoto: Blob; lastVisited: Date}} user 
+     * @param {{login: string; password: string; userPhoto: Blob; lastVisited: Date, role: string}} user 
      * @returns пользователь
      */
-    createUser(user){
-        return new Promise((resolve, reject)=>{
-            let id = this.users.size + 1
-            let newUser = new User(id, user.login, user.password, user.userPhoto, user.lastVisited)
-            this.users.set(id, newUser)
+    async createUser(user){
+        let request = await fetch(`/user`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                login: user.login,
+                password: user.password,
+                userPhoto: user.userPhoto,
+                lastVisited: user.lastVisited,
+                role: user.role
+            })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
 
-            resolve(newUser)
+        let response = await request.json()
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve(response)
         })
     }
 
@@ -53,14 +114,36 @@ export class UserModel{
      * @param {{login: string; password: string; userPhoto: Blob; lastVisited: Date}} user 
      * @returns пользователь
      */
-     updateUser(user){
-        return new Promise((resolve, reject)=>{
-            this.getUesrById(user.id).then((updatingUser)=>{
-                if (updatingUser != null) {
-                    this.users.set(user.id, user)
-                    resolve(user)
-                }
+    async updateUser(user){
+        let request = await fetch(`/user/${user.ID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                ID: user.ID,
+                login: user.login,
+                password: user.password,
+                userPhoto: user.userPhoto,
+                lastVisited: user.lastVisited,
+                role: user.role
             })
+        })
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
+
+        let response = await request.json()
+        if (response != null) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
+        return new Promise((resolve, reject)=>{
+            resolve(response)
         })
     }
 
@@ -68,14 +151,21 @@ export class UserModel{
      * Метод удаляет пользователя по ID
      * @param {number} id 
      */
-     deleteUser(id){
-        return new Promise((resolve, reject)=>{
-            this.getUesrById(id).then((deletingUser)=>{
-                if (deletingUser != null) {
-                    this.users.delete(id)
-                    resolve()
-                }
-            })
+    async deleteUser(id){
+        let request = await fetch(`/user/${id}`, {
+            method: 'DELETE'
         })
+        if (request.status != 200){
+            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+            return
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
     }
 }

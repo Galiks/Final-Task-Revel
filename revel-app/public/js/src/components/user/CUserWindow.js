@@ -12,39 +12,35 @@ export class CUserWindow{
     init(){
         this.loginWindow()
         this.registerWindow()
+        this.loginButton = $$("loginButton")
+        this.registerButton = $$("registerButton")
+        this.userIcon = $$("userIcon")
     }
 
     attachEventLoginWindow(){
         $$("loginPopupButton").attachEvent("onItemClick", ()=>{
-            $$("loginButton").disable()
-            $$("registerButton").disable()
-            $$("userIcon").disable()
+            this.loginButton.disable()
+            this.registerButton.disable()
+            this.userIcon.disable()
 
             let values = this.fetch("loginForm")
 
-            if(values.login == "admin" && values.password == "admin"){
-                this.currentUser = new User(0, "admin", "admin", null, new Date())
-                $$("loginButton").disable()
-                $$("registerButton").disable()
-                $$("userIcon").enable()
-                this.aboutWindow()
-            }
-            else{
-                this.userModel.getUserByLoginAndPassword(values.login, values.password).then((user)=>{
-                    if (user != null) {
-                        this.currentUser = user
-                        $$("loginButton").disable()
-                        $$("registerButton").disable()
-                        $$("userIcon").enable()
-                        this.aboutWindow()
-                    }
-                    else{
-                        $$("loginButton").enable()
-                        $$("registerButton").enable()
-                        $$("userIcon").enable()
-                    }
-                })
-            }
+            
+            this.userModel.getUserByLoginAndPassword(values.login, values.password).then((user)=>{
+                if (user != null) {
+                    this.currentUser = user
+                    this.loginButton.disable()
+                    this.registerButton.disable()
+                    this.userIcon.enable()
+                    this.aboutWindow()
+                }
+                else{
+                    this.loginButton.enable()
+                    this.registerButton.enable()
+                    this.userIcon.enable()
+                }
+            })
+            
             
         })
     }
@@ -52,9 +48,9 @@ export class CUserWindow{
     attachEventRegisterWindow(){
         $$("registerPopupButton").attachEvent("onItemClick", ()=>{
 
-            $$("loginButton").disable()
-            $$("registerButton").disable()
-            $$("userIcon").disable()
+            this.loginButton.disable()
+            this.registerButton.disable()
+            this.userIcon.disable()
 
             const values = this.fetch("registerForm")
             if (values.password != values.repeatPassword) {
@@ -63,31 +59,31 @@ export class CUserWindow{
             }
             else{
                 this.userModel.createUser(values).then((user) =>{
-                    $$("loginButton").enable()
-                    $$("registerButton").enable()
-                    $$("userIcon").enable()
+                    this.loginButton.enable()
+                    this.registerButton.enable()
+                    this.userIcon.enable()
                 })
             }
         })
     }
 
     attachEventAboutWindow(){
-        $$("userIcon").define("popup", "userPopup")
-        $$("userIcon").refresh()
+        this.userIcon.define("popup", "userPopup")
+        this.userIcon.refresh()
 
         $$("logoutButton").attachEvent("onItemClick", ()=>{
 
-            $$("loginButton").disable()
-            $$("registerButton").disable()
-            $$("userIcon").disable()
+            this.loginButton.disable()
+            this.registerButton.disable()
+            this.userIcon.disable()
 
             this.currentUser.lastVisited = new Date()
 
             this.userModel.updateUser(this.currentUser).then((updatingUser) =>{
                 this.currentUser = null
-                $$("userIcon").disable()
-                $$("loginButton").enable()
-                $$("registerButton").enable()
+                this.userIcon.disable()
+                this.loginButton.enable()
+                this.registerButton.enable()
             })
         })
     }
@@ -127,4 +123,11 @@ export class CUserWindow{
     parse(formName, values){
         $$(formName).setValues(values)
     }
+}
+
+
+export const USER_ROLE = {
+    user: "Пользователь",
+    moderator: "Модератор",
+    admin: "Admin"
 }

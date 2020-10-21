@@ -20,13 +20,18 @@ func (p *PUser) GetUserByID(ID int64) (u *entities.User, err error) {
 	return p.userMapper.SelectByID(ID)
 }
 
+//GetUserByAuth метод получения пользователя при авторизации
+func (p *PUser) GetUserByAuth(user *entities.User) (u *entities.User, err error) {
+	return p.userMapper.SelectByAuth(user)
+}
+
 //CreateUser метод создания пользователя
-func (p *PUser) CreateUser(user entities.User) (u *entities.User, err error) {
+func (p *PUser) CreateUser(user *entities.User) (u *entities.User, err error) {
 	return p.userMapper.Insert(user)
 }
 
 //UpdateUser метод изменения пользователя
-func (p *PUser) UpdateUser(user entities.User) (u *entities.User, err error) {
+func (p *PUser) UpdateUser(user *entities.User) (u *entities.User, err error) {
 	return p.userMapper.Update(user)
 }
 
