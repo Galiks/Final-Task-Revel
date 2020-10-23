@@ -1,43 +1,35 @@
-# Welcome to Revel
+# Спецификация по проекту Assessment Manager
 
-A high-productivity web framework for the [Go language](http://www.golang.org/).
+## Цель
 
+Целью проекта является реализация системы по управлению мероприятий.
 
-### Start the web server:
+## Описание
 
-   revel run myapp
+С помощью данной системы пользователь может контролировать мероприятия, кандидатов и сотрудников – добавлять, удалять, изменять. Помимо этого, пользователь может назначать на мероприятия кандидатов и сотрудников.
 
-### Go to http://localhost:9000/ and you'll see:
+## Описание визуальной части
 
-    "It works"
+Визуальная часть проекта состоит из основного окна и дополнительных окон – создание, удаление, изменение, информация, завершение (для мероприятий), всплывающих по вызову.
 
-## Code Layout
+## Функциональные возможности
 
-The directory structure of a generated Revel application:
-
-    conf/             Configuration directory
-        app.conf      Main app configuration file
-        routes        Routes definition file
-
-    app/              App sources
-        init.go       Interceptor registration
-        controllers/  App controllers go here
-        views/        Templates directory
-
-    messages/         Message files
-
-    public/           Public static assets
-        css/          CSS files
-        js/           Javascript files
-        images/       Image files
-
-    tests/            Test suites
-
-
-## Help
-
-* The [Getting Started with Revel](http://revel.github.io/tutorial/gettingstarted.html).
-* The [Revel guides](http://revel.github.io/manual/index.html).
-* The [Revel sample apps](http://revel.github.io/examples/index.html).
-* The [API documentation](https://godoc.org/github.com/revel/revel).
-
+Перечень функциональных возможностей:
+1.	Учёт мероприятий: 
+    a)	создание, 
+    b)	назначение участников, 
+    c)	изменение, удаление,
+    d)	завершение мероприятий, 
+    e)	узнать подробнее.
+2.	Учёт сотрудников: 
+    a)	создание, 
+    b)	изменение, 
+    c)	удаление, 
+    d)	узнать подробнее.
+3.	Учёт кандидатов: 
+    a)	создание, 
+    b)	изменение, 
+    c)	удаление, 
+    d)	узнать подробнее, 
+    e)	изменение статуса кандидата при изменении статуса мероприятия,
+    f)	изменение статуса кандидата при создании мероприятия.

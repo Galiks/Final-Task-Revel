@@ -238,7 +238,6 @@ func (controller *CUser) DeleteUser() revel.Result {
 }
 
 func (controller *CUser) getHash(text string) string {
-	h := md5.New()
-	io.WriteString(h, text)
-	return string(h.Sum(nil))
+	hash := md5.Sum([]byte(text))
+	return hex.EncodeToString(hash[:])
 }
