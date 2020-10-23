@@ -188,16 +188,18 @@ func (controller *CUser) CreateUser() revel.Result {
 	user := &entities.User{}
 	err := json.Unmarshal(controller.Params.JSON, user)
 	if err != nil {
-		fmt.Println(err)
+		revel.AppLog.Errorf("CUser.CreateUser : json.Unmarshal, %s\n", err)
+		fmt.Println("Umnrshal error : ", err)
 		return controller.RenderJSON(err)
 	}
 
-	user.Password = controller.getHash(user.Password)
+	//user.Password = controller.getHash(user.Password)
 
 	controller.userProvider = &providers.PUser{}
 	result, err := controller.userProvider.CreateUser(user)
 	if err != nil {
-		fmt.Println(err)
+		revel.AppLog.Errorf("CUser.CreateUser : controller.userProvider.CreateUser, %s\n", err)
+		fmt.Println("CreateUser error : ", err)
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(result)

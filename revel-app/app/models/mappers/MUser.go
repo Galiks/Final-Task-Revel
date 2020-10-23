@@ -173,6 +173,8 @@ func (m *MUser) Insert(user *entities.User) (u *entities.User, err error) {
 
 	defer db.Close()
 
+	fmt.Println("User for insert : ", user)
+
 	var id int64
 
 	query := `INSERT INTO public."User"(
@@ -190,13 +192,15 @@ func (m *MUser) Insert(user *entities.User) (u *entities.User, err error) {
 		user.Role).Scan(&id)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Insert user query error : ", err)
 		return nil, err
 	}
 
+	fmt.Println("ID of new user : ", id)
+
 	u, err = m.SelectByID(id)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("SelectByID error : ", err)
 		return nil, err
 	}
 	return u, nil
