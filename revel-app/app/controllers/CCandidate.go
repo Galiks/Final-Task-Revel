@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"revel-app/app/helpers"
 	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
 	"strconv"
@@ -18,11 +19,22 @@ type CCandidate struct {
 
 //Before интерцептор BEFOR контроллера CCandidate для проверки авторизации
 func (controller *CCandidate) Before() revel.Result {
-	// userController := CUser{}
+	var (
+		cache helpers.ICache // экземпляр кэша
+		err   error          // ошибка в ходе выполнения функции
+	)
 
-	// isCheck := userController.Check()
+	// инициализация кэша
+	cache, err = helpers.GetCache()
+	if err != nil {
+		revel.AppLog.Errorf("CCandidate.Before : helpers.GetCache, %s\n", err)
+		return controller.RenderJSON(err)
+	}
 
-	// fmt.Println("CCandidate.Before isCheck: ", isCheck)
+	// Проверка существования токена сервера для пользователя
+	if _, ok := cache.TokenIsActualBySID(controller.Session.ID()); !ok {
+		return controller.Redirect((*CError).Unauthorized)
+	}
 
 	return nil
 }
@@ -34,7 +46,7 @@ func (controller *CCandidate) Before() revel.Result {
 
 //Finally интерцептор FINALLY контроллера CCandidate для закрытия соединения с БД
 func (controller *CCandidate) Finally() revel.Result {
-	return nil
+	return controller.RenderJSON(nil)
 }
 
 //GetCandidates метод получения всех кандидатов

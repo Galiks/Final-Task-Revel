@@ -39,12 +39,20 @@ export class Index{
             ]
         }
 
+        let tabbarOption = [
+          { value:'Мероприятия', id:'events'},
+          { value:'Сотрудники', id:'employees'},
+          { value:'Кандидаты', id:'candidates'}
+        ]
+
+        if (this.userWindow.currentUser.role == "Администратор") {
+          tabbarOption.push(
+            { value:'Пользователи', id:'users'}
+          )
+        }
+
         let tabbarHeader = {
-            borderless:true, view:"tabbar", id:"tabbar", value:"listView", multiview:true, options:[
-              { value:'Мероприятия', id:'events'},
-              { value:'Сотрудники', id:'employees'},
-              { value:'Кандидаты', id:'candidates'}
-            ]
+            borderless:true, view:"tabbar", id:"tabbar", value:"listView", multiview:true, options:tabbarOption
         }
 
         let tabbar = {
