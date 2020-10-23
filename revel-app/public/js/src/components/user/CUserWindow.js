@@ -9,39 +9,44 @@ export class CUserWindow{
         this.currentUser = new User();
     }
 
-    init(){
+    async init(){
         this.loginWindow()
         this.registerWindow()
         this.loginButton = $$("loginButton")
         this.registerButton = $$("registerButton")
         this.userIcon = $$("userIcon")
+        this.form = {
+            login: $$("loginForm"),
+            register: $$("registerForm")
+        }
+
+        let check = await this.userModel.check()
+        if (check != false){
+            this.currentUser = await this.userModel.getCurrentUser()
+            this.aboutWindow()
+        }
     }
 
+
+
     attachEventLoginWindow(){
-        $$("loginPopupButton").attachEvent("onItemClick", ()=>{
+        $$("loginPopupButton").attachEvent("onItemClick", async ()=>{
             this.loginButton.disable()
             this.registerButton.disable()
             this.userIcon.disable()
 
-            let values = this.fetch("loginForm")
+            let values = this.form.login.getValues()
 
-            
-            this.userModel.getUserByLoginAndPassword(values.login, values.password).then((user)=>{
-                if (user != null) {
-                    this.currentUser = user
-                    this.loginButton.disable()
-                    this.registerButton.disable()
-                    this.userIcon.enable()
-                    this.aboutWindow()
-                }
-                else{
-                    this.loginButton.enable()
-                    this.registerButton.enable()
-                    this.userIcon.enable()
-                }
-            })
-            
-            
+            let result = await this.userModel.login(values.login, values.password)
+            if (result != false) {
+                this.currentUser = await this.userModel.getCurrentUser()
+                this.userIcon.enable()
+                this.aboutWindow()
+            } else {
+                this.loginButton.enable()
+                this.registerButton.enable()
+                this.userIcon.enable()
+            }
         })
     }
 
@@ -52,10 +57,10 @@ export class CUserWindow{
             this.registerButton.disable()
             this.userIcon.disable()
 
-            const values = this.fetch("registerForm")
+            const values = this.form.register.getValues()
             if (values.password != values.repeatPassword) {
                 webix.message("Пароли не совпадают!")
-                $$("registerForm").clear()
+                this.form.register.clear()
             }
             else{
                 this.userModel.createUser(values).then((user) =>{
@@ -68,10 +73,12 @@ export class CUserWindow{
     }
 
     attachEventAboutWindow(){
+        this.loginButton.disable()
+        this.registerButton.disable()
         this.userIcon.define("popup", "userPopup")
         this.userIcon.refresh()
 
-        $$("logoutButton").attachEvent("onItemClick", ()=>{
+        $$("logoutButton").attachEvent("onItemClick", async ()=>{
 
             this.loginButton.disable()
             this.registerButton.disable()
@@ -79,12 +86,14 @@ export class CUserWindow{
 
             this.currentUser.lastVisited = new Date()
 
-            this.userModel.updateUser(this.currentUser).then((updatingUser) =>{
-                this.currentUser = null
-                this.userIcon.disable()
-                this.loginButton.enable()
-                this.registerButton.enable()
-            })
+            await this.userModel.updateUser(this.currentUser)
+            await this.userModel.logout()
+
+            this.currentUser = null
+
+            this.userIcon.disable()
+            this.loginButton.enable()
+            this.registerButton.enable()
         })
     }
 
@@ -104,24 +113,6 @@ export class CUserWindow{
         webix.ui(this.userWindow.aboutUserView(this.currentUser))
 
         this.attachEventAboutWindow()
-    }
-
-    /**
-     * Метод возвращает данные с формы
-     * @param {string} formName имя формы
-     * @returns данные с формы
-     */
-    fetch(formName){
-        return $$(formName).getValues()
-    }
-
-    /**
-     * Метод для заполнение формы данными
-     * @param {string} formName имя формы
-     * @param {*} values значения
-     */
-    parse(formName, values){
-        $$(formName).setValues(values)
     }
 }
 

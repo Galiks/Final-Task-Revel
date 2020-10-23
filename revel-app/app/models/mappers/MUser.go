@@ -75,14 +75,15 @@ func (m *MUser) SelectAll() (us []*entities.User, err error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		p := entities.User{}
-		err := rows.Scan(&p.ID, &p.Login, &p.Password, &p.Role, &p.UserPhoto, &p.LastVisisted)
+		p := UserSQL{}
+		err := rows.Scan(&p.ID, &p.Login, &p.Password, &p.UserPhoto, &p.LastVisisted, &p.Role)
 		if err != nil {
 			fmt.Println(err)
-			continue
+			return nil, err
 		}
+		user := p.toUser()
 
-		us = append(us, &p)
+		us = append(us, &user)
 	}
 
 	return us, nil
@@ -113,17 +114,15 @@ func (m *MUser) SelectByID(ID int64) (u *entities.User, err error) {
 
 	defer rows.Close()
 
-	for rows.Next() {
-		p := entities.User{}
-		err := rows.Scan(&p.ID, &p.Login, &p.Password, &p.Role, &p.UserPhoto, &p.LastVisisted)
-		if err != nil {
-			fmt.Println(err)
-			return nil, err
-		}
-		return &p, nil
+	rows.Next()
+	p := UserSQL{}
+	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.UserPhoto, &p.LastVisisted, &p.Role)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
 	}
-
-	return nil, nil
+	user := p.toUser()
+	return &user, nil
 }
 
 //SelectByAuth получения пользователя при авторизации
@@ -139,7 +138,7 @@ func (m *MUser) SelectByAuth(user *entities.User) (u *entities.User, err error) 
 
 	defer db.Close()
 
-	query := `SELECT u.id, "Password", "UserPhoto", "LastVisite", "Role", "Login"
+	query := `SELECT u.id, "Login", "Password", "Role", "UserPhoto", "LastVisite"
 	FROM public."User" as u
 	JOIN public."Role" as r ON u."id_role" = r.id
 	WHERE "Login" = $1

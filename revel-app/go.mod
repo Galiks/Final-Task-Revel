@@ -7,6 +7,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/garyburd/redigo v1.6.2 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
+	github.com/google/uuid v1.1.2
 	github.com/inconshreveable/log15 v0.0.0-20200109203555-b30bc20e4fd1 // indirect
 	github.com/lib/pq v1.1.1
 	github.com/mattn/go-colorable v0.1.8 // indirect

@@ -40,10 +40,13 @@ DELETE  /candidate/:id                          CCandidate.DeleteCandidate
 # USER
 GET     /user/all                               CUser.GetUsers
 GET     /user/:id                               CUser.GetUserByID
-POST    /user/auth                              CUser.GetUserByAuth
 PUT     /user                                   CUser.CreateUser
 POST    /user/:id                               CUser.UpdateUser
 DELETE  /user/:id                               CUser.DeleteUser
+POST    /user/auth/login                        CUser.Login
+POST    /user/auth/check                        CUser.Check
+GET     /user/auth/logout                       CUser.Logout
+GET     /user/auth/current                      CUser.GetCurrentUser
 
 
 # Ignore favicon requests

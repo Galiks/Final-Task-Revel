@@ -49,7 +49,8 @@ export class UserWindow{
               "elements": [
               { "label": "Информация", "type": "label" },
               { "label": "Логин", "type": "text", "value": user.login },
-              { "label": "Последний визит", "type":"text", "value": user.lastVisited },
+              { "label": "Последний визит", "type":"text", "value": user.lastVisited, "labelWidth":150 },
+              { "label": "Роль", "type":"text", "value": user.role}
             ],
               "view": "property"
             },
