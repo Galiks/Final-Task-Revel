@@ -5,3 +5,17 @@
 {"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CCandidate.GetCandidateByID : strconv.ParseInt, strconv.ParseInt: parsing \"free\": invalid syntax\n","t":"2020-10-23T15:59:40.3835831+04:00"}
 {"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:01:10.0998089+04:00"}
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:01:10.1148091+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:05:44.84076+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:05:44.8477595+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:32:14.731356+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:32:14.739356+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:37:29.0702686+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:37:29.078269+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:42:14.8846066+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:42:14.892607+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:49:43.6959183+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:49:43.7039198+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:51:36.2898618+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:51:36.2978599+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T17:14:56.8441439+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T17:14:56.8521428+04:00"}

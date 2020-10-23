@@ -21,10 +21,14 @@ type CUser struct {
 	userProvider *providers.PUser
 }
 
-// //Before интерцептор BEFOR контроллера CUser
-// func (controller *CUser) Before() (result revel.Result, rc CUser) {
-// 	return nil, *controller
-// }
+//Before интерцептор BEFOR контроллера CUser
+func (controller *CUser) Before() revel.Result {
+	isCheck := controller.Check()
+
+	fmt.Println("CUser.Before isCheck: ", isCheck)
+
+	return nil
+}
 
 // //After интерцептор AFTER контроллера CUser
 // func (controller *CUser) After() (result revel.Result, rc CUser) {

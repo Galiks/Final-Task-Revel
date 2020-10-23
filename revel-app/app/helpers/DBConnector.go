@@ -36,27 +36,26 @@ type dbConnector struct {
 
 func (connector *dbConnector) GetDBConnection() (db *sql.DB, err error) {
 
-	// name, ok := revel.Config.String("db.dbname")
-	// if !ok {
-	// 	err = ErrFailedConnection
-	// 	revel.AppLog.Errorf("Не удалось получить имя БД")
-	// 	return
-	// }
-	// user, ok := revel.Config.String("db.user")
-	// if !ok {
-	// 	err = ErrFailedConnection
-	// 	revel.AppLog.Errorf("Не удалось получить пользователя БД")
-	// 	return
-	// }
-	// password, ok := revel.Config.String("db.password")
-	// if !ok {
-	// 	err = ErrFailedConnection
-	// 	revel.AppLog.Errorf("Не удалось получить пароль БД")
-	// 	return
-	// }
+	name, ok := revel.Config.String("db.dbname")
+	if !ok {
+		err = ErrFailedConnection
+		revel.AppLog.Errorf("Не удалось получить имя БД")
+		return
+	}
+	user, ok := revel.Config.String("db.user")
+	if !ok {
+		err = ErrFailedConnection
+		revel.AppLog.Errorf("Не удалось получить пользователя БД")
+		return
+	}
+	password, ok := revel.Config.String("db.password")
+	if !ok {
+		err = ErrFailedConnection
+		revel.AppLog.Errorf("Не удалось получить пароль БД")
+		return
+	}
 
-	//connStr := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=verify-full", user, password, address, name)
-	connStr := "user=postgres password=admin dbname=AssessmentManagement sslmode=disable"
+	connStr := "user=" + user + " password=" + password + " dbname=" + name + " sslmode=disable"
 	db, err = sql.Open("postgres", connStr)
 	if err != nil {
 		revel.AppLog.Errorf("Не удалось подключиться к БД")

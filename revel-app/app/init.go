@@ -40,6 +40,12 @@ func init() {
 	// revel.OnAppStart(FillCache)
 	revel.InterceptMethod((*controllers.CCandidate).Before, revel.BEFORE)
 	revel.InterceptMethod((*controllers.CCandidate).Finally, revel.FINALLY)
+
+	revel.InterceptMethod((*controllers.CEmployee).Before, revel.BEFORE)
+
+	revel.InterceptMethod((*controllers.CEvent).Before, revel.BEFORE)
+
+	revel.InterceptMethod((*controllers.CUser).Before, revel.BEFORE)
 }
 
 // HeaderFilter adds common security headers

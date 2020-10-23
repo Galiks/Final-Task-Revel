@@ -17,10 +17,16 @@ type CEvent struct {
 	eventProvider *providers.PEvent
 }
 
-// //Before интерцептор BEFOR контроллера CEvent
-// func (controller *CEvent) Before() (result revel.Result, rc CEvent) {
-// 	return nil, *controller
-// }
+//Before интерцептор BEFOR контроллера CEvent
+func (controller *CEvent) Before() revel.Result {
+	// userController := &CUser{}
+
+	// isCheck := userController.Check()
+
+	// fmt.Println("CEvent.Before isCheck: ", isCheck)
+
+	return nil
+}
 
 // //After интерцептор AFTER контроллера CEvent
 // func (controller *CEvent) After() (result revel.Result, rc CEvent) {

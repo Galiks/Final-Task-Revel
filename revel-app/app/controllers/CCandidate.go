@@ -16,20 +16,13 @@ type CCandidate struct {
 	candidateProvider *providers.PCandidate
 }
 
-//Before интерцептор BEFOR контроллера CCandidate для открытия соединения с БД
+//Before интерцептор BEFOR контроллера CCandidate для проверки авторизации
 func (controller *CCandidate) Before() revel.Result {
-	// connector, err := helpers.GetConnector()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	panic(err)
-	// }
-	// db, err := connector.GetDBConnection()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	panic(err)
-	// }
-	// controller.candidateProvider = new(providers.PCandidate)
-	// controller.candidateProvider.Init(db)
+	// userController := CUser{}
+
+	// isCheck := userController.Check()
+
+	// fmt.Println("CCandidate.Before isCheck: ", isCheck)
 
 	return nil
 }

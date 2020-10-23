@@ -16,10 +16,16 @@ type CEmployee struct {
 	employeeProvider *providers.PEmployee
 }
 
-// //Before интерцептор BEFOR контроллера CEmployee
-// func (controller *CEmployee) Before() (result revel.Result, rc CEmployee) {
-// 	return nil, *controller
-// }
+//Before интерцептор BEFOR контроллера CEmployee
+func (controller *CEmployee) Before() revel.Result {
+	// userController := &CUser{}
+
+	// isCheck := userController.Check()
+
+	// fmt.Println("CEmployee.Before isCheck: ", isCheck)
+
+	return nil
+}
 
 // //After интерцептор AFTER контроллера CEmployee
 // func (controller *CEmployee) After() (result revel.Result, rc CEmployee) {
