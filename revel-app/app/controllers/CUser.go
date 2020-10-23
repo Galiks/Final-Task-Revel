@@ -1,10 +1,8 @@
 package controllers
 
 import (
-	"crypto/md5"
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"revel-app/app/helpers"
@@ -235,9 +233,4 @@ func (controller *CUser) DeleteUser() revel.Result {
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(nil)
-}
-
-func (controller *CUser) getHash(text string) string {
-	hash := md5.Sum([]byte(text))
-	return hex.EncodeToString(hash[:])
 }

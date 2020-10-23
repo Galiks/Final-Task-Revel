@@ -1,6 +1,8 @@
 package providers
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"revel-app/app/models/entities"
 	"revel-app/app/models/mappers"
 )
@@ -27,6 +29,7 @@ func (p *PUser) GetUserByAuth(user *entities.User) (u *entities.User, err error)
 
 //CreateUser метод создания пользователя
 func (p *PUser) CreateUser(user *entities.User) (u *entities.User, err error) {
+	user.Password = p.getHash(user.Password)
 	return p.userMapper.Insert(user)
 }
 
@@ -38,4 +41,9 @@ func (p *PUser) UpdateUser(user *entities.User) (u *entities.User, err error) {
 //DeleteUser метод удаления пользователя
 func (p *PUser) DeleteUser(ID int64) (err error) {
 	return p.userMapper.Delete(ID)
+}
+
+func (p *PUser) getHash(text string) string {
+	hash := md5.Sum([]byte(text))
+	return hex.EncodeToString(hash[:])
 }
