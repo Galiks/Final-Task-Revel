@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"revel-app/app/helpers"
 	"revel-app/app/models/entities"
+
+	"github.com/revel/revel"
 )
 
 //MEvent маппер мероприятий
@@ -16,12 +18,18 @@ type MEvent struct {
 func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.SelectAll : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.SelectAll : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.SelectAll : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.SelectAll : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
+
+	defer db.Close()
 
 	query := `SELECT e.id, "Theme", "Beginning", es."Status"
 	FROM public."Event" as e
@@ -29,7 +37,9 @@ func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 
 	rows, err := db.Query(query)
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.SelectAll : db.Query error : ", err)
+		revel.AppLog.Errorf("MEvent.SelectAll : db.Query, %s\n", err)
+		return nil, err
 	}
 
 	defer rows.Close()
@@ -38,8 +48,8 @@ func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 		p := entities.Event{}
 		err := rows.Scan(&p.ID, &p.Theme, &p.Beginning, &p.Status)
 		if err != nil {
-			fmt.Println("SelectAll получение всех мероприятий: ", err)
-			continue
+			fmt.Println("MEvent.SelectAll : rows.Scan error : ", err)
+			revel.AppLog.Errorf("MEvent.SelectAll : rows.Scan, %s\n", err)
 		}
 		es = append(es, &p)
 	}
@@ -51,12 +61,18 @@ func (m *MEvent) SelectAll() (es []*entities.Event, err error) {
 func (m *MEvent) SelectByID(ID int64) (e *entities.Event, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.SelectByID : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.SelectByID : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.SelectByID : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.SelectByID : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
+
+	defer db.Close()
 
 	query := `SELECT e.id, "Theme", "Beginning", es."Status"
 	FROM public."Event" as e
@@ -66,8 +82,9 @@ func (m *MEvent) SelectByID(ID int64) (e *entities.Event, err error) {
 	fmt.Println("ID IN GetByID: ", ID)
 
 	row, err := db.Query(query, ID)
-
 	if err != nil {
+		fmt.Println("MEvent.SelectByID : db.Query error : ", err)
+		revel.AppLog.Errorf("MEvent.SelectByID : db.Query, %s\n", err)
 		return nil, err
 	}
 
@@ -86,12 +103,18 @@ func (m *MEvent) SelectByID(ID int64) (e *entities.Event, err error) {
 func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.Insert : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.Insert : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.Insert : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.Insert : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
+
+	defer db.Close()
 
 	query := `INSERT INTO public."Event"(
 		"Theme", "Beginning", "id_eventsStatus")
@@ -106,16 +129,18 @@ func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
 		event.Beginning,
 		event.Status).Scan(&id)
 	if err != nil {
-		fmt.Println("Insert добавление мероприятия: ", err)
-		return
+		fmt.Println("MEvent.Insert : db.QueryRow error : ", err)
+		revel.AppLog.Errorf("MEvent.Insert : db.QueryRow, %s\n", err)
+		return nil, err
 	}
 
 	fmt.Println("ID NEW EVENT: ", id)
 
 	e, err = m.SelectByID(id)
 	if err != nil {
-		fmt.Println("Insert добавление мероприятия - SelectByID: ", err)
-		return
+		fmt.Println("MEvent.Insert : m.SelectByID error : ", err)
+		revel.AppLog.Errorf("MEvent.Insert : m.SelectByID, %s\n", err)
+		return nil, err
 	}
 
 	fmt.Println("INSERT EVENT: ", e)
@@ -127,12 +152,18 @@ func (m *MEvent) Insert(event *entities.Event) (e *entities.Event, err error) {
 func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.Update : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.Update : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.Update : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.Update : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
+
+	defer db.Close()
 
 	fmt.Println("Updating event: ", event)
 
@@ -147,20 +178,20 @@ func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 		event.Beginning,
 		event.Status,
 		event.ID)
-
 	if err != nil {
-		fmt.Println("ERROR UPDATE event: ", err)
+		fmt.Println("MEvent.Update : db.Exec error : ", err)
+		revel.AppLog.Errorf("MEvent.Update : db.Exec, %s\n", err)
 		return nil, err
 	}
 
 	e, err = m.SelectByID(event.ID)
+	if err != nil {
+		fmt.Println("MEvent.Update : m.SelectByID error : ", err)
+		revel.AppLog.Errorf("MEvent.Update : m.SelectByID, %s\n", err)
+		return nil, err
+	}
 
 	fmt.Println("Result Updating event: ", e)
-
-	if err != nil {
-		fmt.Println("ERROR UPDATE event: ", err)
-		return
-	}
 
 	return e, nil
 }
@@ -169,40 +200,53 @@ func (m *MEvent) Update(event *entities.Event) (e *entities.Event, err error) {
 func (m *MEvent) Delete(ID int64) (err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.Delete : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.Delete : helpers.GetConnector, %s\n", err)
+		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
-	}
-
-	query := `DELETE FROM public."CandidateEvent"
-	WHERE "id_event" = $1;`
-
-	_, err = db.Exec(query, ID)
-
-	if err != nil {
-		fmt.Println("ERROR DELETE event: ", err)
+		fmt.Println("MEvent.Delete : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.Delete : connector.GetDBConnection, %s\n", err)
 		return err
 	}
 
-	query = `DELETE FROM public."EmployeeEvent"
-		WHERE "id_event" = $1;`
+	defer db.Close()
 
-	_, err = db.Exec(query, ID)
+	// query := `DELETE FROM public."CandidateEvent"
+	// WHERE "id_event" = $1;`
 
+	// _, err = db.Exec(query, ID)
+	// if err != nil {
+	// 	fmt.Println("MEvent.Delete : db.Exec (candidateEvent) error : ", err)
+	// 	revel.AppLog.Errorf("MEvent.Delete : db.Exec (candidateEvent), %s\n", err)
+	// 	return err
+	// }
+
+	err = m.DeleteCandidatesFromEvent(ID)
 	if err != nil {
-		fmt.Println("ERROR UPDATE event: ", err)
+		fmt.Println("MEvent.Delete : m.DeleteCandidatesFromEvent error : ", err)
+		revel.AppLog.Errorf("MEvent.Delete : m.DeleteCandidatesFromEvent, %s\n", err)
 		return err
 	}
 
-	query = `DELETE FROM public."Event"
+	// query = `DELETE FROM public."EmployeeEvent"
+	// 	WHERE "id_event" = $1;`
+
+	err = m.DeleteEmployeesFromEvent(ID)
+	if err != nil {
+		fmt.Println("MEvent.Delete : m.DeleteEmployeesFromEvent error : ", err)
+		revel.AppLog.Errorf("MEvent.Delete : m.DeleteEmployeesFromEvent, %s\n", err)
+		return err
+	}
+
+	query := `DELETE FROM public."Event"
 		WHERE id = $1;`
 
 	_, err = db.Exec(query, ID)
-
 	if err != nil {
-		fmt.Println("ERROR UPDATE event: ", err)
+		fmt.Println("MEvent.Delete : db.Exec (event) error : ", err)
+		revel.AppLog.Errorf("MEvent.Delete : db.Exec (event), %s\n", err)
 		return err
 	}
 
@@ -213,12 +257,18 @@ func (m *MEvent) Delete(ID int64) (err error) {
 func (m *MEvent) UpdateCandidateStatusToFinishedEvent(IDcandidate int64, IDevent int64) error {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.UpdateCandidateStatusToFinishedEvent : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.UpdateCandidateStatusToFinishedEvent : helpers.GetConnector, %s\n", err)
+		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEvent.UpdateCandidateStatusToFinishedEvent : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.UpdateCandidateStatusToFinishedEvent : connector.GetDBConnection, %s\n", err)
+		return err
 	}
+
+	defer db.Close()
 
 	fmt.Println("UpdateCandidateStatusToFinishedEvent : IDCandidate: ", IDcandidate, " IDEvent: ", IDevent)
 
@@ -230,6 +280,11 @@ func (m *MEvent) UpdateCandidateStatusToFinishedEvent(IDcandidate int64, IDevent
 	var idCandidateStatus int
 
 	err = db.QueryRow(query, IDcandidate, IDevent).Scan(&idCandidateStatus)
+	if err != nil {
+		fmt.Println("MEvent.UpdateCandidateStatusToFinishedEvent : db.QueryRow error : ", err)
+		revel.AppLog.Errorf("MEvent.UpdateCandidateStatusToFinishedEvent : db.QueryRow, %s\n", err)
+		return err
+	}
 
 	fmt.Println("First query result: ", idCandidateStatus)
 
@@ -241,12 +296,13 @@ func (m *MEvent) UpdateCandidateStatusToFinishedEvent(IDcandidate int64, IDevent
 	AND "id_event" = $3;`
 
 	returnQuery, err := db.Exec(query, idCandidateStatus, IDcandidate, IDevent)
-
-	fmt.Println("Second query result: ", returnQuery)
-
 	if err != nil {
+		fmt.Println("MEvent.UpdateCandidateStatusToFinishedEvent : db.Exec error : ", err)
+		revel.AppLog.Errorf("MEvent.UpdateCandidateStatusToFinishedEvent : db.Exec, %s\n", err)
 		return err
 	}
+
+	fmt.Println("Second query result: ", returnQuery)
 
 	return nil
 }
@@ -255,12 +311,18 @@ func (m *MEvent) UpdateCandidateStatusToFinishedEvent(IDcandidate int64, IDevent
 func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
+		fmt.Println("MEvent.InsertEmployeeToEvent : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.InsertEmployeeToEvent : helpers.GetConnector, %s\n", err)
 		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
+		fmt.Println("MEvent.InsertEmployeeToEvent : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.InsertEmployeeToEvent : connector.GetDBConnection, %s\n", err)
 		return err
 	}
+
+	defer db.Close()
 
 	fmt.Println("ID employee: ", IDEmployee)
 	fmt.Println("ID event: ", IDEvent)
@@ -271,6 +333,8 @@ func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err err
 
 	_, err = db.Exec(query, IDEmployee, IDEvent)
 	if err != nil {
+		fmt.Println("MEvent.InsertEmployeeToEvent : db.Exec error : ", err)
+		revel.AppLog.Errorf("MEvent.InsertEmployeeToEvent : db.Exec, %s\n", err)
 		return err
 	}
 	return nil
@@ -278,22 +342,28 @@ func (m *MEvent) InsertEmployeeToEvent(IDEmployee int64, IDEvent int64) (err err
 
 //DeleteEmployeesFromEvent удаляет всех сотрудников из мероприятия
 func (m *MEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
-
 	connector, err := helpers.GetConnector()
 	if err != nil {
+		fmt.Println("MEvent.DeleteEmployeesFromEvent : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.DeleteEmployeesFromEvent : helpers.GetConnector, %s\n", err)
 		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
+		fmt.Println("MEvent.DeleteEmployeesFromEvent : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.DeleteEmployeesFromEvent : connector.GetDBConnection, %s\n", err)
 		return err
 	}
+
+	defer db.Close()
 
 	query := `DELETE FROM public."EmployeeEvent"
 	WHERE id_event = $1;`
 
 	err = db.QueryRow(query, IDEvent).Scan()
 	if err != nil {
-		fmt.Println("DeleteEmployeesFromEvent ", err)
+		fmt.Println("MEvent.DeleteEmployeesFromEvent : db.QueryRow error : ", err)
+		revel.AppLog.Errorf("MEvent.DeleteEmployeesFromEvent : db.QueryRow, %s\n", err)
 		return err
 	}
 
@@ -304,12 +374,18 @@ func (m *MEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
 func (m *MEvent) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
+		fmt.Println("MEvent.InsertCandidateToEvent : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.InsertCandidateToEvent : helpers.GetConnector, %s\n", err)
 		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
+		fmt.Println("MEvent.InsertCandidateToEvent : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.InsertCandidateToEvent : connector.GetDBConnection, %s\n", err)
 		return err
 	}
+
+	defer db.Close()
 
 	fmt.Println("ID candidate: ", IDcandidate)
 	fmt.Println("ID event: ", IDevent)
@@ -322,7 +398,9 @@ func (m *MEvent) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err e
 
 	_, err = db.Exec(query, IDcandidate, IDevent)
 	if err != nil {
-		fmt.Println("InsertCandidateToEvent ", err)
+		fmt.Println("MEvent.InsertCandidateToEvent : db.Exec error : ", err)
+		revel.AppLog.Errorf("MEvent.InsertCandidateToEvent : db.Exec, %s\n", err)
+		return err
 	}
 	return nil
 }
@@ -331,19 +409,26 @@ func (m *MEvent) InsertCandidateToEvent(IDcandidate int64, IDevent int64) (err e
 func (m *MEvent) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
+		fmt.Println("MEvent.DeleteCandidatesFromEvent : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEvent.DeleteCandidatesFromEvent : helpers.GetConnector, %s\n", err)
 		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
+		fmt.Println("MEvent.DeleteCandidatesFromEvent : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEvent.DeleteCandidatesFromEvent : connector.GetDBConnection, %s\n", err)
 		return err
 	}
+
+	defer db.Close()
 
 	query := `DELETE FROM public."CandidateEvent"
 	WHERE id_event = $1;`
 
 	err = db.QueryRow(query, IDEvent).Scan()
 	if err != nil {
-		fmt.Println("DeleteCandidatesFromEvent ", err)
+		fmt.Println("MEvent.DeleteCandidatesFromEvent : db.QueryRow error : ", err)
+		revel.AppLog.Errorf("MEvent.DeleteCandidatesFromEvent : db.QueryRow, %s\n", err)
 		return err
 	}
 

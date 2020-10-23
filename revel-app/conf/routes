@@ -33,6 +33,7 @@ DELETE  /employee/:id                           CEmployee.DeleteEmployee
 GET     /candidate/all                          CCandidate.GetCandidates
 GET     /candidate/:id                          CCandidate.GetCandidateByID
 GET     /candidate/event/:id                    CCandidate.GetCandidatesByEvent
+GET     /candidate/all/free                     CCandidate.GetFreeCandidates
 PUT     /candidate                              CCandidate.CreateCandidate
 POST    /candidate/:id                          CCandidate.UpdateCandidate
 DELETE  /candidate/:id                          CCandidate.DeleteCandidate

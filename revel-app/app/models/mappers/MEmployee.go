@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"revel-app/app/helpers"
 	"revel-app/app/models/entities"
+
+	"github.com/revel/revel"
 )
 
 //EmployeeSQL структура для конвертации в Employee
@@ -76,11 +78,15 @@ type MEmployee struct {
 func (m *MEmployee) SelectAll() (es []*entities.Employee, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectAll : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectAll : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectAll : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectAll : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
 
 	defer db.Close()
@@ -90,7 +96,9 @@ func (m *MEmployee) SelectAll() (es []*entities.Employee, err error) {
 
 	rows, err := db.Query(query)
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectAll : db.Query error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectAll : db.Query, %s\n", err)
+		return nil, err
 	}
 
 	defer rows.Close()
@@ -99,7 +107,8 @@ func (m *MEmployee) SelectAll() (es []*entities.Employee, err error) {
 		p := EmployeeSQL{}
 		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Position, &p.Email, &p.Phone, &p.IDUser)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("MEmployee.SelectAll : rows.Scan error : ", err)
+			revel.AppLog.Errorf("MEmployee.SelectAll : rows.Scan, %s\n", err)
 			continue
 		}
 
@@ -115,14 +124,16 @@ func (m *MEmployee) SelectAll() (es []*entities.Employee, err error) {
 func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectByEventID : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectByEventID : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectByEventID : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectByEventID : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
-
-	fmt.Println("IDEvent in getEmployeeByID: ", IDEvent)
 
 	defer db.Close()
 
@@ -133,7 +144,9 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 
 	rows, err := db.Query(query, IDEvent)
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectByEventID : db.Query error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectByEventID : db.Query, %s\n", err)
+		return nil, err
 	}
 
 	defer rows.Close()
@@ -143,8 +156,8 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 		p := EmployeeSQL{}
 		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Position, &p.Email, &p.Phone, &p.IDUser)
 		if err != nil {
-			fmt.Println(err)
-			continue
+			fmt.Println("MEmployee.SelectByEventID : rows.Scan error : ", err)
+			revel.AppLog.Errorf("MEmployee.SelectByEventID : rows.Scan, %s\n", err)
 		}
 
 		employee := p.ToEmployee()
@@ -159,12 +172,18 @@ func (m *MEmployee) SelectByEventID(IDEvent int64) (es []*entities.Employee, err
 func (m *MEmployee) SelectByID(ID int64) (e *entities.Employee, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectByID : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectByID : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.SelectByID : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectByID : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
+
+	defer db.Close()
 
 	query := `SELECT id, "Firstname", "Lastname", "Patronymic", "Position", "Email", "Phone", id_user
 	FROM public."Employee"
@@ -172,7 +191,8 @@ func (m *MEmployee) SelectByID(ID int64) (e *entities.Employee, err error) {
 
 	row, err := db.Query(query, ID)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("MEmployee.SelectByID : db.Query error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectByID : db.Query, %s\n", err)
 		return nil, err
 	}
 
@@ -189,12 +209,18 @@ func (m *MEmployee) SelectByID(ID int64) (e *entities.Employee, err error) {
 func (m *MEmployee) Insert(employee *entities.Employee) (e *entities.Employee, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.Insert : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.Insert : helpers.GetConnector, %s\n", err)
+		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
-		panic(err)
+		fmt.Println("MEmployee.Insert : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.Insert : connector.GetDBConnection, %s\n", err)
+		return nil, err
 	}
+
+	defer db.Close()
 
 	var id int64
 
@@ -209,14 +235,16 @@ func (m *MEmployee) Insert(employee *entities.Employee) (e *entities.Employee, e
 		employee.Email,
 		employee.Phone).Scan(&id)
 	if err != nil {
-		fmt.Println(err)
-		return
+		fmt.Println("MEmployee.Insert : db.QueryRow error : ", err)
+		revel.AppLog.Errorf("MEmployee.Insert : db.QueryRow, %s\n", err)
+		return nil, err
 	}
 
 	e, err = m.SelectByID(id)
 	if err != nil {
-		fmt.Println(err)
-		return
+		fmt.Println("MEmployee.Insert : m.SelectByID error : ", err)
+		revel.AppLog.Errorf("MEmployee.Insert : m.SelectByID, %s\n", err)
+		return nil, err
 	}
 
 	return e, nil
@@ -226,12 +254,18 @@ func (m *MEmployee) Insert(employee *entities.Employee) (e *entities.Employee, e
 func (m *MEmployee) Update(employee *entities.Employee) (e *entities.Employee, err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
+		fmt.Println("MEmployee.Update : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.Update : helpers.GetConnector, %s\n", err)
 		return nil, err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
+		fmt.Println("MEmployee.Update : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.Update : connector.GetDBConnection, %s\n", err)
 		return nil, err
 	}
+
+	defer db.Close()
 
 	fmt.Println("UPDATING EMPLOYEE: ", employee)
 	var employeeSQL EmployeeSQL = ToEmployeeSQL(*employee)
@@ -250,16 +284,16 @@ func (m *MEmployee) Update(employee *entities.Employee) (e *entities.Employee, e
 		employeeSQL.IDUser,
 		employeeSQL.ID)
 	if err != nil {
-		fmt.Println("EXEC: ")
-		fmt.Println(err)
-		return
+		fmt.Println("MEmployee.Update : db.Exec error : ", err)
+		revel.AppLog.Errorf("MEmployee.Update : db.Exec, %s\n", err)
+		return nil, err
 	}
 
 	e, err = m.SelectByID(employee.ID)
 	if err != nil {
-		fmt.Println("SELECT BY ID: ")
-		fmt.Println(err)
-		return
+		fmt.Println("MEmployee.Update : m.SelectByID error : ", err)
+		revel.AppLog.Errorf("MEmployee.Update : m.SelectByID, %s\n", err)
+		return nil, err
 	}
 	return e, nil
 }
@@ -268,12 +302,18 @@ func (m *MEmployee) Update(employee *entities.Employee) (e *entities.Employee, e
 func (m *MEmployee) Delete(ID int64) (err error) {
 	connector, err := helpers.GetConnector()
 	if err != nil {
+		fmt.Println("MEmployee.Delete : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.Delete : helpers.GetConnector, %s\n", err)
 		return err
 	}
 	db, err := connector.GetDBConnection()
 	if err != nil {
+		fmt.Println("MEmployee.Delete : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.Delete : connector.GetDBConnection, %s\n", err)
 		return err
 	}
+
+	defer db.Close()
 
 	fmt.Println("ID FOR DELETE EMPLOYEE: ", ID)
 
@@ -282,7 +322,8 @@ func (m *MEmployee) Delete(ID int64) (err error) {
 
 	_, err = db.Exec(query, ID)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("MEmployee.Delete : db.Exec (employeeEvent) error : ", err)
+		revel.AppLog.Errorf("MEmployee.Delete : db.Exec (employeeEvent), %s\n", err)
 		return err
 	}
 
@@ -291,7 +332,8 @@ func (m *MEmployee) Delete(ID int64) (err error) {
 
 	_, err = db.Exec(query, ID)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("MEmployee.Delete : db.Exec (employee) error : ", err)
+		revel.AppLog.Errorf("MEmployee.Delete : db.Exec (employee), %s\n", err)
 		return err
 	}
 

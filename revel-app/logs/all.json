@@ -1,0 +1,7 @@
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T15:44:50.0899337+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T15:44:50.1009285+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T15:59:34.851869+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T15:59:34.8668705+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CCandidate.GetCandidateByID : strconv.ParseInt, strconv.ParseInt: parsing \"free\": invalid syntax\n","t":"2020-10-23T15:59:40.3835831+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T16:01:10.0998089+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T16:01:10.1148091+04:00"}

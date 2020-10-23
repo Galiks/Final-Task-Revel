@@ -31,7 +31,6 @@ func (controller *CEmployee) GetEmployees() revel.Result {
 	controller.employeeProvider = &providers.PEmployee{}
 	employees, err := controller.employeeProvider.GetEmployees()
 	if err != nil {
-		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(employees)
@@ -39,11 +38,15 @@ func (controller *CEmployee) GetEmployees() revel.Result {
 
 //GetEmployeeByID метод получения сотрудника по ID
 func (controller *CEmployee) GetEmployeeByID() revel.Result {
-	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	id, err := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	if err != nil {
+		fmt.Println("CEmployee.GetEmployeeByID : strconv.ParseInt error : ", err)
+		revel.AppLog.Errorf("CEmployee.GetEmployeeByID : strconv.ParseInt, %s\n", err)
+		return controller.RenderJSON(err)
+	}
 	controller.employeeProvider = &providers.PEmployee{}
 	employee, err := controller.employeeProvider.GetEmployeeByID(id)
 	if err != nil {
-		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(employee)
@@ -51,12 +54,15 @@ func (controller *CEmployee) GetEmployeeByID() revel.Result {
 
 //GetEmployeesByEvent метод получения сотрудников по ID мероприятия
 func (controller *CEmployee) GetEmployeesByEvent() revel.Result {
-	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
-	fmt.Println("GetEmployeesByEvent ID: ", id)
+	id, err := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
+	if err != nil {
+		fmt.Println("CEmployee.GetEmployeesByEvent : strconv.ParseInt error : ", err)
+		revel.AppLog.Errorf("CEmployee.GetEmployeesByEvent : strconv.ParseInt, %s\n", err)
+		return controller.RenderJSON(err)
+	}
 	controller.employeeProvider = &providers.PEmployee{}
 	employees, err := controller.employeeProvider.GetEmployeesByEventID(id)
 	if err != nil {
-		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(employees)
@@ -67,11 +73,15 @@ func (controller *CEmployee) CreateEmployee() revel.Result {
 	employee := &entities.Employee{}
 	err := json.Unmarshal(controller.Params.JSON, employee)
 	if err != nil {
-		fmt.Println("Unmarshalling: ", err)
+		fmt.Println("CEmployee.CreateEmployee : json.Unmarshal error : ", err)
+		revel.AppLog.Errorf("CEmployee.CreateEmployee : json.Unmarshal, %s\n", err)
 		return controller.RenderJSON(err)
 	}
 	controller.employeeProvider = &providers.PEmployee{}
 	result, err := controller.employeeProvider.CreateEmployee(employee)
+	if err != nil {
+		return controller.RenderJSON(err)
+	}
 
 	return controller.RenderJSON(result)
 }
@@ -81,13 +91,13 @@ func (controller *CEmployee) UpdateEmployee() revel.Result {
 	employee := &entities.Employee{}
 	err := json.Unmarshal(controller.Params.JSON, employee)
 	if err != nil {
-		fmt.Println("Unmarshalling: ", err)
+		fmt.Println("CEmployee.UpdateEmployee : json.Unmarshal error : ", err)
+		revel.AppLog.Errorf("CEmployee.UpdateEmployee : json.Unmarshal, %s\n", err)
 		return controller.RenderJSON(err)
 	}
 	controller.employeeProvider = &providers.PEmployee{}
 	result, err := controller.employeeProvider.UpdateEmployee(employee)
 	if err != nil {
-		fmt.Println(err)
 		return controller.RenderJSON(err)
 	}
 
@@ -96,12 +106,15 @@ func (controller *CEmployee) UpdateEmployee() revel.Result {
 
 //DeleteEmployee метод удаления сотрудника
 func (controller *CEmployee) DeleteEmployee() revel.Result {
-	id, _ := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
-	fmt.Println(id)
-	controller.employeeProvider = &providers.PEmployee{}
-	err := controller.employeeProvider.DeleteEmployee(id)
+	id, err := strconv.ParseInt(controller.Params.Get("id"), 10, 64)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("CEmployee.DeleteEmployee : strconv.ParseInt error : ", err)
+		revel.AppLog.Errorf("CEmployee.DeleteEmployee : strconv.ParseInt, %s\n", err)
+		return controller.RenderJSON(err)
+	}
+	controller.employeeProvider = &providers.PEmployee{}
+	err = controller.employeeProvider.DeleteEmployee(id)
+	if err != nil {
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(nil)

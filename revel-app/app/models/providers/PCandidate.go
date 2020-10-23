@@ -32,6 +32,11 @@ func (p *PCandidate) GetCandidatesByEventID(eventID int64) (cs []*entities.Candi
 	return p.candidateMapper.SelectByEventID(eventID)
 }
 
+//GetFreeCandidates метод получения кандидатов, не назначенных на мероприятие
+func (p *PCandidate) GetFreeCandidates() (cs []*entities.Candidate, err error) {
+	return p.candidateMapper.SelectFreeCandidates()
+}
+
 //CreateCandidate метод создаёт кандидата
 func (p *PCandidate) CreateCandidate(candidate *entities.Candidate) (c *entities.Candidate, err error) {
 	return p.candidateMapper.Insert(candidate)
