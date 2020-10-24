@@ -8,6 +8,6 @@ type User struct {
 	Login        string    `json:"login"`
 	Password     string    `json:"password"`
 	Role         string    `json:"role"`
-	UserPhoto    []byte    `json:"photo"`
+	UserPhoto    []byte    `json:"userPhoto"`
 	LastVisisted time.Time `json:"lastVisited"`
 }

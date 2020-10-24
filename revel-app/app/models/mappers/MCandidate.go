@@ -99,9 +99,7 @@ func (m *MCandidate) SelectAll() (cs []*entities.Candidate, err error) {
 			fmt.Println("MCandidate.SelectAll : rows.Scan error : ", err)
 			revel.AppLog.Errorf("MCandidate.SelectAll : rows.Scan, %s\n", err)
 		}
-
 		candidate := p.ToCandidate()
-
 		cs = append(cs, &candidate)
 	}
 

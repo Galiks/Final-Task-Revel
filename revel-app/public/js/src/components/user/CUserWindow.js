@@ -38,14 +38,25 @@ export class CUserWindow{
             let values = this.form.login.getValues()
 
             let result = await this.userModel.login(values.login, values.password)
-            if (result != false) {
-                this.currentUser = await this.userModel.getCurrentUser()
-                this.userIcon.enable()
-                this.aboutWindow()
+            if (result == false) {
+                falseAuth(this)
+                return
             } else {
-                this.loginButton.enable()
-                this.registerButton.enable()
-                this.userIcon.enable()
+                let user = await this.userModel.getCurrentUser()
+                if (user != undefined) {
+                    this.userIcon.enable()
+                    this.aboutWindow()
+                }
+                else{
+                    falseAuth(this)
+                }
+            }
+
+            function falseAuth(controller){
+                controller.loginButton.enable()
+                controller.registerButton.enable()
+                controller.userIcon.enable()
+                webix.message("Ошибка. Неправильный логин или пароль!")
             }
         })
     }
@@ -111,7 +122,6 @@ export class CUserWindow{
 
     aboutWindow(){
         webix.ui(this.userWindow.aboutUserView(this.currentUser))
-
         this.attachEventAboutWindow()
     }
 }

@@ -1,0 +1,67 @@
+# Routes Config
+#
+# This file defines all application routes (Higher priority routes first)
+#
+
+module:testrunner
+# module:jobs
+
+# INDEX
+GET     /                                       App.Index
+
+# EVENTS
+GET     /event/all                              CEvent.GetEvents
+GET     /event/:id                              CEvent.GetEventByID
+PUT     /event                                  CEvent.CreateEvent
+POST    /event/:id                              CEvent.UpdateEvent
+DELETE  /event/:id                              CEvent.DeleteEvent
+PUT     /event/:eventID/employee/:employeeID    CEvent.CreateLinkEmployeeToEvent
+PUT     /event/:eventID/candidate/:candidateID  CEvent.CreateLinkCandidateToEvent
+DELETE  /event/:id/employee                     CEvent.DeleteEmployeesFromEvent
+DELETE  /event/:id/candidate                    CEvent.DeleteCandidatesFromEvent
+POST    /event/:eventID/candidate/:candidateID  CEvent.SetCandidateStatusToFinishedEvent
+
+# EMPLOYEE
+GET     /employee/all                           CEmployee.GetEmployees
+GET     /employee/:id                           CEmployee.GetEmployeeByID
+GET     /employee/event/:id                     CEmployee.GetEmployeesByEvent
+PUT     /employee                               CEmployee.CreateEmployee
+POST    /employee/:id                           CEmployee.UpdateEmployee
+DELETE  /employee/:id                           CEmployee.DeleteEmployee
+
+# CANDIDATE
+GET     /candidate/all                          CCandidate.GetCandidates
+GET     /candidate/:id                          CCandidate.GetCandidateByID
+GET     /candidate/event/:id                    CCandidate.GetCandidatesByEvent
+GET     /candidate/all/free                     CCandidate.GetFreeCandidates
+PUT     /candidate                              CCandidate.CreateCandidate
+POST    /candidate/:id                          CCandidate.UpdateCandidate
+DELETE  /candidate/:id                          CCandidate.DeleteCandidate
+
+# USER
+GET     /user/all                               CUser.GetUsers
+GET     /user/:id                               CUser.GetUserByID
+PUT     /user                                   CUser.CreateUser
+POST    /user/:id                               CUser.UpdateUser
+DELETE  /user/:id                               CUser.DeleteUser
+POST    /user/auth/login                        CUser.Login
+POST    /user/auth/check                        CUser.Check
+GET     /user/auth/logout                       CUser.Logout
+GET     /user/auth/current                      CUser.GetCurrentUser
+
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/*filepath                       Static.Serve("public")
+
+# Catch all, this will route any request into the controller path
+#
+#                    **** WARNING ****
+# Enabling this exposes any controller and function to the web.
+# ** This is a serious security issue if used online **
+#
+# For rapid development uncomment the following to add new controller.action endpoints
+# without having to add them to the routes table.
+# *       /:controller/:action                    :controller.:action

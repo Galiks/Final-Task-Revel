@@ -19,8 +19,13 @@ export class EventModel{
             method: 'PUT'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -39,8 +44,13 @@ export class EventModel{
     async getCandidatesByEvent(eventID){
         let request = await fetch(`/candidate/event/${eventID}`)
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -73,8 +83,13 @@ export class EventModel{
             method: 'PUT'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -93,8 +108,13 @@ export class EventModel{
     async getEmployeesByEvent(eventID){
         let request = await fetch(`/employee/event/${eventID}`)
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -205,8 +225,13 @@ export class EventModel{
     async getEvents() {
         let request = await fetch(`event/all`)
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -247,8 +272,13 @@ export class EventModel{
     async getEventByID(id) {
         let request = await fetch(`/event/${id}`);
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -282,8 +312,13 @@ export class EventModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -317,8 +352,13 @@ export class EventModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -343,8 +383,13 @@ export class EventModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -365,8 +410,13 @@ export class EventModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -387,8 +437,13 @@ export class EventModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -405,8 +460,13 @@ export class EventModel{
             method: 'POST',
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   

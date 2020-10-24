@@ -14,8 +14,13 @@ export class EmployeeModel{
         let request = await fetch(`/employee/all`)
 
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -64,8 +69,13 @@ export class EmployeeModel{
     async getEmployeeByID(id) {
         let request = await fetch(`employee/${id}`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -103,8 +113,13 @@ export class EmployeeModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -143,8 +158,13 @@ export class EmployeeModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -169,8 +189,13 @@ export class EmployeeModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   

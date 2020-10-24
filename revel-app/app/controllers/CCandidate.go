@@ -19,6 +19,11 @@ type CCandidate struct {
 
 //Before интерцептор BEFOR контроллера CCandidate для проверки авторизации
 func (controller *CCandidate) Before() revel.Result {
+	var path = controller.Request.GetPath()
+	if path == "/candidate/all" {
+		return nil
+	}
+
 	var (
 		cache helpers.ICache // экземпляр кэша
 		err   error          // ошибка в ходе выполнения функции
@@ -34,6 +39,8 @@ func (controller *CCandidate) Before() revel.Result {
 	// Проверка существования токена сервера для пользователя
 	if _, ok := cache.TokenIsActualBySID(controller.Session.ID()); !ok {
 		return controller.Redirect((*CError).Unauthorized)
+		// err = errors.New("Пройдите авторизацию")
+		// return controller.RenderJSON(err)
 	}
 
 	return nil
@@ -45,9 +52,9 @@ func (controller *CCandidate) Before() revel.Result {
 // }
 
 //Finally интерцептор FINALLY контроллера CCandidate для закрытия соединения с БД
-func (controller *CCandidate) Finally() revel.Result {
-	return controller.RenderJSON(nil)
-}
+// func (controller *CCandidate) Finally() revel.Result {
+// 	return controller.RenderJSON(nil)
+// }
 
 //GetCandidates метод получения всех кандидатов
 func (controller *CCandidate) GetCandidates() revel.Result {

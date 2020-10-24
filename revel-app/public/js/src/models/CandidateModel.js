@@ -13,8 +13,13 @@ export class CandidateModel{
     async getCandidates(){
         let request = await fetch(`/candidate/all`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -46,8 +51,13 @@ export class CandidateModel{
     async getCandidateByID(id){
         let request = await fetch(`/candidate/${id}`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -88,8 +98,13 @@ export class CandidateModel{
     async getFreeCandidate(){
         let request = await fetch(`/candidate/all/free`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -134,8 +149,13 @@ export class CandidateModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -173,8 +193,13 @@ export class CandidateModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -212,8 +237,13 @@ export class CandidateModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   

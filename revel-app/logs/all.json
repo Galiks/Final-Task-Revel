@@ -48,3 +48,139 @@
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T21:41:46.5752578+04:00"}
 {"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-23T21:42:56.1637744+04:00"}
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-23T21:42:56.1757756+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T13:52:53.7809988+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T13:52:53.8119991+04:00"}
+{"action":"CEvent.GetEvents","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/event/all","t":"2020-10-24T13:53:00.2529286+04:00"}
+{"action":"CEmployee.GetEmployees","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/all","t":"2020-10-24T13:53:00.2719291+04:00"}
+{"action":"CUser.Check","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/check","t":"2020-10-24T13:53:00.2859294+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T13:53:00.3049272+04:00"}
+{"action":"CUser.Login","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/login","t":"2020-10-24T13:53:42.8955633+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T13:53:45.4326303+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T13:57:54.5023433+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T13:57:54.5093707+04:00"}
+{"action":"CEmployee.GetEmployees","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/all","t":"2020-10-24T13:58:21.1404743+04:00"}
+{"action":"CEvent.GetEvents","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/event/all","t":"2020-10-24T13:58:21.145476+04:00"}
+{"action":"CUser.Check","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/check","t":"2020-10-24T13:58:21.1524743+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T13:58:21.1934748+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:01:08.619732+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:01:08.6267314+04:00"}
+{"action":"CEmployee.GetEmployees","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/all","t":"2020-10-24T14:03:32.0514275+04:00"}
+{"action":"CEvent.GetEvents","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/event/all","t":"2020-10-24T14:03:32.0544286+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:06:09.2465395+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:06:09.2545384+04:00"}
+{"action":"CEmployee.GetEmployees","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/all","t":"2020-10-24T14:06:47.9493655+04:00"}
+{"action":"CEvent.GetEvents","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/event/all","t":"2020-10-24T14:06:47.9513664+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:08:35.888765+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:08:35.8957643+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:09:21.4660841+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:09:21.4760828+04:00"}
+{"action":"CEmployee.GetEmployees","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/all","t":"2020-10-24T14:09:23.734997+04:00"}
+{"action":"CEvent.GetEvents","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/event/all","t":"2020-10-24T14:09:23.7489979+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:10:18.88396+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:10:18.8919595+04:00"}
+{"action":"CEmployee.GetEmployeesByEvent","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/event/3","t":"2020-10-24T14:10:41.5068511+04:00"}
+{"action":"CEmployee.GetEmployeesByEvent","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/employee/event/3","t":"2020-10-24T14:10:53.2073648+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:15:42.9493156+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:15:42.9573174+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:26:52.1192535+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:26:52.1272524+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:28:35.3155065+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:28:35.3225055+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:30:39.0157476+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:30:39.0237488+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:33:19.3764344+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:33:19.3854383+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:37:37.0163665+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:37:37.0243617+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:39:11.2829754+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:39:11.2909759+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:42:04.629983+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:42:04.6369838+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T14:45:26.4489641+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T14:45:26.4569643+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T15:23:03.3463324+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T15:23:03.3553302+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T15:24:24.5390989+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T15:25:52.8216294+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T15:43:23.5595019+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T15:43:23.5685266+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T15:43:35.182734+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T15:45:53.6646446+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T15:45:53.6726444+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T15:46:50.8549689+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T15:46:50.8649696+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T15:47:05.5912847+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T15:48:11.4914811+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T15:50:00.5302435+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T15:50:00.5372416+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T15:55:47.0358764+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T15:55:47.043873+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:02:19.5251304+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:02:19.5321297+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:29:13.8542626+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:29:13.8612633+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T16:31:12.7828513+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:36:21.2746361+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:36:21.2816364+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T16:36:43.0889781+04:00"}
+{"action":"CCandidate.UpdateCandidate","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"POST","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/25","t":"2020-10-24T16:37:07.9405761+04:00"}
+{"caller":"CUser.go:129","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T16:37:17.0704471+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:39:33.6177674+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:39:33.6247669+04:00"}
+{"caller":"CUser.go:129","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T16:40:03.0946153+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:46:07.8259396+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:46:07.8339361+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:47:13.1157849+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:47:13.1237822+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:48:19.3024777+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:48:19.3104783+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T16:48:51.0612183+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T16:49:01.8748163+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:50:45.0898493+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:50:45.0978527+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T16:51:07.8486851+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:52:27.0771285+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:52:27.1221302+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T16:54:25.8544991+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T16:55:10.0945152+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T16:58:02.7013332+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T16:58:02.7093355+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:00:31.6382787+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:02:11.6057972+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:02:11.6137965+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:02:51.0116071+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T17:03:08.2158307+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:09:13.8922863+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:09:13.9002842+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:09:29.3043771+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:12:54.544611+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:12:54.5536121+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:13:15.7258688+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:16:20.623493+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:16:20.6314913+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:17:51.5981704+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:20:12.284551+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:20:12.2945204+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:21:40.8392069+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:22:07.2223133+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:22:07.2313128+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.Login : json.Unmarshal, unexpected end of JSON input\n","t":"2020-10-24T17:23:04.1494964+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:26:18.1444943+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:26:18.1534934+04:00"}
+{"caller":"CUser.go:130","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T17:27:19.0913427+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:29:47.033709+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:29:47.0417086+04:00"}
+{"caller":"CUser.go:130","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T17:40:37.3643901+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T17:45:11.386659+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T17:45:11.3946577+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"При поиске пользователя произошла ошибка: %!(EXTRA *errors.errorString=Пользователь не найден)","t":"2020-10-24T17:46:03.2024175+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T17:46:14.2851031+04:00"}
+{"caller":"CUser.go:130","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T17:49:20.044817+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"При поиске пользователя произошла ошибка: %!(EXTRA *errors.errorString=Пользователь не найден)","t":"2020-10-24T17:49:59.1947056+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T17:50:06.3988252+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T19:36:15.3613511+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T19:36:15.3693491+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T19:37:20.8728388+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T19:37:20.8798394+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T19:38:27.0155428+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T19:38:27.0225426+04:00"}

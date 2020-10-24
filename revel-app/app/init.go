@@ -39,7 +39,7 @@ func init() {
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
 	revel.InterceptMethod((*controllers.CCandidate).Before, revel.BEFORE)
-	revel.InterceptMethod((*controllers.CCandidate).Finally, revel.FINALLY)
+	// revel.InterceptMethod((*controllers.CCandidate).Finally, revel.FINALLY)
 
 	revel.InterceptMethod((*controllers.CEmployee).Before, revel.BEFORE)
 

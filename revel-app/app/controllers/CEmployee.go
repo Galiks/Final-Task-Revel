@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"revel-app/app/helpers"
 	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
 	"strconv"
@@ -18,11 +19,27 @@ type CEmployee struct {
 
 //Before интерцептор BEFOR контроллера CEmployee
 func (controller *CEmployee) Before() revel.Result {
-	// userController := &CUser{}
+	var path = controller.Request.GetPath()
+	if path == "/employee/all" {
+		return nil
+	}
+	var (
+		cache helpers.ICache // экземпляр кэша
+		err   error          // ошибка в ходе выполнения функции
+	)
 
-	// isCheck := userController.Check()
+	// инициализация кэша
+	cache, err = helpers.GetCache()
+	if err != nil {
+		revel.AppLog.Errorf("CCandidate.Before : helpers.GetCache, %s\n", err)
+		return controller.RenderJSON(err)
+	}
 
-	// fmt.Println("CEmployee.Before isCheck: ", isCheck)
+	// Проверка существования токена сервера для пользователя
+	if _, ok := cache.TokenIsActualBySID(controller.Session.ID()); !ok {
+		// return controller.Redirect((*CError).Unauthorized)
+		return controller.Redirect((*CError).Unauthorized)
+	}
 
 	return nil
 }

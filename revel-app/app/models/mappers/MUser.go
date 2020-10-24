@@ -2,6 +2,7 @@ package mappers
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"revel-app/app/helpers"
 	"revel-app/app/models/entities"
@@ -25,7 +26,8 @@ type UserSQL struct {
 	LastVisisted *time.Time `json:"last visited"`
 }
 
-func (u UserSQL) toUser() entities.User {
+//ToUser метод для конвертации из UserSQL в User
+func (u UserSQL) ToUser() entities.User {
 	var (
 		userPhoto   []byte
 		lastVisited time.Time
@@ -89,7 +91,7 @@ func (m *MUser) SelectAll() (us []*entities.User, err error) {
 			fmt.Println("MUser.SelectAll : rows.Scan error : ", err)
 			revel.AppLog.Errorf("MUser.SelectAll : rows.Scan, %s\n", err)
 		}
-		user := p.toUser()
+		user := p.ToUser()
 
 		us = append(us, &user)
 	}
@@ -136,7 +138,7 @@ func (m *MUser) SelectByID(ID int64) (u *entities.User, err error) {
 		revel.AppLog.Errorf("MUser.SelectByID : rows.Scan, %s\n", err)
 		return nil, err
 	}
-	user := p.toUser()
+	user := p.ToUser()
 	return &user, nil
 }
 
@@ -157,6 +159,8 @@ func (m *MUser) SelectByAuth(user *entities.User) (u *entities.User, err error) 
 
 	defer db.Close()
 
+	fmt.Println("MUser.SelectByAuth : Input value : ", user)
+
 	query := `SELECT u.id, "Login", "Password", "Role", "UserPhoto", "LastVisite"
 	FROM public."User" as u
 	JOIN public."Role" as r ON u."id_role" = r.id
@@ -176,7 +180,11 @@ func (m *MUser) SelectByAuth(user *entities.User) (u *entities.User, err error) 
 	fmt.Println(rows)
 	p := UserSQL{}
 	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.Role, &p.UserPhoto, &p.LastVisisted)
-	result := p.toUser()
+	if p.ID == 0 {
+		return nil, errors.New("Пользователь не найден")
+	}
+	result := p.ToUser()
+	fmt.Println("MUser.SelectByAuth : ", result)
 	return &result, nil
 
 }

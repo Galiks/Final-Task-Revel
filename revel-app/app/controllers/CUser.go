@@ -23,9 +23,27 @@ type CUser struct {
 
 //Before интерцептор BEFOR контроллера CUser
 func (controller *CUser) Before() revel.Result {
-	isCheck := controller.Check()
+	var path = controller.Request.GetPath()
+	if path == "/user/auth/login" || path == "/user/auth/check" {
+		return nil
+	}
+	var (
+		cache helpers.ICache // экземпляр кэша
+		err   error          // ошибка в ходе выполнения функции
+	)
 
-	fmt.Println("CUser.Before isCheck: ", isCheck)
+	// инициализация кэша
+	cache, err = helpers.GetCache()
+	if err != nil {
+		revel.AppLog.Errorf("CCandidate.Before : helpers.GetCache, %s\n", err)
+		return controller.RenderJSON(err)
+	}
+
+	// Проверка существования токена сервера для пользователя
+	if _, ok := cache.TokenIsActualBySID(controller.Session.ID()); !ok {
+		return controller.Redirect((*CError).Unauthorized)
+		// return controller.RenderJSON(errors.New("Пройдите авторизацию"))
+	}
 
 	return nil
 }
@@ -61,13 +79,13 @@ func (controller *CUser) GetUserByID() revel.Result {
 
 //Login метод для получения пользователя после попытки авторизации
 func (controller *CUser) Login() revel.Result {
-
 	fmt.Println("Login")
 
 	// инициализация кэша
 	cache, err := helpers.GetCache()
 	if err != nil {
-		revel.AppLog.Errorf("CAuth.Init : helpers.GetCache, %s\n", err)
+		fmt.Println("CUser.Login : helpers.GetCache : ", err)
+		revel.AppLog.Errorf("CUser.Login : helpers.GetCache, %s\n", err)
 		return controller.RenderJSON(err)
 	}
 
@@ -87,6 +105,7 @@ func (controller *CUser) Login() revel.Result {
 	// преобразование тела запроса в структуру сущности
 	err = json.Unmarshal(rawRequest, user)
 	if err != nil {
+		fmt.Println("CUser.Login : json.Unmarshal : ", err)
 		revel.AppLog.Errorf("CUser.Login : json.Unmarshal, %s\n", err)
 		return controller.RenderJSON(err)
 	}

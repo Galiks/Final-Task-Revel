@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/revel/revel"
@@ -13,6 +14,7 @@ type CError struct {
 
 // Unauthorized ошибка 401
 func (c *CError) Unauthorized() revel.Result {
+	fmt.Println("CError.Unauthorized")
 	c.Response.Status = http.StatusUnauthorized
 	c.ViewArgs["Title"] = "Unauthorized"
 	c.ViewArgs["Description"] = "The request has not been applied because it lacks valid authentication credentials for the target resource"
