@@ -44,6 +44,7 @@ export class CUserWindow{
             } else {
                 let user = await this.userModel.getCurrentUser()
                 if (user != undefined) {
+                    this.currentUser = user
                     this.userIcon.enable()
                     this.aboutWindow()
                 }

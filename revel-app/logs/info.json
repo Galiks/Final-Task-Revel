@@ -4031,3 +4031,7 @@
 {"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-10-24T19:38:27.023556+04:00"}
 {"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-10-24T19:38:27.0345426+04:00"}
 {"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-10-24T19:38:27.0385427+04:00"}
+{"caller":"watcher.go:242","lvl":"INFO","module":"revel","msg":"Waiting for refresh timer to expire","section":"util","t":"2020-10-24T19:40:40.0533532+04:00"}
+{"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-10-24T19:40:40.0638077+04:00"}
+{"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-10-24T19:40:40.0757899+04:00"}
+{"caller":"watcher.go:263","error":"nil","lvl":"INFO","module":"revel","msg":"Rebuilt, result","section":"util","t":"2020-10-24T19:40:40.0757899+04:00"}
