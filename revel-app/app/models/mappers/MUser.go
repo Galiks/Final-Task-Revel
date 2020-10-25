@@ -59,7 +59,7 @@ func (u UserSQL) ToUser() entities.User {
 	return entities.User{
 		ID:           u.ID,
 		Login:        u.Login,
-		Password:     u.Password,
+		Password:     "password",
 		Role:         role,
 		UserPhoto:    userPhoto,
 		LastVisisted: lastVisited}
@@ -84,10 +84,6 @@ func (m *MUser) SelectAll() (us []*entities.User, err error) {
 
 	query := `SELECT id, "Login", "Password", "UserPhoto", "LastVisite", "id_role"
 	FROM public."User"`
-
-	// query := `SELECT u.id, "Login", "Password", "UserPhoto", "LastVisite", "Role"
-	// FROM public."User" as u
-	// JOIN public."Role" as r ON u.id_role = r.id;`
 
 	rows, err := db.Query(query)
 	if err != nil {

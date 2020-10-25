@@ -1,7 +1,8 @@
 import { User } from "../../models/entities/User.js"
+import { USER_ROLE } from "./CUserTab.js";
 
 
-export class UserWindow{
+export class UserWindowView{
     constructor(){
 
     }
@@ -18,12 +19,14 @@ export class UserWindow{
           "id": "updateForm",
           "rows": [
             { "view": "text", "label": "Номер", "name": "ID", "type": "number", "readonly": true, labelWidth: labelWidth, hidden: true },
-            { "view": "text", "label": "Фамилия", "name": "lastname", "type": "text", required:true, labelWidth: labelWidth },
-            { "view": "text", "label": "Имя", "name": "firstname", "type": "text", required:true, labelWidth: labelWidth },
-            { "view": "text", "label": "Отчество", "name": "patronymic", "type": "text", labelWidth: labelWidth },
-            { "view": "text", "label": "Должность", "name": "position", "type": "text", required:true, labelWidth: labelWidth },
-            { "view": "text", "label": "Email", "name": "email", "type": "text", required:true, labelWidth: labelWidth },
-            { "view": "text", "label": "Телефон", "name": "phone", "type": "text", required:true, pattern: { mask: "# ###-###-##-##", allow: /[0-9]/g }, labelWidth: labelWidth },
+            { "view": "text", "label": "Логин", "name": "login", "type": "text", required:true, labelWidth: labelWidth },
+            { "view": "text", "label": "Пароль", "name": "password", "type": "text", required:true, labelWidth: labelWidth },
+            { view:"select", label:"Роль", name:"role", options:[
+                USER_ROLE.user,
+                USER_ROLE.moderator,
+                USER_ROLE.admin
+              ] 
+            },
             { "view": "button", "css": "webix_primary", "label": "Изменить", "id": "updateWindowButton" }
           ]
         };
@@ -50,6 +53,8 @@ export class UserWindow{
     }
 
     viewDeleteWindow(user){
+        let labelWidth = 100
+
         let deleteWindow = {
             view:"window",
             move:true,
@@ -67,11 +72,11 @@ export class UserWindow{
               "rows": [
                 {
                     "elements": [
-                        { "label": "Информация", "type": "label" },
-                        { "label": "ФИО", "type": "text", "value": employee.lastname + " " + employee.firstname + " " + employee.patronymic },
-                        { "label": "Должность", "type":"text", "value": employee.position },
-                        { "label": "Email", "type":"text", "value": employee.email },
-                        { "label": "Телефон", "type":"text", "value": employee.phone },
+                        { "label": "Информация", "type": "label",labelWidth: labelWidth },
+                        { "label": "Фото", "type":"text", "value":  user.userPhoto,labelWidth: labelWidth},
+                        { "label": "Логин", "type": "text", "value": user.login,labelWidth: labelWidth },
+                        { "label": "Роль", "type":"text", "value": user.role,labelWidth: labelWidth },
+                        { "label": "Последний визит", "type":"text", "value": user.lastVisites,labelWidth: labelWidth },
                       ],
                       "view": "property"
                 },
@@ -90,6 +95,8 @@ export class UserWindow{
     }
 
     viewAboutWindow(user){
+        let labelWidth = 250
+
         let aboutWindow = {
             view:"window",
             move:true,
@@ -106,10 +113,10 @@ export class UserWindow{
             body:{
               "elements": [
                 { "label": "Информация", "type": "label" },
-                { "label": "ФИО", "type": "text", "value": employee.lastname + " " + employee.firstname + " " + employee.patronymic },
-                { "label": "Должность", "type":"text", "value": employee.position },
-                { "label": "Email", "type":"text", "value": employee.email },
-                { "label": "Телефон", "type":"text", "value": employee.phone },
+                { "label": "Логин", "type": "text", "value": user.login, labelWidth: labelWidth },
+                { "label": "Роль", "type":"text", "value": user.role, labelWidth: labelWidth },
+                { "label": "Последний визит", "type":"text", "value": String(user.lastVisited), labelWidth: labelWidth },
+                { "label": "Фото", "type":"text", "value":  user.userPhoto, labelWidth: labelWidth},
               ],
               "view": "property"
             },

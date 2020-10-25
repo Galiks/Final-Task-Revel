@@ -25,7 +25,8 @@ func (p *PUser) GetUserByID(ID int64) (u *entities.User, err error) {
 //GetUserByAuth метод получения пользователя при авторизации
 func (p *PUser) GetUserByAuth(user *entities.User) (u *entities.User, err error) {
 	user.Password = p.getHash(user.Password)
-	return p.userMapper.SelectByAuth(user)
+	result, err := p.userMapper.SelectByAuth(user)
+	return result, err
 }
 
 //CreateUser метод создания пользователя

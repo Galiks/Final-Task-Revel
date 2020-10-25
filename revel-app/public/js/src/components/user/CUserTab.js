@@ -15,6 +15,7 @@ export class CUserTab{
         this.cmenu = $$("usercmenu")
         this.refreshDatatable()
         this.attachEvent()
+        this.userWindowController.init(()=>this.refreshDatatable())
     }
 
     config(){
@@ -51,16 +52,13 @@ export class CUserTab{
             let itemID = context.id;
             let user = item.getItem(itemID)
             if (this.getItem(id).value == "Удалить"){
-                alert("Удалить")
                 controller.userWindowController.deleteWindow(user)       
             }
             else if (this.getItem(id).value == "Изменить"){
-                alert("Изменить")
                 controller.userWindowController.updateWindow(user)
             }
             else if (this.getItem(id).value == "Подробнее"){
-                alert("Подробнее")
-                controller.userWindowController.aboutWindow()
+                controller.userWindowController.aboutWindow(user)
             }
         })
     }
@@ -98,6 +96,7 @@ export class CUserTab{
 }
 
 export const USER_ROLE = {
+    empty: "Нет роли",
     user: "Пользователь",
     moderator: "Модератор",
     admin: "Admin"
