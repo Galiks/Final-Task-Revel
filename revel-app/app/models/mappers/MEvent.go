@@ -360,7 +360,7 @@ func (m *MEvent) DeleteEmployeesFromEvent(IDEvent int64) (err error) {
 	query := `DELETE FROM public."EmployeeEvent"
 	WHERE id_event = $1;`
 
-	err = db.QueryRow(query, IDEvent).Scan()
+	_, err = db.Exec(query, IDEvent)
 	if err != nil {
 		fmt.Println("MEvent.DeleteEmployeesFromEvent : db.QueryRow error : ", err)
 		revel.AppLog.Errorf("MEvent.DeleteEmployeesFromEvent : db.QueryRow, %s\n", err)
@@ -425,7 +425,7 @@ func (m *MEvent) DeleteCandidatesFromEvent(IDEvent int64) (err error) {
 	query := `DELETE FROM public."CandidateEvent"
 	WHERE id_event = $1;`
 
-	err = db.QueryRow(query, IDEvent).Scan()
+	_, err = db.Exec(query, IDEvent)
 	if err != nil {
 		fmt.Println("MEvent.DeleteCandidatesFromEvent : db.QueryRow error : ", err)
 		revel.AppLog.Errorf("MEvent.DeleteCandidatesFromEvent : db.QueryRow, %s\n", err)

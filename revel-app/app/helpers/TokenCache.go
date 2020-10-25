@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"fmt"
 	"revel-app/app/models/entities"
 )
 
@@ -55,9 +54,6 @@ func (c *cache) TokenIsActualBySID(sid string) (token string, ok bool) {
 
 // Get получение данных кэша по SID
 func (c *cache) Get(sid string) (u *entities.User, token string, err error) {
-	fmt.Println("Cache : Get")
-	fmt.Println(c.actualUsers)
-	fmt.Println(c.actualToken)
 	return c.actualUsers[sid], c.actualToken[sid], nil
 }
 

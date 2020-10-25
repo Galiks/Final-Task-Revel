@@ -23,10 +23,15 @@ type CUser struct {
 
 //Before интерцептор BEFOR контроллера CUser
 func (controller *CUser) Before() revel.Result {
+	method := controller.Request.Method
 	var path = controller.Request.GetPath()
 	if path == "/user/auth/login" || path == "/user/auth/check" {
 		return nil
 	}
+	if method == "PUT" && path == "/user" {
+		return nil
+	}
+
 	var (
 		cache helpers.ICache // экземпляр кэша
 		err   error          // ошибка в ходе выполнения функции

@@ -60,12 +60,20 @@ export class UserModel{
             let users = []
             if (response != null) {
                 for (const item of response) {
-                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, item.lastVisited)
+                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, toDate(item.lastVisited))
                     users.push(user)
                 }
             }
             resolve(users)
         })
+
+        function toDate(ISOdate){ 
+            let date = ISOdate.split('T')
+            let time = date[1].split(':')
+            let hh = time[0]
+            let mm = time[1]
+            return date[0] + " " + hh + ":" + mm
+        }
     }
 
     /**

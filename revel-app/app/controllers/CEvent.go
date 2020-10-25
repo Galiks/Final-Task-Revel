@@ -7,7 +7,6 @@ import (
 	"revel-app/app/models/entities"
 	"revel-app/app/models/providers"
 	"strconv"
-	"time"
 
 	"github.com/revel/revel"
 )
@@ -84,12 +83,6 @@ func (controller *CEvent) CreateEvent() revel.Result {
 		revel.AppLog.Errorf("CEvent.CreateEvent : json.Unmarshal, %s\n", err)
 		return controller.RenderJSON(err)
 	}
-	event.Beginning, err = time.Parse(time.RFC3339, event.Beginning.String()+":00Z")
-	if err != nil {
-		fmt.Println("CEvent.CreateEventt : time.Parse error : ", err)
-		revel.AppLog.Errorf("CEvent.CreateEvent : time.Parse, %s\n", err)
-		return controller.RenderJSON(err)
-	}
 
 	fmt.Println("Try create event: ", event)
 	controller.eventProvider = &providers.PEvent{}
@@ -110,12 +103,6 @@ func (controller *CEvent) UpdateEvent() revel.Result {
 	if err != nil {
 		fmt.Println("CEvent.UpdateEvent : json.Unmarshal error : ", err)
 		revel.AppLog.Errorf("CEvent.UpdateEvent : json.Unmarshal, %s\n", err)
-		return controller.RenderJSON(err)
-	}
-	event.Beginning, err = time.Parse(time.RFC3339, event.Beginning.String()+":00Z")
-	if err != nil {
-		fmt.Println("CEvent.UpdateEvent : time.Parse error : ", err)
-		revel.AppLog.Errorf("CEvent.UpdateEvent : time.Parse, %s\n", err)
 		return controller.RenderJSON(err)
 	}
 

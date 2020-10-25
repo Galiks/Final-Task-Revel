@@ -200,3 +200,131 @@
 {"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T19:58:06.2598899+04:00"}
 {"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"При поиске пользователя произошла ошибка: %!(EXTRA *errors.errorString=Пользователь не найден)","t":"2020-10-24T19:59:14.0656562+04:00"}
 {"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T19:59:15.5560148+04:00"}
+{"caller":"CUser.go:130","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T20:00:47.6648313+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.SelectByID : rows.Scan, sql: Rows are closed\n","t":"2020-10-24T20:01:07.3163823+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.Update : m.SelectByID, sql: Rows are closed\n","t":"2020-10-24T20:01:07.3163823+04:00"}
+{"caller":"CUser.go:130","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T20:01:11.9781948+04:00"}
+{"caller":"CUser.go:130","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T20:05:08.1708875+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"При поиске пользователя произошла ошибка: %!(EXTRA *errors.errorString=Пользователь не найден)","t":"2020-10-24T20:05:28.1408981+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T20:05:30.0356002+04:00"}
+{"action":"CUser.CreateUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"PUT","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user","t":"2020-10-24T20:05:40.9304464+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T20:44:50.5156277+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T20:44:50.5236339+04:00"}
+{"caller":"CUser.go:132","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-24T20:46:02.0782806+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T20:49:06.7420036+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T20:49:06.750007+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T20:49:25.5667478+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T20:49:25.5767464+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-24T20:52:45.3147774+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-24T20:52:45.3227763+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.SelectByID : rows.Scan, sql: Rows are closed\n","t":"2020-10-24T20:53:05.8978583+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.Insert : m.SelectByID, sql: Rows are closed\n","t":"2020-10-24T20:53:05.8978583+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CUser.CreateUser : controller.userProvider.CreateUser, sql: Rows are closed\n","t":"2020-10-24T20:53:05.8988136+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"При поиске пользователя произошла ошибка: %!(EXTRA *errors.errorString=Пользователь не найден)","t":"2020-10-24T20:53:27.6066667+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-24T20:53:32.2382447+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T14:27:06.0675439+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T14:27:06.1415431+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T14:28:12.3410448+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T14:28:12.349043+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T14:28:31.4166959+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T14:28:31.424695+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"При поиске пользователя произошла ошибка: %!(EXTRA *errors.errorString=Пользователь не найден)","t":"2020-10-25T14:35:24.3240813+04:00"}
+{"action":"CUser.GetCurrentUser","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/auth/current","t":"2020-10-25T14:35:24.3390816+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T14:35:32.7325947+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T15:07:10.7418704+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T15:31:21.9704386+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T15:50:28.6522724+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T15:50:28.6602719+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T15:51:35.062924+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T15:51:35.0709254+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T15:54:20.6570785+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T15:54:20.665082+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T15:54:38.5545697+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.SelectAll : rows.Scan, sql: Scan error on column index 4, name \"id_role\": unsupported Scan, storing driver.Value type int64 into type *time.Time\n","t":"2020-10-25T15:54:41.7040736+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:08:00.0639821+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:08:00.0719821+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:09:12.9730979+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.SelectByID : db.Query, pq: таблица \"u\" отсутствует в предложении FROM\n","t":"2020-10-25T17:09:27.261031+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.Update : m.SelectByID, pq: таблица \"u\" отсутствует в предложении FROM\n","t":"2020-10-25T17:09:27.2619979+04:00"}
+{"action":"CUser.GetUsers","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/user/all","t":"2020-10-25T17:09:48.6433369+04:00"}
+{"action":"CCandidate.GetCandidateByID","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/3","t":"2020-10-25T17:10:21.1314304+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:12:32.6887287+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:12:32.696769+04:00"}
+{"action":"CCandidate.GetCandidateByID","caller":"results.go:455","error":"no route for action App\\App.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/3","t":"2020-10-25T17:12:44.5402746+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:14:17.206753+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:14:17.2147515+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:14:38.8236933+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:14:38.8316932+04:00"}
+{"action":"CCandidate.GetCandidateByID","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/3","t":"2020-10-25T17:14:39.8605845+04:00"}
+{"action":"CCandidate.GetCandidateByID","caller":"results.go:455","error":"no route for action App\\CError.Unauthorized","ip":"127.0.0.1","lvl":"ERROR","method":"GET","module":"app","msg":"Apply: Couldn't resolve redirect","namespace":"App\\","path":"/candidate/3","t":"2020-10-25T17:14:41.6523963+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:17:07.3709645+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:17:07.3899649+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:18:18.2076491+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:23:03.1736905+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:23:03.1816895+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:23:12.8235617+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:27:06.7505929+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:27:06.7585921+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:27:14.4535207+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.SelectByID : db.Query, pq: таблица \"u\" отсутствует в предложении FROM\n","t":"2020-10-25T17:31:22.5004625+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MUser.Update : m.SelectByID, pq: таблица \"u\" отсутствует в предложении FROM\n","t":"2020-10-25T17:31:22.5004625+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:32:42.1139154+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:32:42.1219139+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:37:41.4190423+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MEvent.DeleteCandidatesFromEvent : db.QueryRow, sql: no rows in result set\n","t":"2020-10-25T17:38:39.6899122+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MEvent.Delete : m.DeleteCandidatesFromEvent, sql: no rows in result set\n","t":"2020-10-25T17:38:39.6899122+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MEvent.DeleteCandidatesFromEvent : db.QueryRow, sql: no rows in result set\n","t":"2020-10-25T17:38:43.4750263+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MEvent.Delete : m.DeleteCandidatesFromEvent, sql: no rows in result set\n","t":"2020-10-25T17:38:43.4760238+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MEvent.DeleteCandidatesFromEvent : db.QueryRow, sql: no rows in result set\n","t":"2020-10-25T17:38:48.9310833+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MEvent.Delete : m.DeleteCandidatesFromEvent, sql: no rows in result set\n","t":"2020-10-25T17:38:48.9320591+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:42:20.380975+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:42:20.3889752+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:42:34.1456317+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateEvent : json.Unmarshal, parsing time \"\"2020-10-25T17:43\"\" as \"\"2006-01-02T15:04:05Z07:00\"\": cannot parse \"\"\" as \":\"\n","t":"2020-10-25T17:43:24.3449598+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateLinkEmployeeToEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T17:43:24.3529716+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateLinkEmployeeToEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T17:43:41.5588464+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T17:43:42.4236732+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T17:43:42.4376725+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T17:43:42.4446738+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T17:43:42.4506736+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CCandidate.GetCandidatesByEvent : strconv.ParseInt, strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T17:43:42.4646727+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T17:46:51.9901036+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T17:46:51.998104+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T17:47:02.8166912+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T18:16:30.5022622+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T18:16:30.5102618+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T18:17:37.5171644+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T18:17:37.525162+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T18:19:27.1018649+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.UpdateEvent : json.Unmarshal, parsing time \"\"2020-10-25T17:47\"\" as \"\"2006-01-02T15:04:05Z07:00\"\": cannot parse \"\"\" as \":\"\n","t":"2020-10-25T18:32:10.1701948+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.DeleteCandidatesFromEvent : strconv.ParseInt, strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T18:32:10.1771935+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.1851946+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.1911917+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.1991926+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.2062024+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.2121902+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.DeleteEmployeesFromEvent : strconv.ParseInt, strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T18:32:10.2191924+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateLinkEmployeeToEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.2261932+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateLinkEmployeeToEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:10.2351935+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.UpdateEvent : json.Unmarshal, parsing time \"\"2020-10-25T17:47\"\" as \"\"2006-01-02T15:04:05Z07:00\"\": cannot parse \"\"\" as \":\"\n","t":"2020-10-25T18:32:14.8401615+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.DeleteCandidatesFromEvent : strconv.ParseInt, strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T18:32:14.8482176+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.855162+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.8621617+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.8701606+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.8761618+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.8831633+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.DeleteEmployeesFromEvent : strconv.ParseInt, strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T18:32:14.8901602+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateLinkEmployeeToEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.8961607+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.CreateLinkEmployeeToEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:32:14.9041615+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.UpdateEvent : json.Unmarshal, parsing time \"\"2020-10-25T17:47\"\" as \"\"2006-01-02T15:04:05Z07:00\"\": cannot parse \"\"\" as \":\"\n","t":"2020-10-25T18:34:17.8090074+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.DeleteCandidatesFromEvent : strconv.ParseInt, strconv.ParseInt: parsing \"undefined\": invalid syntax\n","t":"2020-10-25T18:34:17.8169981+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:34:29.9133755+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:34:31.6150655+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:34:32.6657088+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:34:34.2982969+04:00"}
+{"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"CEvent.SetCandidateStatusToFinishedEvent : strconv.ParseInt(eventID), strconv.ParseInt: parsing \"NaN\": invalid syntax\n","t":"2020-10-25T18:34:35.002507+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T18:35:57.1580238+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T18:35:57.1670231+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T18:38:02.1989109+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T18:38:02.2139105+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T18:38:18.4272261+04:00"}

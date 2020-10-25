@@ -53,14 +53,15 @@ export class CCreateEventWindow{
 
             let newEvent = await this.eventModel.createEvent(values)
 
+            if (candidates[0] != ""){
+                for (let index = 0; index < candidates.length; index++) {
+                    const id = candidates[index];
+                    await this.eventModel.setCandidateToEvent(id, newEvent.ID)
+                }
+            }
             for (let index = 0; index < employees.length; index++) {
                 const id = employees[index];
                 await this.eventModel.setEmployeeToEvent(id, newEvent.ID)
-            }
-
-            for (let index = 0; index < candidates.length; index++) {
-                const id = candidates[index];
-                await this.eventModel.setCandidateToEvent(id, newEvent.ID)
             }
 
             this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)

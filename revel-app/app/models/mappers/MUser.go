@@ -21,17 +21,28 @@ type UserSQL struct {
 	ID           int64      `json:"ID"`
 	Login        string     `json:"login"`
 	Password     string     `json:"password"`
-	Role         string     `json:"role"`
-	UserPhoto    *[]byte    `json:"photo"`
-	LastVisisted *time.Time `json:"last visited"`
+	IDRole       *int64     `json:"id_role"`
+	UserPhoto    *[]byte    `json:"userPhoto"`
+	LastVisisted *time.Time `json:"lastVisited"`
 }
 
 //ToUser метод для конвертации из UserSQL в User
 func (u UserSQL) ToUser() entities.User {
 	var (
+		role        string
 		userPhoto   []byte
 		lastVisited time.Time
 	)
+
+	if u.IDRole == nil {
+		role = "Нет роли"
+	} else {
+		roleByID, err := u.getRoleByID(*u.IDRole)
+		if err != nil {
+			role = "Нет роли"
+		}
+		role = roleByID
+	}
 
 	if u.UserPhoto == nil {
 		userPhoto = make([]byte, 0, 0)
@@ -49,7 +60,7 @@ func (u UserSQL) ToUser() entities.User {
 		ID:           u.ID,
 		Login:        u.Login,
 		Password:     u.Password,
-		Role:         u.Role,
+		Role:         role,
 		UserPhoto:    userPhoto,
 		LastVisisted: lastVisited}
 }
@@ -71,9 +82,12 @@ func (m *MUser) SelectAll() (us []*entities.User, err error) {
 
 	defer db.Close()
 
-	query := `SELECT u.id, "Login", "Password", "UserPhoto", "LastVisite", "Role"
-	FROM public."User" as u
-	JOIN public."Role" as r ON u.id_role = r.id;`
+	query := `SELECT id, "Login", "Password", "UserPhoto", "LastVisite", "id_role"
+	FROM public."User"`
+
+	// query := `SELECT u.id, "Login", "Password", "UserPhoto", "LastVisite", "Role"
+	// FROM public."User" as u
+	// JOIN public."Role" as r ON u.id_role = r.id;`
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -86,7 +100,7 @@ func (m *MUser) SelectAll() (us []*entities.User, err error) {
 
 	for rows.Next() {
 		p := UserSQL{}
-		err := rows.Scan(&p.ID, &p.Login, &p.Password, &p.UserPhoto, &p.LastVisisted, &p.Role)
+		err := rows.Scan(&p.ID, &p.Login, &p.Password, &p.UserPhoto, &p.LastVisisted, &p.IDRole)
 		if err != nil {
 			fmt.Println("MUser.SelectAll : rows.Scan error : ", err)
 			revel.AppLog.Errorf("MUser.SelectAll : rows.Scan, %s\n", err)
@@ -116,9 +130,8 @@ func (m *MUser) SelectByID(ID int64) (u *entities.User, err error) {
 
 	defer db.Close()
 
-	query := `SELECT u.id, "Login", "Password", "UserPhoto", "LastVisite", "Role"
-	FROM public."User" as u
-	JOIN public."Role" as r ON u.id_role = r.id
+	query := `SELECT id, "Login", "Password", "UserPhoto", "LastVisite", "id_role"
+	FROM public."User"
 	WHERE u.id = $1;`
 
 	rows, err := db.Query(query, ID)
@@ -132,7 +145,7 @@ func (m *MUser) SelectByID(ID int64) (u *entities.User, err error) {
 
 	rows.Next()
 	p := UserSQL{}
-	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.UserPhoto, &p.LastVisisted, &p.Role)
+	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.UserPhoto, &p.LastVisisted, &p.IDRole)
 	if err != nil {
 		fmt.Println("MUser.SelectByID : rows.Scan error : ", err)
 		revel.AppLog.Errorf("MUser.SelectByID : rows.Scan, %s\n", err)
@@ -161,9 +174,8 @@ func (m *MUser) SelectByAuth(user *entities.User) (u *entities.User, err error) 
 
 	fmt.Println("MUser.SelectByAuth : Input value : ", user)
 
-	query := `SELECT u.id, "Login", "Password", "Role", "UserPhoto", "LastVisite"
-	FROM public."User" as u
-	JOIN public."Role" as r ON u."id_role" = r.id
+	query := `SELECT id, "Login", "Password", "id_role", "UserPhoto", "LastVisite"
+	FROM public."User"
 	WHERE "Login" = $1
 	AND "Password" = $2;`
 
@@ -179,7 +191,7 @@ func (m *MUser) SelectByAuth(user *entities.User) (u *entities.User, err error) 
 	rows.Next()
 	fmt.Println(rows)
 	p := UserSQL{}
-	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.Role, &p.UserPhoto, &p.LastVisisted)
+	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.IDRole, &p.UserPhoto, &p.LastVisisted)
 	if p.ID == 0 {
 		return nil, errors.New("Пользователь не найден")
 	}
@@ -315,4 +327,44 @@ func (m *MUser) Delete(ID int64) (err error) {
 
 	return nil
 
+}
+
+func (u *UserSQL) getRoleByID(ID int64) (string, error) {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		fmt.Println("MUser.getRoleByID : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MUser.getRoleByID : helpers.GetConnector, %s\n", err)
+		return "", err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		fmt.Println("MUser.getRoleByID : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MUser.getRoleByID : connector.GetDBConnection, %s\n", err)
+		return "", err
+	}
+
+	defer db.Close()
+
+	query := `SELECT "Role"
+	FROM public."Role"
+	WHERE id = $1`
+
+	rows, err := db.Query(query, ID)
+	if err != nil {
+		fmt.Println("MUser.getRoleByID : db.Query error : ", err)
+		revel.AppLog.Errorf("MUser.getRoleByID : db.Query, %s\n", err)
+		return "", err
+	}
+
+	defer rows.Close()
+
+	rows.Next()
+	var role string
+	err = rows.Scan(&role)
+	if err != nil {
+		fmt.Println("MUser.getRoleByID : rows.Scan error : ", err)
+		revel.AppLog.Errorf("MUser.getRoleByID : rows.Scan, %s\n", err)
+		return "", err
+	}
+	return role, nil
 }
