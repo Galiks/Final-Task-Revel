@@ -1,10 +1,12 @@
+import { CandidateModel } from "../../../models/CandidateModel.js"
+
 export class CDeleteCandidateWindow{
     constructor(){
 
     }
 
-    init(candidate, candidateModel, refreshDatatable){
-        this.candidateModel = candidateModel
+    init(candidate, refreshDatatable){
+        this.candidateModel = new CandidateModel()
         this.refreshDatatable = refreshDatatable
 
         this.window = $$("deleteWindow")

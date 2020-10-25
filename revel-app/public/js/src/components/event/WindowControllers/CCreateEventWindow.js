@@ -1,13 +1,13 @@
-import { EVENT_STATUS } from "./../CEventWindow.js";
 import { CANDIDATE_STATUS } from "./../../candidate/CCandidateWindow.js";
+import { EventModel } from "../../../models/EventModel.js";
 
 export class CCreateEventWindow{
     constructor(){
         
     }
 
-    init(eventModel, refreshDatatable, updateCandidateStatus){
-        this.eventModel = eventModel
+    init(refreshDatatable, updateCandidateStatus){
+        this.eventModel = new EventModel()
         this.refreshDatatable = refreshDatatable
         this.updateCandidateStatus = updateCandidateStatus
         this.createWindow = $$("createWindow")

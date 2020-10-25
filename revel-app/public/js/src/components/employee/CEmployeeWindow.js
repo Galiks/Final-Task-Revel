@@ -13,8 +13,7 @@ export class CEmployeeWindow{
     /**
      * Метод для инициализации
      */
-    init(employeeModel, refreshDatatable){
-        this.employeeModel = employeeModel
+    init( refreshDatatable){
         this.refreshDatatable = refreshDatatable
 
         this.createWindowController = new CCreateEmployeeWindow()
@@ -25,21 +24,21 @@ export class CEmployeeWindow{
 
     createWindow(){
         webix.ui(this.employeeWindowView.viewCreateWindow())
-        this.createWindowController.init(this.employeeModel, ()=>{this.refreshDatatable()})
+        this.createWindowController.init(()=>{this.refreshDatatable()})
     }
 
     deleteWindow(employee){
         webix.ui(this.employeeWindowView.viewDeleteWindow(employee))
-        this.deleteWindowController.init(employee, this.employeeModel, () => {this.refreshDatatable()})
+        this.deleteWindowController.init(employee,() => {this.refreshDatatable()})
     }
 
     updateWindow(employee){
         webix.ui(this.employeeWindowView.viewUpdateWindow())
-        this.updateWindowController.init(employee, this.employeeModel, ()=>{this.refreshDatatable()})
+        this.updateWindowController.init(employee, ()=>{this.refreshDatatable()})
     }
 
     aboutWindow(employee){
         webix.ui(this.employeeWindowView.viewAboutWindow(employee))
-        this.aboutWindowController.init(this.employeeModel, ()=>{this.refreshDatatable()})
+        this.aboutWindowController.init(()=>{this.refreshDatatable()})
     }
 }

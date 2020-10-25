@@ -18,7 +18,7 @@ export class CCandidateTab{
 
         this.candidateModel = new CandidateModel()
 
-        this.candidateWindowController.init(this.candidateModel, ()=>{this.refreshDatatable()})
+        this.candidateWindowController.init(()=>{this.refreshDatatable()})
         this.attachEvent()
 
         this.refreshDatatable()

@@ -19,7 +19,7 @@ export class CEventTab{
         this.candidateModel = new CandidateModel()
 
 
-        this.eventWindowController.init(this.eventModel, (datatableName) => this.refreshDatatable(datatableName))
+        this.eventWindowController.init((datatableName) => this.refreshDatatable(datatableName))
 
         this.datatable = $$("events")
         this.cmenu = $$("eventcmenu")

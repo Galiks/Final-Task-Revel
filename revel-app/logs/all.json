@@ -328,3 +328,5 @@
 {"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T18:38:02.1989109+04:00"}
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T18:38:02.2139105+04:00"}
 {"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-25T18:38:18.4272261+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-25T18:42:25.5386615+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-25T18:42:25.5456604+04:00"}

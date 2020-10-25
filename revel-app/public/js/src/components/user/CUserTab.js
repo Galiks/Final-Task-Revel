@@ -49,22 +49,18 @@ export class CUserTab{
             let context = this.getContext();
             let item = context.obj;
             let itemID = context.id;
-            let event = item.getItem(itemID)
-            if (this.getItem(id).value == "Добавить"){             
-                alert("Добавить")
-                // controller.eventWindowController.createWindow()
-            }
-            else if (this.getItem(id).value == "Удалить"){
+            let user = item.getItem(itemID)
+            if (this.getItem(id).value == "Удалить"){
                 alert("Удалить")
-                // controller.eventWindowController.deleteWindow(event)        
+                controller.userWindowController.deleteWindow(user)       
             }
             else if (this.getItem(id).value == "Изменить"){
                 alert("Изменить")
-                // controller.eventWindowController.updateWindow(event)
+                controller.userWindowController.updateWindow(user)
             }
             else if (this.getItem(id).value == "Подробнее"){
                 alert("Подробнее")
-                // controller.eventWindowController.aboutWindow(event)
+                controller.userWindowController.aboutWindow()
             }
         })
     }

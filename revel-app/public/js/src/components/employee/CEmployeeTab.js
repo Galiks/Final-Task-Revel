@@ -20,7 +20,7 @@ export class CEmployeeTab{
 
         this.refreshDatatable()
 
-        this.employeeWindowController.init(this.employeeModel, ()=>{this.refreshDatatable()})
+        this.employeeWindowController.init(()=>{this.refreshDatatable()})
         this.attachEvent()
     }
 

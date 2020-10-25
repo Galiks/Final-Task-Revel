@@ -1,3 +1,4 @@
+import { EventModel } from "../../../models/EventModel.js"
 
 
 export class CDeleteEventWindow{
@@ -5,8 +6,8 @@ export class CDeleteEventWindow{
         
     }
 
-    init(event, eventModel, refreshDatatable){
-        this.eventModel = eventModel
+    init(event, refreshDatatable){
+        this.eventModel = new EventModel()
         this.refreshDatatable = refreshDatatable
 
         this.deleteWindow = $$("deleteWindow")

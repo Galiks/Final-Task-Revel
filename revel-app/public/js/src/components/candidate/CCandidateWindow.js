@@ -7,15 +7,13 @@ import { CUpdateCandidateWindow } from "./WindowControllers/CUpdateCandidateWind
 
 export class CCandidateWindow{
     constructor(){
-        this.candidateModel = new CandidateModel()
         this.candidateWindowView = new CandidateWindowView()
     }
 
     /**
      * Метод для инициализации переменных
      */
-    init(candidateModel ,refreshDatatable){
-        this.candidateModel = candidateModel
+    init(refreshDatatable){
         this.refreshDatatable = refreshDatatable
 
         this.createWindowController = new CCreateCandidateWindow()
@@ -27,17 +25,17 @@ export class CCandidateWindow{
 
     createWindow(){
         webix.ui(this.candidateWindowView.viewCreateWindow())
-        this.createWindowController.init(this.candidateModel, ()=>{this.refreshDatatable()})
+        this.createWindowController.init(()=>{this.refreshDatatable()})
     }
 
     deleteWindow(candidate){
         webix.ui(this.candidateWindowView.viewDeleteWindow(candidate))
-        this.deleteWindowController.init(candidate, this.candidateModel, ()=>{this.refreshDatatable()})
+        this.deleteWindowController.init(candidate, ()=>{this.refreshDatatable()})
     }
 
     updateWindow(candidate){
         webix.ui(this.candidateWindowView.viewUpdateWindow(candidate))
-        this.updateWindowController.init(candidate, this.candidateModel, () => {this.refreshDatatable()})
+        this.updateWindowController.init(candidate, () => {this.refreshDatatable()})
     }
 
     aboutWindow(candidate){

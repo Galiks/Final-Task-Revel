@@ -1,10 +1,12 @@
+import { EmployeeModel } from "../../../models/EmployeeModel.js"
+
 export class CUpdateEmployeeWindow{
     constructor(){
 
     }
 
-    init(employee, employeeModel, refreshDatatable){
-        this.employeeModel = employeeModel
+    init(employee, refreshDatatable){
+        this.employeeModel = new EmployeeModel()
         this.refreshDatatable = refreshDatatable
 
         this.window = $$("updateWindow")
