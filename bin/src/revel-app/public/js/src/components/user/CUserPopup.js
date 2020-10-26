@@ -44,12 +44,9 @@ export class CUserPopup{
      * Метод обновляет все таблицы
      */
     refreshDatatablesCmenus(){
-        // this.eventTabController.refreshDatatable("events")
-        // this.eventTabController.refreshDatatable("candidates")
-        // this.eventTabController.refreshDatatable("employees")
-        this.eventTabController.init()
-        this.employeeTabController.init()
-        this.candidateTabController.init()
+        this.eventTabController.refreshDatatable("events")
+        this.employeeTabController.refreshDatatable()
+        this.candidateTabController.refreshDatatable()
         if (this.currentUser != null) {
             if (this.currentUser.role == "Модератор" || this.currentUser.role == "Администратор"){
                 this.userTabController.refreshDatatable()

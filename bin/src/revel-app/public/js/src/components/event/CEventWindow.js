@@ -128,7 +128,7 @@ export class CEventWindow{
     aboutWindow(event){
         webix.ui(this.eventWindowView.viewAboutWindow(event))
 
-        this.aboutWindowController.init(event)
+        this.aboutWindowController.init(event, (datatableName) => {this.refreshDatatable(datatableName)})
     }
 
     /**

@@ -30,6 +30,7 @@ export class CEmployeeTab{
      * Метод обновляет данные в таблице employees
      */
     refreshDatatable(){
+        this.cmenu = $$("employeecmenu")
         this.employeeModel.getEmloyees().then(async (data)=>{
             let user = await this.userTabController.getCurrentUser();
             let role = ""
@@ -72,7 +73,7 @@ export class CEmployeeTab{
                 }
                 this.cmenu.define("data", this.cmenuOption)
                 this.cmenu.refresh()
-                refreshDatatableData(data, this);
+                refreshDatatableData(data);
             }
         })
 
@@ -81,10 +82,11 @@ export class CEmployeeTab{
          * @param {Array} data массив данных
          * @param {this} controller контекст контроллера
          */
-        function refreshDatatableData(data, controller) {
-            controller.datatable.clearAll();
-            controller.datatable.parse(data);
-            controller.datatable.refresh();
+        function refreshDatatableData(data) {
+            let datatable = $$("employees")
+            datatable.clearAll();
+            datatable.parse(data);
+            datatable.refresh();
         }
     }
 

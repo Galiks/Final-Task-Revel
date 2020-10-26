@@ -61,14 +61,14 @@ export class CandidateWindowView{
           id: "createWindow"
         }
         return createWindow;
-      }
+    }
 
-      /**
-       * Создаёт конфиг WEBIX для отображения окна удаления кандидата
-       * @param {Candidate} candidate 
-       * @returns Конфиг окна удаления кандидата
-       */
-      viewDeleteWindow(candidate){
+    /**
+     * Создаёт конфиг WEBIX для отображения окна удаления кандидата
+     * @param {Candidate} candidate 
+     * @returns Конфиг окна удаления кандидата
+     */
+    viewDeleteWindow(candidate){
         let deleteWindow = {
           view:"window",
           move:true,
@@ -105,13 +105,13 @@ export class CandidateWindowView{
           id: "deleteWindow"
         }
         return deleteWindow
-      }
+    }
 
-      /**
-       * 
-       * @returns
-       */
-      viewUpdateWindow(){
+    /**
+     * Создаёт конфиг WEBIX для отображения окна обновления кандидата
+     * @returns Конфиг окна обновления кандидата
+     */
+    viewUpdateWindow(){
         let labelWidth = 90
         
         let body = {
@@ -157,13 +157,14 @@ export class CandidateWindowView{
         }
 
         return updateWindow
-      }
+    }
 
-      /**
-       * 
+    /**
+       * Создаёт конфиг WEBIX для отображения окна информации о кандидате
        * @param {Candidate} candidate 
+       * @returns Конфиг окна информации о кандидате
        */
-      viewAboutWindow(candidate){
+    viewAboutWindow(candidate){
         let aboutWindow = {
           view:"window",
           move:true,
@@ -192,5 +193,5 @@ export class CandidateWindowView{
         }
 
         return aboutWindow
-      }
+    }
 }

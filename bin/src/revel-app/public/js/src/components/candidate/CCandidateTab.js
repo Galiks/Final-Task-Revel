@@ -30,6 +30,7 @@ export class CCandidateTab{
      * Метод обновляет данные в таблице candidates
      */
     refreshDatatable(){
+        this.cmenu = $$("candidatecmenu")
         this.candidateModel.getCandidates().then(async (data)=>{
             let user = await this.userTabController.getCurrentUser();
             let role = ""
@@ -72,7 +73,7 @@ export class CCandidateTab{
                 }
                 this.cmenu.define("data", this.cmenuOption)
                 this.cmenu.refresh()
-                refreshDatatableData(data, this);
+                refreshDatatableData(data);
             }
         })
 
@@ -80,10 +81,11 @@ export class CCandidateTab{
          * Метод для обновления данных в таблице candidates
          * @param {Array} data массив данных
          */
-        function refreshDatatableData(data, controller) {
-            controller.datatable.clearAll();
-            controller.datatable.parse(data);
-            controller.datatable.refresh();
+        function refreshDatatableData(data) {
+            let datatable = $$("candidates")
+            datatable.clearAll();
+            datatable.parse(data);
+            datatable.refresh();
         }
     }
 
