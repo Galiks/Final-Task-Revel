@@ -62,7 +62,7 @@ export class CFinishEventWindow{
             if (event.status == EVENT_STATUS.finished) {
                 flagOnCandidateStatus = isValidCandidateStatus(candidates);
                 
-                //Если кандидат не "явился", то "не успешно"
+                //Если кандидат "не явился", то "не успешно"
                 if (flagOnCandidateStatus) {
                     event.status = EVENT_STATUS.archive;
                     event.beginning = event.beginning.replace(" ", "T")
@@ -109,8 +109,9 @@ export class CFinishEventWindow{
 
 function isValidCandidateStatus(candidates) {
     let result = candidates.every(element => {
-        if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.dontShowUp) {
-            webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не явился");
+        //if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.empty) {
+        if (element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess && element.status != CANDIDATE_STATUS.empty) {
+            webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не назначен");
             return true;
         }
     });

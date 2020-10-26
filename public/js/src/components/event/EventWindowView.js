@@ -1,3 +1,4 @@
+import { CANDIDATE_STATUS } from "../candidate/CCandidateWindow.js";
 import { EVENT_STATUS } from "./CEventWindow.js";
 
 export class EventWindowView{
@@ -116,7 +117,9 @@ export class EventWindowView{
         "id":"employeesMultiselect",
         "view": "multiselect",
         "value": employeesMultiselectValue,
-        "height": 38
+        "height": 40,
+        width: 400,
+        labelWidth: 90,
       }
 
       let candidatesMultiselect = {
@@ -125,7 +128,9 @@ export class EventWindowView{
         "id":"candidatesMultiselect",
         "view": "multiselect",
         "value": candidatesMultiselectValue,
-        "height": 38
+        "height": 40,
+        width: 400, 
+        labelWidth: 90,
       }
       
       let updateWindow = {
@@ -155,10 +160,7 @@ export class EventWindowView{
                     employeesMultiselect,
                     candidatesMultiselect,
                   ]},
-                  { view:"select", label:"Статус", name:"status", id:"statusOption", options:[
-
-                  ] 
-                    },
+                    { view:"select", label:"Статус", name:"status", id:"statusOption", options:[]},
                     { "view": "button", "css": "webix_primary", "label": "Изменить", "id":"updateWindowButton", "height": 38 }
                   ]
                 }
@@ -176,13 +178,11 @@ export class EventWindowView{
       let employeesDatatable = {
             // "data": employees,
             "columns": [
-              { "id": "ID", "header":"Номер", "sort":"number"},
-              { "id": "firstname", "header": "Имя", "fillspace": true, "sort": "string" },
-              { "id": "lastname", "header": "Фамилия", "fillspace": true, "sort": "string" },
-              { "id": "patronymic", "header": "Отчество", "fillspace": true, "sort": "string" },
-              { "id": "position", "header": "Должность", "sort": "string" },
-              { "id": "email", "header": "Email", "sort": "string" },
-              { "id": "phone", "header": "Телефон", "sort": "string" }
+              { "id": "ID", "header":"Номер", hidden:true},
+              { "id": "firstname", "header": "Имя", "fillspace": true},
+              { "id": "lastname", "header": "Фамилия", "fillspace": true },
+              { "id": "patronymic", "header": "Отчество", "fillspace": true },
+              { "id": "position", "header": "Должность" }
             ],
             "view": "datatable",
             "id":"employeesAbout"
@@ -190,19 +190,28 @@ export class EventWindowView{
       let candidatesDatatable = {
             // "data": candidates,
             "columns": [
-              { "id": "ID", "header":"Номер", "sort":"number", "fillspace": true,},
-              { "id": "firstname", "header": "Имя",  },
-              { "id": "lastname", "header": "Фамилия",  },
-              { "id": "patronymic", "header": "Отчество",  },
-              { "id": "email", "header": "Email", "sort": "string" },
-              { "id": "phone", "header": "Телефон", "sort": "string", "fillspace": true,},
-              { "id": "status", "header": "Статус", "sort": "string", "fillspace": true, }
+              { "id": "ID", "header":"Номер", hidden: true,},
+              { "id": "firstname", "header": "Имя", "fillspace": true },
+              { "id": "lastname", "header": "Фамилия", "fillspace": true },
+              { "id": "patronymic", "header": "Отчество", "fillspace": true },
+              { "id": "email", "header": "Email", "fillspace": true },
+              { "id": "status", "header": "Статус", "fillspace": true, }
             ],
             "view": "datatable",
             "id":"candidatesAbout"
       }
+
+      let candidatesDatatableCmenu = {
+        view:"contextmenu",
+          id:"candidatesDatatableCmenu",
+          data : ["Сменить статус"]
+      }
+
+      webix.ui(candidatesDatatableCmenu) 
+
       let eventInformation = {
             "view":"property",
+            height: 100, 
             "elements":[
               { "label": "Информация", "type": "label" },
               { "label": "Тема", "view": "text", "value":event.theme, "readonly":true, readonly:true },
@@ -213,10 +222,10 @@ export class EventWindowView{
             view:"window",
             move:true,
             resize: true,
-            height:500,
-            width:1100,
+            width:1500,
             head:{
-                view:"toolbar", cols:[
+                view:"toolbar",
+                cols:[
                     { view:"label", label: "Окно информации" },
                     { view:"button", label: 'Close', id:"aboutWindowClose" , width: 100, align: 'right'}
                   ]
@@ -227,8 +236,10 @@ export class EventWindowView{
                 eventInformation,
                 {view:"resizer"},
                 {
+                  height:300,
                   cols:[
                     employeesDatatable,
+                    {view:"resizer"},
                     candidatesDatatable
                   ]
                 }
@@ -290,6 +301,41 @@ export class EventWindowView{
       }
 
       return finishWindow
+    }
+
+    viewChangeStatusWindow(candidate){
+      let changeStatusWindow = {
+        view:"window",
+        move:true,
+        resize: true,
+        height:300,
+        width:300,
+        head:{
+            view:"toolbar", cols:[
+                { view:"label", label: "Окно информации" },
+                { view:"button", label: 'Close', id:"changeStatusWindowClose" , width: 100, align: 'right'}
+              ]
+        },
+        position:"center",
+        body:{
+          "rows": [
+            { view: "text", name:"ID", hidden:true},
+            {
+              "elements": [
+              { "label": "Информация", "type": "label"},
+              { "label": "ФИО", "type": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic },
+              ],
+              "view": "property"
+            },
+            { "view":"select", "label":"Статус", labelWidth:90, "name":"status", id:"changeStatusOption", "options":[] },
+            { "view": "button", "css": "webix_primary", "label": "Изменить", "id":"changeStatusWindowButton", "height": 38 }
+          ]
+        },
+        close: true,
+        id: "changeStatusWindow",
+      }
+
+      return changeStatusWindow
     }
 }
   

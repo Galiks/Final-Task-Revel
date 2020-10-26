@@ -1,14 +1,16 @@
 import { EVENT_STATUS } from "./../CEventWindow.js";
 import { CANDIDATE_STATUS } from "./../../candidate/CCandidateWindow.js";
 import { EventModel } from "../../../models/EventModel.js";
+import { CandidateModel } from "../../../models/CandidateModel.js";
 
 export class CUpdateEventWindow{
     constructor(){
-        
+
     }
 
     init(event, refreshDatatable, updateCandidateStatus){
         this.eventModel = new EventModel()
+        this.candidateModel = new CandidateModel()
         this.refreshDatatable = refreshDatatable
         this.updateCandidateStatus = updateCandidateStatus
 
@@ -29,7 +31,7 @@ export class CUpdateEventWindow{
         this.updateWindow.attachEvent("onHide", ()=> {
             this.updateWindow.close()
             this.mainTab.enable()
-            
+
         })
 
         this.updateWindow.attachEvent("onDestruct", ()=>{
@@ -38,7 +40,7 @@ export class CUpdateEventWindow{
 
         $$("updateWindowClose").attachEvent("onItemClick", ()=>{
             this.updateWindow.close()
-            this.mainTab.enable()    
+            this.mainTab.enable()
         });
 
         if (event.status == EVENT_STATUS.planned){
@@ -75,15 +77,26 @@ export class CUpdateEventWindow{
             let updatingEvent = await this.eventModel.updateEvent(values)
             await this.eventModel.updateCandidateEvent(candidates, updatingEvent.ID)
             await this.eventModel.updateEmployeeEvent(employees, updatingEvent.ID)
-                if (updatingEvent.status == EVENT_STATUS.planned) {
-                    this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.invite);
-                }
-                else if (updatingEvent.status == EVENT_STATUS.finished) {
-                    this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.wait)
-                }
 
-                this.updateWindow.close()
-                this.mainTab.enable()
+            if (updatingEvent.status == EVENT_STATUS.planned) {
+                this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.invite);
+            }
+            else if (updatingEvent.status == EVENT_STATUS.finished) {
+                let candidatesByEvent = await this.eventModel.getCandidatesByEvent(updatingEvent.ID)
+                candidatesByEvent.forEach(candidate => {
+                    if (candidate.status == CANDIDATE_STATUS.dontShowUp) {
+                        candidate.status = CANDIDATE_STATUS.empty
+                        this.candidateModel.updateCandidate(candidate)
+                    }else if (candidate.status == CANDIDATE_STATUS.showUp) {
+                        candidate.status = CANDIDATE_STATUS.wait
+                        this.candidateModel.updateCandidate(candidate)
+                    }
+                });
+                this.refreshDatatable("candidates")
+                // this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.wait)
+            }
+            this.updateWindow.close()
+            this.mainTab.enable()
         })
 
         this.updateWindow.show()
