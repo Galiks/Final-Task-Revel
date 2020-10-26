@@ -1,3 +1,4 @@
+import { USER_ACTION } from "../user/CUserTab.js";
 import { Candidate } from "./../../models/entities/Candidate.js";
 
 export class CandidateTabView{
@@ -15,7 +16,7 @@ export class CandidateTabView{
             view:"contextmenu",
             id:"candidatecmenu",
             // data:["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"]
-            data:["Подробнее"]
+            data:USER_ACTION.emptyDatatableForEmpty
         }
 
         webix.ui(contextmenu)

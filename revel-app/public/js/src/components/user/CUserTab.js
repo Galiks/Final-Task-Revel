@@ -22,6 +22,10 @@ export class CUserTab{
         return this.userTabView.view()
     }
 
+    async getCurrentUser(){
+        return await this.userModel.getCurrentUser()
+    }
+
     addComponents(){
         $$("tabbar").addOption({ value:'Пользователи', id:'users'}, true)
         let users = this.config()
@@ -70,16 +74,47 @@ export class CUserTab{
      * Метод обновляет данные в таблице users
      */
     refreshDatatable(){
-        this.userModel.getUsers().then((data)=>{
+        this.userModel.getUsers().then(async (data)=>{
+            let user = await this.getCurrentUser();
+            let role = ""
+            if  (user == undefined){
+                role = "Нет роли"
+            }else{
+                role = user.role
+            }
             if (data.length == 0) {
                 this.cmenu.clearAll()
-                this.cmenu.define("data", ["Добавить"])
+                if (role == "Пользователь"){
+                    this.cmenuOption = USER_ACTION.user.emptys
+                }
+                else if (role == "Модератор"){
+                    this.cmenuOption = USER_ACTION.moderator.emptys
+                }
+                else if (role == "Администратор"){
+                    this.cmenuOption = USER_ACTION.admin.emptys
+                }
+                else{
+                    this.cmenuOption = USER_ACTION.empty.emptys
+                }
+                this.cmenu.define("data", this.cmenuOption)
                 this.cmenu.refresh()
                 let empty = [new Object]
                 refreshDatatableData(empty, this)
             }else{
                 this.cmenu.clearAll()
-                this.cmenu.define("data", ["Удалить", "Изменить", "Сменить пароль", { $template:"Separator" },"Подробнее"])
+                if (role == "Пользователь"){
+                    this.cmenuOption = USER_ACTION.user.emptys
+                }
+                else if (role == "Модератор"){
+                    this.cmenuOption = USER_ACTION.moderator.users
+                }
+                else if (role == "Администратор"){
+                    this.cmenuOption = USER_ACTION.admin.users
+                }
+                else{
+                    this.cmenuOption = USER_ACTION.empty.emptys
+                }
+                this.cmenu.define("data", this.cmenuOption)
                 this.cmenu.refresh()
                 refreshDatatableData(data, this);
             }
@@ -103,4 +138,34 @@ export const USER_ROLE = {
     user: "Пользователь",
     moderator: "Модератор",
     admin: "Администратор"
+}
+
+export const USER_ACTION = {
+    empty: {
+        emptys: null,
+        events: ["Подробнее"],
+        employees: ["Подробнее"],
+        candidates: ["Подробнее"]
+    },
+    user: {
+        emptys: null,
+        emptyEvents: ["Добавить"],
+        events: ["Добавить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"],
+        employees: ["Добавить", { $template:"Separator" },"Подробнее"],
+        candidates: ["Добавить", { $template:"Separator" },"Подробнее"],
+    },
+    moderator: {
+        emptys: ["Добавить"],
+        events: ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"],
+        employees: ["Добавить", "Изменить",{ $template:"Separator" },"Подробнее"],
+        candidates: ["Добавить", "Изменить",{ $template:"Separator" },"Подробнее"],
+        users: ["Изменить",{ $template:"Separator" },"Подробнее"] 
+    },
+    admin: {
+        emptys: ["Добавить"],
+        events: ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"],
+        employees: ["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"],
+        candidates: ["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"],
+        users: ["Удалить", "Изменить", "Сменить пароль",{ $template:"Separator" },"Подробнее"]
+    }
 }

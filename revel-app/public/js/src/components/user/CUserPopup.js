@@ -1,5 +1,8 @@
 import { UserModel } from "../../models/UserModel.js";
-import { CUserTab } from "./CUserTab.js";
+import { CCandidateTab } from "../candidate/CCandidateTab.js";
+import { CEmployeeTab } from "../employee/CEmployeeTab.js";
+import { CEventTab } from "../event/CEventTab.js";
+import { CUserTab, USER_ACTION } from "./CUserTab.js";
 import { UserPopupView } from "./UserPopupView.js";
 
 export class CUserPopup{
@@ -7,6 +10,10 @@ export class CUserPopup{
         this.userPopupView = new UserPopupView()
         this.userTabController = new CUserTab()
         this.userModel = new UserModel()
+        this.cmenuOption = USER_ACTION;
+        this.eventTabController = new CEventTab()
+        this.employeeTabController = new CEmployeeTab()
+        this.candidateTabController = new CCandidateTab()
     }
 
     async init(){
@@ -23,15 +30,30 @@ export class CUserPopup{
         await this.check();
     }
 
-
-
     async check() {
         let check = await this.userModel.check();
         if (check != false) {
-            this.currentUser = await this.userModel.getCurrentUser();
+            this.currentUser = await this.userTabController.getCurrentUser();
             this.aboutPopup();
-            if (this.currentUser.role == "Администратор" || this.currentUser.role == "Модератор") {
-                this.userTabController.init();
+            if (this.currentUser.role == "Модератор" || this.currentUser.role == "Администратор"){
+                this.userTabController.init()
+            }
+        }
+    }
+
+    /**
+     * Метод обновляет все таблицы
+     */
+    refreshDatatablesCmenus(){
+        // this.eventTabController.refreshDatatable("events")
+        // this.eventTabController.refreshDatatable("candidates")
+        // this.eventTabController.refreshDatatable("employees")
+        this.eventTabController.init()
+        this.employeeTabController.init()
+        this.candidateTabController.init()
+        if (this.currentUser != null) {
+            if (this.currentUser.role == "Модератор" || this.currentUser.role == "Администратор"){
+                this.userTabController.refreshDatatable()
             }
         }
     }
@@ -54,8 +76,7 @@ export class CUserPopup{
                     this.currentUser = user
                     this.userIcon.enable()
                     this.aboutPopup()
-                    
-                    if (this.currentUser.role == "Администратор" || this.currentUser.role == "Модератор") {
+                    if (this.currentUser.role == "Модератор" || this.currentUser.role == "Администратор"){
                         this.userTabController.init()
                     }
                 }
@@ -64,12 +85,16 @@ export class CUserPopup{
                 }
             }
 
+            this.refreshDatatablesCmenus()
+
             function falseAuth(controller){
                 controller.loginButton.enable()
                 controller.registerButton.enable()
                 controller.userIcon.enable()
                 webix.message("Ошибка. Неправильный логин или пароль!")
             }
+
+        
         })
     }
 
@@ -117,6 +142,8 @@ export class CUserPopup{
             this.registerButton.enable()
 
             this.userTabController.removeComponents()
+
+            this.refreshDatatablesCmenus()
         })
     }
 

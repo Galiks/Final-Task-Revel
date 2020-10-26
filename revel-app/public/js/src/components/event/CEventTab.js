@@ -3,22 +3,22 @@ import { EventTabView } from "./EventTabView.js";
 import { EventModel } from "../../models/EventModel.js";
 import { EmployeeModel } from "../../models/EmployeeModel.js";
 import { CandidateModel } from "../../models/CandidateModel.js";
+import { CUserTab, USER_ACTION } from "../user/CUserTab.js";
 
 export class CEventTab{
     constructor(){
         this.eventTabView = new EventTabView()
         this.eventWindowController = new CEventWindow()
+        this.userTabController = new CUserTab()
+        this.eventModel = new EventModel()
+        this.employeeModel = new EmployeeModel()
+        this.candidateModel = new CandidateModel()
     }
 
     /**
      * Метод для инициализации
      */
     init(){
-        this.eventModel = new EventModel()
-        this.employeeModel = new EmployeeModel()
-        this.candidateModel = new CandidateModel()
-
-
         this.eventWindowController.init((datatableName) => this.refreshDatatable(datatableName))
 
         this.datatable = $$("events")
@@ -47,18 +47,48 @@ export class CEventTab{
         else {
             return
         }
-        getData.then((data)=>{
+        getData.then(async (data)=>{
+            let user = await this.userTabController.getCurrentUser();
+            let role = ""
+            if  (user == undefined){
+                role = "Нет роли"
+            }else{
+                role = user.role
+            }
             if (data.length == 0) {
                 this.cmenu.clearAll()
-                this.cmenu.define("data", ["Добавить"])
+                if (role == "Пользователь"){
+                    this.cmenuOption = USER_ACTION.user.emptyEvents
+                }
+                else if (role == "Модератор"){
+                    this.cmenuOption = USER_ACTION.moderator.emptys
+                }
+                else if (role == "Администратор"){
+                    this.cmenuOption = USER_ACTION.admin.emptys
+                }
+                else{
+                    this.cmenuOption = USER_ACTION.empty.emptys
+                }
+                this.cmenu.define("data", this.cmenuOption)
                 this.cmenu.refresh()
                 let empty = [new Object]
                 refreshDatatableData(datatableName, empty)
             }
             else{
                 this.cmenu.clearAll()
-                this.cmenu.define("data", ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"])
-                //this.cmenu.define("data", ["Подробнее"])
+                if (role == "Пользователь"){
+                    this.cmenuOption = USER_ACTION.user.events
+                }
+                else if (role == "Модератор"){
+                    this.cmenuOption = USER_ACTION.moderator.events
+                }
+                else if (role == "Администратор"){
+                    this.cmenuOption = USER_ACTION.admin.events
+                }
+                else{
+                    this.cmenuOption = USER_ACTION.empty.emptys
+                }
+                this.cmenu.define("data", this.cmenuOption)
                 this.cmenu.refresh()
                 refreshDatatableData(datatableName, data);
             }

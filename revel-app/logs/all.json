@@ -390,3 +390,13 @@
 {"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-26T12:37:39.486432+04:00"}
 {"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-26T12:52:57.3777045+04:00"}
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-26T12:52:57.3857058+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-26T12:54:51.3956014+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-26T13:08:50.1548894+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-26T13:09:55.5218297+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-26T13:16:46.6761869+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-26T14:16:58.0962583+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-26T14:16:58.1032592+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-26T14:18:04.9841644+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-26T14:18:04.9921668+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-26T14:25:53.5211951+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-26T14:25:53.5291959+04:00"}
