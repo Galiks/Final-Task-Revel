@@ -10,7 +10,6 @@ export class CUserPopup{
         this.userPopupView = new UserPopupView()
         this.userTabController = new CUserTab()
         this.userModel = new UserModel()
-        this.cmenuOption = USER_ACTION;
         this.eventTabController = new CEventTab()
         this.employeeTabController = new CEmployeeTab()
         this.candidateTabController = new CCandidateTab()
