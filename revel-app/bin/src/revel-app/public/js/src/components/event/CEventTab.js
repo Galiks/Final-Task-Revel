@@ -19,7 +19,7 @@ export class CEventTab{
         this.candidateModel = new CandidateModel()
 
 
-        this.eventWindowController.init(this.eventModel, (datatableName) => this.refreshDatatable(datatableName))
+        this.eventWindowController.init((datatableName) => this.refreshDatatable(datatableName))
 
         this.datatable = $$("events")
         this.cmenu = $$("eventcmenu")
@@ -53,27 +53,28 @@ export class CEventTab{
                 this.cmenu.define("data", ["Добавить"])
                 this.cmenu.refresh()
                 let empty = [new Object]
-                this.refreshDatatableData(datatableName, empty)
+                refreshDatatableData(datatableName, empty)
             }
             else{
                 this.cmenu.clearAll()
                 this.cmenu.define("data", ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"])
+                //this.cmenu.define("data", ["Подробнее"])
                 this.cmenu.refresh()
-                this.refreshDatatableData(datatableName, data);
+                refreshDatatableData(datatableName, data);
             }
         })
-    }
 
-
-    /**
-     * Метод для обновления данных в указанной таблице
-     * @param {string} datatableName имя таблицы
-     * @param {Array} data массив данных
-     */
-    refreshDatatableData(datatableName, data) {
-        $$(datatableName).clearAll();
-        $$(datatableName).parse(data);
-        $$(datatableName).refresh();
+        /**
+         * Метод для обновления данных в указанной таблице
+         * @param {string} datatableName имя таблицы
+         * @param {Array} data массив данных
+         */
+        function refreshDatatableData(datatableName, data) {
+            $$(datatableName).clearAll()
+            $$(datatableName).parse(data)
+            $$(datatableName).refresh()
+        }
+        
     }
 
     /**

@@ -12,8 +12,13 @@ export class UserModel{
     async getUserById(id){
         let request = await fetch(`/user/${id}`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -33,8 +38,13 @@ export class UserModel{
     async getUsers(){
         let request = await fetch(`/user/all`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -50,12 +60,20 @@ export class UserModel{
             let users = []
             if (response != null) {
                 for (const item of response) {
-                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, item.lastVisited)
+                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, toDate(item.lastVisited))
                     users.push(user)
                 }
             }
             resolve(users)
         })
+
+        function toDate(ISOdate){ 
+            let date = ISOdate.split('T')
+            let time = date[1].split(':')
+            let hh = time[0]
+            let mm = time[1]
+            return date[0] + " " + hh + ":" + mm
+        }
     }
 
     /**
@@ -64,10 +82,17 @@ export class UserModel{
      * @param {string} password пароль пользователя
      */
     async login(login, password){
-        let user = new User(0, login, password, "", null, null)
+        //let user = new User(0, login, password, "", null, null)
         let request = await fetch(`/user/auth/login`, {
             method: "POST",
-            body: JSON.stringify(user)
+            body: JSON.stringify({
+                ID: 0,
+                login: login,
+                password: password,
+                role: "",
+                userPhoto: null,
+                lastVisited: null
+            })
         })
 
         if (request.status != 200){
@@ -91,8 +116,13 @@ export class UserModel{
     async logout(){
         let request = await fetch(`/user/auth/logout`)
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -110,9 +140,15 @@ export class UserModel{
         })
 
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
+        
 
         let response = await request.json()
         if (response != null) {
@@ -131,8 +167,13 @@ export class UserModel{
         let request = await fetch(`/user/auth/current`)
 
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -168,8 +209,13 @@ export class UserModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -206,8 +252,13 @@ export class UserModel{
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()
@@ -233,8 +284,13 @@ export class UserModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   

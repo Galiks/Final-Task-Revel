@@ -237,7 +237,8 @@ func (controller *CUser) UpdateUser() revel.Result {
 	user := &entities.User{}
 	err := json.Unmarshal(controller.Params.JSON, user)
 	if err != nil {
-		fmt.Println(err)
+		revel.AppLog.Errorf("CUser.UpdateUser : json.Unmarshal, %s\n", err)
+		fmt.Println("CUser.UpdateUser : Unmarshal error : ", err)
 		return controller.RenderJSON(err)
 	}
 
@@ -245,7 +246,8 @@ func (controller *CUser) UpdateUser() revel.Result {
 	controller.userProvider = &providers.PUser{}
 	result, err := controller.userProvider.UpdateUser(user)
 	if err != nil {
-		fmt.Println(err)
+		revel.AppLog.Errorf("CUser.UpdateUser : controller.userProvider.UpdateUser, %s\n", err)
+		fmt.Println("CUser.UpdateUser : controller.userProvider.UpdateUser error : ", err)
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(result)
@@ -257,7 +259,8 @@ func (controller *CUser) DeleteUser() revel.Result {
 	controller.userProvider = &providers.PUser{}
 	err := controller.userProvider.DeleteUser(id)
 	if err != nil {
-		fmt.Println(err)
+		revel.AppLog.Errorf("CUser.DeleteUser : controller.userProvider.DeleteUser, %s\n", err)
+		fmt.Println("CUser.DeleteUser : controller.userProvider.DeleteUser error : ", err)
 		return controller.RenderJSON(err)
 	}
 	return controller.RenderJSON(nil)

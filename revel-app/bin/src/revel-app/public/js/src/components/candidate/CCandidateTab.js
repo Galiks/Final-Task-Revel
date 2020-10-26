@@ -18,7 +18,7 @@ export class CCandidateTab{
 
         this.candidateModel = new CandidateModel()
 
-        this.candidateWindowController.init(this.candidateModel, ()=>{this.refreshDatatable()})
+        this.candidateWindowController.init(()=>{this.refreshDatatable()})
         this.attachEvent()
 
         this.refreshDatatable()
@@ -34,24 +34,24 @@ export class CCandidateTab{
                 this.cmenu.define("data", ["Добавить"])
                 this.cmenu.refresh()
                 let empty = [new Object]
-                this.refreshDatatableData(empty)
+                refreshDatatableData(empty, this)
             }else{
                 this.cmenu.clearAll()
                 this.cmenu.define("data", ["Добавить","Удалить", "Изменить", { $template:"Separator" },"Подробнее"])
                 this.cmenu.refresh()
-                this.refreshDatatableData(data);
+                refreshDatatableData(data, this);
             }
         })
-    }
 
-    /**
-     * Метод для обновления данных в таблице candidates
-     * @param {Array} data массив данных
-     */
-    refreshDatatableData(data) {
-        this.datatable.clearAll();
-        this.datatable.parse(data);
-        this.datatable.refresh();
+        /**
+         * Метод для обновления данных в таблице candidates
+         * @param {Array} data массив данных
+         */
+        function refreshDatatableData(data, controller) {
+            controller.datatable.clearAll();
+            controller.datatable.parse(data);
+            controller.datatable.refresh();
+        }
     }
 
     /**

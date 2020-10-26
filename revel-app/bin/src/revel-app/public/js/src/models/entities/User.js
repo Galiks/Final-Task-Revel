@@ -1,10 +1,12 @@
+import { USER_ROLE } from "./../../components/user/CUserTab.js";
+
 export class User{
     /**
      * 
      * @param {number} id 
      * @param {string} login 
      * @param {string} password 
-     * @param {string} role
+     * @param {USER_ROLE} role
      * @param {Blob} userPhoto 
      * @param {Date} lastVisited 
      */

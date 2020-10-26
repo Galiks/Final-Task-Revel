@@ -20,7 +20,7 @@ export class CEmployeeTab{
 
         this.refreshDatatable()
 
-        this.employeeWindowController.init(this.employeeModel, ()=>{this.refreshDatatable()})
+        this.employeeWindowController.init(()=>{this.refreshDatatable()})
         this.attachEvent()
     }
 
@@ -34,24 +34,25 @@ export class CEmployeeTab{
                 this.cmenu.define("data", ["Добавить"])
                 this.cmenu.refresh()
                 let empty = [new Object]
-                this.refreshDatatableData(empty)
+                refreshDatatableData(empty, this)
             }else{
                 this.cmenu.clearAll()
                 this.cmenu.define("data", ["Добавить","Удалить", "Изменить", { $template:"Separator" },"Подробнее"])
                 this.cmenu.refresh()
-                this.refreshDatatableData(data);
+                refreshDatatableData(data, this);
             }
         })
-    }
 
-    /**
-     * Метод для обновления данных в таблице employees
-     * @param {Array} data массив данных
-     */
-    refreshDatatableData(data) {
-        this.datatable.clearAll();
-        this.datatable.parse(data);
-        this.datatable.refresh();
+        /**
+         * Метод для обновления данных в таблице employees
+         * @param {Array} data массив данных
+         * @param {this} controller контекст контроллера
+         */
+        function refreshDatatableData(data, controller) {
+            controller.datatable.clearAll();
+            controller.datatable.parse(data);
+            controller.datatable.refresh();
+        }
     }
 
     /**

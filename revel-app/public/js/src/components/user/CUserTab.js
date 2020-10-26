@@ -57,6 +57,9 @@ export class CUserTab{
             else if (this.getItem(id).value == "Изменить"){
                 controller.userWindowController.updateWindow(user)
             }
+            else if (this.getItem(id).value == "Сменить пароль"){
+                controller.userWindowController.changePasswordWindow(user)
+            }
             else if (this.getItem(id).value == "Подробнее"){
                 controller.userWindowController.aboutWindow(user)
             }
@@ -76,7 +79,7 @@ export class CUserTab{
                 refreshDatatableData(empty, this)
             }else{
                 this.cmenu.clearAll()
-                this.cmenu.define("data", ["Добавить","Удалить", "Изменить", { $template:"Separator" },"Подробнее"])
+                this.cmenu.define("data", ["Удалить", "Изменить", "Сменить пароль", { $template:"Separator" },"Подробнее"])
                 this.cmenu.refresh()
                 refreshDatatableData(data, this);
             }
@@ -99,5 +102,5 @@ export const USER_ROLE = {
     empty: "Нет роли",
     user: "Пользователь",
     moderator: "Модератор",
-    admin: "Admin"
+    admin: "Администратор"
 }

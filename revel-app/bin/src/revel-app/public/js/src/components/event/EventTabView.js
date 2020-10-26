@@ -1,19 +1,17 @@
-import { Event } from './../../models/entities/Event.js';
-
 export class EventTabView{
     constructor(){
         
     }
     /**
      * 
-     * @param {Event[]} events
      */
     view(){
 
         let contextmenu = {
             view:"contextmenu",
             id:"eventcmenu",
-            data : ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"]
+            //data : ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"]
+            data : ["Подробнее"]
         }
 
         webix.ui(contextmenu)   

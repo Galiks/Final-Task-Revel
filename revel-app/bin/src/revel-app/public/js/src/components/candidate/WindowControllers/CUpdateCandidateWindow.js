@@ -1,11 +1,13 @@
+import { CandidateModel } from "../../../models/CandidateModel.js"
+
 export class CUpdateCandidateWindow{
     constructor(){
 
     }
 
-    init(candidate, candidateModel, refreshDatatable){
+    init(candidate, refreshDatatable){
 
-        this.candidateModel = candidateModel
+        this.candidateModel = new CandidateModel()
         this.refreshDatatable = refreshDatatable
 
         this.window = $$("updateWindow")

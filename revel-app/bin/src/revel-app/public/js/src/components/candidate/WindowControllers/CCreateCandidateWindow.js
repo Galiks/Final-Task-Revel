@@ -1,11 +1,13 @@
+import { CandidateModel } from "../../../models/CandidateModel.js"
+
 export class CCreateCandidateWindow{
     constructor(){
 
     }
 
-    init(candidateModel, refreshDatatable){
+    init(refreshDatatable){
 
-        this.candidateModel = candidateModel
+        this.candidateModel = new CandidateModel()
         this.refreshDatatable = refreshDatatable
 
         this.window = $$("createWindow")
@@ -61,19 +63,5 @@ export class CCreateCandidateWindow{
      */
     parse(values){
         this.form.setValues(values)
-    }
-
-    /**
-     * Метод для проверки пустых строк
-     * @returns true/false
-     */
-    isEmptyString(){
-        for (let index = 0; index < arguments.length; index++) {
-            const element = arguments[index];
-            if (element.trim() == ''){
-                return true
-            }
-        }
-        return false
     }
 }

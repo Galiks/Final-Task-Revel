@@ -1,64 +1,129 @@
 import { User } from "../../models/entities/User.js"
+import { USER_ROLE } from "./CUserTab.js";
 
 
-export class UserWindow{
+export class UserWindowView{
     constructor(){
 
     }
 
-    loginView(){
+    viewUpdateWindow(){
+        let labelWidth = 100
 
-        let loginPopup =  {
-            view:"popup",
-            id:"loginPopup",
-            body:{ 
-              view:"form", id:"loginForm", width:200, elements:[
-                {view:"text", label:"Логин", name:"login", placeholder:"Логин", align:"center", required:true},
-                {view:"text", label:"Пароль", type:"password", name:"password", placeholder:"Пароль", align:"center", required:true},
-                {view:"button", label:"Войти", id:"loginPopupButton"}
-              ]
-            }
+        const body = {
+          "autoheight": false,
+          "view": "form",
+          rules: {
+            "email": webix.rules.isEmail,
+          },
+          "id": "updateForm",
+          "rows": [
+            { "view": "text", "label": "Номер", "name": "ID", "type": "number", "readonly": true, labelWidth: labelWidth, hidden: true },
+            { "view": "text", "label": "Логин", "name": "login", "type": "text", required:true, labelWidth: labelWidth },
+            { "view": "text", "label": "Пароль", "name": "password", "type": "text", required:true, labelWidth: labelWidth },
+            { view:"select", label:"Роль", name:"role", options:[
+                USER_ROLE.user,
+                USER_ROLE.moderator,
+                USER_ROLE.admin
+              ] 
+            },
+            { "view": "button", "css": "webix_primary", "label": "Изменить", "id": "updateWindowButton" }
+          ]
+        };
+
+        let updateWindow = {
+          view:"window",
+          height:400,
+          move:true,
+          resize: true,
+          width:300,
+          head:{
+              view:"toolbar", cols:[
+                  { view:"label", label: "Окно изменения" },
+                  { view:"button", label: 'Close', id:"updateWindowClose" , width: 100, align: 'right'}
+                ]
+          },
+          position:"center",
+          body:body,
+          close: true,
+          id: "updateWindow"
         }
 
-        return loginPopup
+        return updateWindow
     }
 
-    registerView(){
-        let registerPopup = {
-            view:"popup",
-            id:"registerPopup",
-            body:{ 
-              view:"form", id:"registerForm", elements:[
-                {view:"text", label:"Логин", width:370, "labelWidth":150, name:"login", placeholder:"Логин", align:"left", required:true},
-                {view:"text", label:"Пароль", type:"password", "labelWidth":150, name:"password", placeholder:"Пароль", align:"left", required:true},
-                {view:"text", label:"Повторите пароль", "labelWidth":150, type:"password", name:"repeatPassword", placeholder:"Повторите пароль", align:"left", required:true},
-                {view:"button", label:"Зарегистрироваться", id:"registerPopupButton"}
+    viewDeleteWindow(user){
+        let labelWidth = 100
+
+        let deleteWindow = {
+            view:"window",
+            move:true,
+            resize: true,
+            height: 300,
+            width: 300,
+            head:{
+                view:"toolbar", cols:[
+                    { view:"label", label: "Окно удаления" },
+                    { view:"button", label: 'Close', id:"deleteWindowClose" , width: 100, align: 'right'}
+                  ]
+            },
+            position:"center",
+            body:{
+              "rows": [
+                {
+                    "elements": [
+                        { "label": "Информация", "type": "label",labelWidth: labelWidth },
+                        { "label": "Фото", "type":"text", "value":  user.userPhoto,labelWidth: labelWidth},
+                        { "label": "Логин", "type": "text", "value": user.login,labelWidth: labelWidth },
+                        { "label": "Роль", "type":"text", "value": user.role,labelWidth: labelWidth },
+                        { "label": "Последний визит", "type":"text", "value": user.lastVisites,labelWidth: labelWidth },
+                      ],
+                      "view": "property"
+                },
+                {
+                  "cols": [
+                    { "label": "Да", "view": "button", id:"deleteWindowButtonYes" },
+                    { "label": "Нет", "view": "button", id:"deleteWindowButtonNo" }
+                  ]
+                }
               ]
-            }
-        }
-        return registerPopup
+            },
+            close: true,
+            id: "deleteWindow"
+          }
+          return deleteWindow
     }
 
-    aboutUserView(user){
-      let aboutUser = {
-        view:"popup",
-        id:"userPopup",
-        body:{ 
-          rows:[
-            { 
+    viewAboutWindow(user){
+        let labelWidth = 250
+
+        let aboutWindow = {
+            view:"window",
+            move:true,
+            resize: true,
+            height:300,
+            width:300,
+            head:{
+                view:"toolbar", cols:[
+                    { view:"label", label: "Окно информации" },
+                    { view:"button", label: 'Close', id:"aboutWindowClose" , width: 100, align: 'right'}
+                  ]
+            },
+            position:"center",
+            body:{
               "elements": [
-              { "label": "Информация", "type": "label" },
-              { "label": "Логин", "type": "text", "value": user.login },
-              { "label": "Последний визит", "type":"text", "value": user.lastVisited, "labelWidth":150 },
-              { "label": "Роль", "type":"text", "value": user.role}
-            ],
+                { "label": "Информация", "type": "label" },
+                { "label": "Логин", "type": "text", "value": user.login, labelWidth: labelWidth },
+                { "label": "Роль", "type":"text", "value": user.role, labelWidth: labelWidth },
+                { "label": "Последний визит", "type":"text", "value": String(user.lastVisited), labelWidth: labelWidth },
+                { "label": "Фото", "type":"text", "value":  user.userPhoto, labelWidth: labelWidth},
+              ],
               "view": "property"
             },
-            { view:"button", label:"Выход", id:"logoutButton"}
-          ]
-        }
-      }
+            close: true,
+            id: "aboutWindow",
+          }
 
-      return aboutUser
+          return aboutWindow
     }
 }

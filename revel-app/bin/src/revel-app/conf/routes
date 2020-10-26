@@ -49,6 +49,10 @@ POST    /user/auth/check                        CUser.Check
 GET     /user/auth/logout                       CUser.Logout
 GET     /user/auth/current                      CUser.GetCurrentUser
 
+# Error
+
+GET     /401                                    CError.Unauthorized
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -1,14 +1,16 @@
 import { EVENT_STATUS } from "./../CEventWindow.js";
 import { CANDIDATE_STATUS } from "./../../candidate/CCandidateWindow.js";
+import { EventModel } from "../../../models/EventModel.js";
+import { CandidateModel } from "../../../models/CandidateModel.js";
 
 export class CFinishEventWindow{
     constructor(){
         
     }
 
-    async init(event, eventModel, candidateModel, refreshDatatable, updateCandidateStatus){
-        this.eventModel = eventModel,
-        this.candidateModel = candidateModel
+    async init(event, refreshDatatable, updateCandidateStatus){
+        this.eventModel = new EventModel()
+        this.candidateModel = new CandidateModel()
         this.refreshDatatable = refreshDatatable
         this.updateCandidateStatus = updateCandidateStatus
 
@@ -58,7 +60,6 @@ export class CFinishEventWindow{
         let flagOnCandidateStatus = true;
         if ($$("finishWindowButton").isEnabled()) {
             if (event.status == EVENT_STATUS.finished) {
-
                 candidates.every(element => {
                     if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.dontShowUp) {
                         webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не явился")
@@ -94,6 +95,7 @@ export class CFinishEventWindow{
                 }
             }
             else {
+                webix.message("Мероприятие не закончено!")
                 $$("finishWindowButton").disable();
             }
         }

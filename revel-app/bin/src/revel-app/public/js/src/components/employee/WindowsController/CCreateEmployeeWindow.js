@@ -1,3 +1,4 @@
+import { EmployeeModel } from "../../../models/EmployeeModel.js"
 
 
 export class CCreateEmployeeWindow{
@@ -5,8 +6,8 @@ export class CCreateEmployeeWindow{
 
     }
 
-    init(employeeModel, refreshDatatable){
-        this.employeeModel = employeeModel
+    init(refreshDatatable){
+        this.employeeModel = new EmployeeModel()
         this.refreshDatatable = refreshDatatable
 
         this.window = $$("createWindow")

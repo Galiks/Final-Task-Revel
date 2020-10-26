@@ -16,13 +16,13 @@ export class CEventWindow{
     }
 
     /**
-     * Метод для инициализации
-     * @param {EventModel} eventModel объект класса EventModel
+     * 
+     * @param {function} refreshTable функция для обновления таблицы
      */
-    init(eventModel, refreshTable){
+    init(refreshTable){
 
         this.refreshDatatable = refreshTable
-        this.eventModel = eventModel
+        this.eventModel = new EventModel()
 
         this.eventWindowView = new EventWindowView()
         this.employeeModel = new EmployeeModel()
@@ -37,16 +37,33 @@ export class CEventWindow{
 
     /**
      * Метод устанавливает значения для свойства options
+     * @param {boolean} all выбирать всех или нет
+     * @param {number} eventID ID мероприятия
      */
-    async setMultiselectOptions() {
-        let result = await this.employeeModel.getEmployeesLikeIDValue()
-        $$("employeesMultiselect").define("options", result);
+    async setMultiselectOptions(all, eventID) {
+        let employeeOption = await this.employeeModel.getEmployeesLikeIDValue()
+        $$("employeesMultiselect").define("options", employeeOption);
         $$("employeesMultiselect").refresh();
-        
-        this.candidateModel.getCandidatesLikeIDValue().then((result) => {
-            $$("candidatesMultiselect").define("options", result);
-            $$("candidatesMultiselect").refresh();
-        });
+        let candidatesOption = []
+        if(all){
+            let candidatesByEvent = await this.eventModel.getCandidatesByEvent(Number(eventID))
+            candidatesByEvent.forEach((candidate)=>{
+                candidatesOption.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
+            })
+
+            let freeCandidates = await this.candidateModel.getFreeCandidate()
+            freeCandidates.forEach((candidate)=>{
+                candidatesOption.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
+            })
+        }else{
+            let freeCandidates = await this.candidateModel.getFreeCandidate()
+            freeCandidates.forEach((candidate)=>{
+                candidatesOption.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
+            })
+        }
+
+        $$("candidatesMultiselect").define("options", candidatesOption);
+        $$("candidatesMultiselect").refresh();
     }
 
     /**
@@ -59,15 +76,6 @@ export class CEventWindow{
 
         let candidates = await this.eventModel.getCandidateIDByEventIDLikeString(eventID)
         $$("candidatesMultiselect").setValue(candidates);
-
-        // let employeesMultiselectValue = this.eventModel.getEmployeeIDByEventIDLikeString(eventID);
-        // employeesMultiselectValue.then((value) => {
-        //     $$("employeesMultiselect").setValue(value);
-        // });
-        // let candidatesMultiselectValue = this.eventModel.getCandidateIDByEventIDLikeString(eventID);
-        // candidatesMultiselectValue.then((value) => {
-        //     $$("candidatesMultiselect").setValue(value);
-        // });
     }
 
     /**
@@ -75,13 +83,13 @@ export class CEventWindow{
      */
     createWindow(){
         webix.ui(this.eventWindowView.viewCreateWindow())     
-        this.createWindowController.init(this.eventModel, (datatableName) => {
+        this.createWindowController.init((datatableName) => {
             this.refreshDatatable(datatableName)
         },
         (eventID, status)=>{
             this.updateCandidateStatus(eventID, status)
         })
-        this.setMultiselectOptions();   
+        this.setMultiselectOptions(false);   
     }
     
     /**
@@ -90,14 +98,15 @@ export class CEventWindow{
      */
     updateWindow(event){
         webix.ui(this.eventWindowView.viewUpdateWindow(event))
-        this.updateWindowController.init(event, this.eventModel, (datatableName) => {
+        this.updateWindowController.init(event, (datatableName) => {
             this.refreshDatatable(datatableName)
         }, 
         (eventID, status)=>{
             this.updateCandidateStatus(eventID, status)
         })
         this.setMultiselectValue(event.ID);
-        this.setMultiselectOptions()
+        //нужны все!
+        this.setMultiselectOptions(true, event.ID)
     }
 
     /**
@@ -107,7 +116,7 @@ export class CEventWindow{
     deleteWindow(event){
         webix.ui(this.eventWindowView.viewDeleteWindow(event))
 
-        this.deleteWindowController.init(event, this.eventModel, (datatableName) => {
+        this.deleteWindowController.init(event, (datatableName) => {
             this.refreshDatatable(datatableName)
         })
     }
@@ -119,7 +128,7 @@ export class CEventWindow{
     aboutWindow(event){
         webix.ui(this.eventWindowView.viewAboutWindow(event))
 
-        this.aboutWindowController.init(event, this.eventModel, this.employeeModel, this.candidateModel)
+        this.aboutWindowController.init(event)
     }
 
     /**
@@ -131,7 +140,7 @@ export class CEventWindow{
 
         webix.ui(this.eventWindowView.viewFinishWindow(event))
         
-        this.finishWindowController.init(event, this.eventModel, this.candidateModel, (datatableName)=>{this.refreshDatatable(datatableName)}, (eventID, status)=>{this.updateCandidateStatus(eventID, status)})
+        this.finishWindowController.init(event, (datatableName)=>{this.refreshDatatable(datatableName)}, (eventID, status)=>{this.updateCandidateStatus(eventID, status)})
     }
 
     /**

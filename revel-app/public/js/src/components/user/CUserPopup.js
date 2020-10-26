@@ -108,8 +108,6 @@ export class CUserPopup{
             this.userIcon.disable()
 
             this.currentUser.lastVisited = new Date()
-
-            await this.userModel.updateUser(this.currentUser)
             await this.userModel.logout()
 
             this.currentUser = null

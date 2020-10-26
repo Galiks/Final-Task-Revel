@@ -19,8 +19,13 @@ export class EventModel{
             method: 'PUT'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -39,8 +44,13 @@ export class EventModel{
     async getCandidatesByEvent(eventID){
         let request = await fetch(`/candidate/event/${eventID}`)
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -52,14 +62,14 @@ export class EventModel{
         }
 
         return new Promise((resolve, reject)=>{
+            let candidates = []
             if (response != null){
-                let candidates = []
                 for (const item of response) {
                     let candidate = new Candidate(item.ID, item.firstname, item.lastname, item.patronymic, item.email, item.phone, item.status)
                     candidates.push(candidate)
                 }
-                resolve(candidates)
             }
+            resolve(candidates)
         })
     }
 
@@ -73,8 +83,13 @@ export class EventModel{
             method: 'PUT'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -93,8 +108,13 @@ export class EventModel{
     async getEmployeesByEvent(eventID){
         let request = await fetch(`/employee/event/${eventID}`)
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -205,8 +225,13 @@ export class EventModel{
     async getEvents() {
         let request = await fetch(`event/all`)
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -221,22 +246,20 @@ export class EventModel{
             let events = []
             if (response != null){
                 for (const item of response) {
-                    let event = new Event(item.ID, item.theme, this.toDate(item.beginning), item.status)
+                    let event = new Event(item.ID, item.theme, toDate(item.beginning), item.status)
                     events.push(event)
                 }
             }
             resolve(events)
         })
-    }
 
-    toDate(ISOdate){ 
-        let date = ISOdate.split('T')
-        let time = date[1].split(':')
-        let hh = time[0]
-        let mm = time[1]
-
-
-        return date[0] + " " + hh + ":" + mm
+        function toDate(ISOdate){ 
+            let date = ISOdate.split('T')
+            let time = date[1].split(':')
+            let hh = time[0]
+            let mm = time[1]
+            return date[0] + " " + hh + ":" + mm
+        }
     }
 
     /**
@@ -247,8 +270,13 @@ export class EventModel{
     async getEventByID(id) {
         let request = await fetch(`/event/${id}`);
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -277,13 +305,18 @@ export class EventModel{
             },
             body: JSON.stringify({
                 theme:event.theme,
-                beginning:event.beginning,
+                beginning:event.beginning + ":00Z",
                 status:event.status
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -312,13 +345,18 @@ export class EventModel{
             body: JSON.stringify({
                 ID:Number(event.ID),
                 theme:event.theme,
-                beginning:event.beginning,
+                beginning:event.beginning + ":00Z",
                 status:event.status
             })
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -343,8 +381,13 @@ export class EventModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -365,8 +408,13 @@ export class EventModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -387,8 +435,13 @@ export class EventModel{
             method: 'DELETE'
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   
@@ -405,8 +458,13 @@ export class EventModel{
             method: 'POST',
         })
         if (request.status != 200){
-            webix.message("ОШИБКА");
-            return
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
         }
 
         let response = await request.json()   

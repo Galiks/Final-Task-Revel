@@ -3,9 +3,7 @@ export class CAboutEmployeeWindow{
 
     }
 
-    init(employeeModel, refreshDatatable){
-        this.employeeModel = employeeModel
-        this.refreshDatatable = refreshDatatable
+    init(){
 
         this.window = $$("aboutWindow")
         this.main = $$("main")

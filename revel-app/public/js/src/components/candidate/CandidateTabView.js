@@ -14,7 +14,8 @@ export class CandidateTabView{
         let contextmenu = {
             view:"contextmenu",
             id:"candidatecmenu",
-            data:["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"]
+            // data:["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"]
+            data:["Подробнее"]
         }
 
         webix.ui(contextmenu)

@@ -1,31 +1,33 @@
 import { CEventTab } from "./event/CEventTab.js";
 import { CEmployeeTab } from "./employee/CEmployeeTab.js";
 import { CCandidateTab } from "./candidate/CCandidateTab.js";
-import { CUserWindow } from "./user/CUserWindow.js";
+import { CUserPopup } from "./user/CUserPopup.js";
 
 export class Index{
     constructor(){
         this.eventTab = new CEventTab()
-
         this.employeeTab = new CEmployeeTab()
-
         this.candidateTab = new CCandidateTab()
+        this.userPopup = new CUserPopup()
 
-        this.userWindow = new CUserWindow()
+        // this.userWindow = new CUserWindow()
+        // this.userTab = new CUserTab()
     }
 
     init(){
       this.employeeTab.init()
       this.candidateTab.init()
       this.eventTab.init()
-      this.userWindow.init()
+      this.userPopup.init()
+      // this.userWindow.init()
+      // this.userTab.init()
     }
 
     run(){
 
         let employees = this.employeeTab.config()
         let candidates = this.candidateTab.config()
-        let eventsConfig = this.eventTab.config() 
+        let events = this.eventTab.config() 
 
         // popup:"userPopup"
 
@@ -45,11 +47,11 @@ export class Index{
           { value:'Кандидаты', id:'candidates'}
         ]
 
-        if (this.userWindow.currentUser.role == "Администратор") {
-          tabbarOption.push(
-            { value:'Пользователи', id:'users'}
-          )
-        }
+        let cells = [
+          employees,
+          candidates,
+          events
+        ]        
 
         let tabbarHeader = {
             borderless:true, view:"tabbar", id:"tabbar", value:"listView", multiview:true, options:tabbarOption
@@ -66,28 +68,13 @@ export class Index{
                         userWindow,
                     ]},
                   {
-                    cells:[
-                     eventsConfig,
-                     employees,
-                     candidates
-                    ]
+                    id:"maincells",
+                    cells:cells
                   }
                 ]
               }
             ]
         }
-
-        let loginPopup =  {
-          view:"popup",
-          id:"loginPopup",
-          body:{ 
-            view:"form", id:"loginForm", width:200, elements:[
-              {view:"text", label:"Логин", name:"login", placeholder:"Логин", align:"center", required:true},
-              {view:"text", label:"Пароль", type:"password", name:"password", placeholder:"Пароль", align:"center", required:true},
-              {view:"button", label:"Войти"}
-            ]
-          }
-      }
 
       webix.ui(tabbar)
 

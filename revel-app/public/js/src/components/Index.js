@@ -48,9 +48,9 @@ export class Index{
         ]
 
         let cells = [
+          events,
           employees,
           candidates,
-          events
         ]        
 
         let tabbarHeader = {

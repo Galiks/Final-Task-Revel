@@ -128,7 +128,7 @@ func (m *MUser) SelectByID(ID int64) (u *entities.User, err error) {
 
 	query := `SELECT id, "Login", "Password", "UserPhoto", "LastVisite", "id_role"
 	FROM public."User"
-	WHERE u.id = $1;`
+	WHERE id = $1;`
 
 	rows, err := db.Query(query, ID)
 	if err != nil {
@@ -185,13 +185,14 @@ func (m *MUser) SelectByAuth(user *entities.User) (u *entities.User, err error) 
 	defer rows.Close()
 
 	rows.Next()
-	fmt.Println(rows)
 	p := UserSQL{}
 	err = rows.Scan(&p.ID, &p.Login, &p.Password, &p.IDRole, &p.UserPhoto, &p.LastVisisted)
 	if p.ID == 0 {
 		return nil, errors.New("Пользователь не найден")
 	}
 	result := p.ToUser()
+	result.LastVisisted = time.Now()
+	m.UpdateLastVisited(&result)
 	fmt.Println("MUser.SelectByAuth : ", result)
 	return &result, nil
 
@@ -250,6 +251,7 @@ func (m *MUser) Insert(user *entities.User) (u *entities.User, err error) {
 
 //Update изменение пользователя
 func (m *MUser) Update(user *entities.User) (u *entities.User, err error) {
+	fmt.Println("MUser.Update START")
 	connector, err := helpers.GetConnector()
 	if err != nil {
 		fmt.Println("MUser.Update : helpers.GetConnector error : ", err)
@@ -266,16 +268,13 @@ func (m *MUser) Update(user *entities.User) (u *entities.User, err error) {
 	defer db.Close()
 
 	query := `UPDATE public."User"
-	SET "Login"=$1, "Password"=$2, "UserPhoto"=$3, "LastVisite"=$4, id_role=(SELECT id
-																		FROM public."Role"
-																		WHERE "Role" = $5)
-	WHERE id = $6;`
+	SET "Login"=$1, id_role=(SELECT id
+							FROM public."Role"
+							WHERE "Role" = $2)
+	WHERE id = $3;`
 
 	_, err = db.Exec(query,
 		user.Login,
-		user.Password,
-		user.UserPhoto,
-		user.LastVisisted,
 		user.Role,
 		user.ID)
 	if err != nil {
@@ -288,6 +287,88 @@ func (m *MUser) Update(user *entities.User) (u *entities.User, err error) {
 	if err != nil {
 		fmt.Println("MUser.Update : m.SelectByID error : ", err)
 		revel.AppLog.Errorf("MUser.Update : m.SelectByID, %s\n", err)
+		return nil, err
+	}
+
+	return u, nil
+}
+
+//UpdatePassword изменение пароля пользователя
+func (m *MUser) UpdatePassword(user *entities.User) (u *entities.User, err error) {
+	fmt.Println("MUser.UpdatePassword START")
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		fmt.Println("MUser.UpdatePassword : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MUser.UpdatePassword : helpers.GetConnector, %s\n", err)
+		return nil, err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		fmt.Println("MUser.UpdatePassword : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MUser.UpdatePassword : connector.GetDBConnection, %s\n", err)
+		return nil, err
+	}
+
+	defer db.Close()
+
+	query := `UPDATE public."User"
+	SET "Password"=$1
+	WHERE id = $2;`
+
+	_, err = db.Exec(query,
+		user.Password,
+		user.ID)
+	if err != nil {
+		fmt.Println("MUser.UpdatePassword : db.Exec error : ", err)
+		revel.AppLog.Errorf("MUser.UpdatePassword : db.Exec, %s\n", err)
+		return nil, err
+	}
+
+	u, err = m.SelectByID(user.ID)
+	if err != nil {
+		fmt.Println("MUser.UpdatePassword : m.SelectByID error : ", err)
+		revel.AppLog.Errorf("MUser.UpdatePassword : m.SelectByID, %s\n", err)
+		return nil, err
+	}
+
+	return u, nil
+}
+
+//UpdateLastVisited изменение пользователя
+func (m *MUser) UpdateLastVisited(user *entities.User) (u *entities.User, err error) {
+	fmt.Println("MUser.UpdateLastVisited START")
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		fmt.Println("MUser.UpdateLastVisited : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MUser.UpdateLastVisited : helpers.GetConnector, %s\n", err)
+		return nil, err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		fmt.Println("MUser.UpdateLastVisited : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MUser.UpdateLastVisited : connector.GetDBConnection, %s\n", err)
+		return nil, err
+	}
+
+	defer db.Close()
+
+	query := `UPDATE public."User"
+	SET "LastVisite"=$1
+	WHERE id = $2;`
+
+	_, err = db.Exec(query,
+		user.LastVisisted,
+		user.ID)
+	if err != nil {
+		fmt.Println("MUser.UpdateLastVisited : db.Exec error : ", err)
+		revel.AppLog.Errorf("MUser.UpdateLastVisited : db.Exec, %s\n", err)
+		return nil, err
+	}
+
+	u, err = m.SelectByID(user.ID)
+	if err != nil {
+		fmt.Println("MUser.UpdateLastVisited : m.SelectByID error : ", err)
+		revel.AppLog.Errorf("MUser.UpdateLastVisited : m.SelectByID, %s\n", err)
 		return nil, err
 	}
 

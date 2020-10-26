@@ -1,13 +1,16 @@
+import { CandidateModel } from "../../../models/CandidateModel.js"
+import { EmployeeModel } from "../../../models/EmployeeModel.js"
+import { EventModel } from "../../../models/EventModel.js"
 
 export class CAboutEventWindow{
     constructor(){
 
     }
 
-    init(event, eventModel, employeeModel, candidateModel){
-        this.eventModel = eventModel
-        this.employeeModel = employeeModel
-        this.candidateModel = candidateModel
+    init(event){
+        this.eventModel = new EventModel()
+        this.employeeModel = new EmployeeModel()
+        this.candidateModel = new CandidateModel()
 
         this.aboutWindow = $$("aboutWindow")
         this.mainTab = $$("main")

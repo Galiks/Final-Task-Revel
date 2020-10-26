@@ -1,13 +1,13 @@
-import { EVENT_STATUS } from "./../CEventWindow.js";
 import { CANDIDATE_STATUS } from "./../../candidate/CCandidateWindow.js";
+import { EventModel } from "../../../models/EventModel.js";
 
 export class CCreateEventWindow{
     constructor(){
         
     }
 
-    init(eventModel, refreshDatatable, updateCandidateStatus){
-        this.eventModel = eventModel
+    init(refreshDatatable, updateCandidateStatus){
+        this.eventModel = new EventModel()
         this.refreshDatatable = refreshDatatable
         this.updateCandidateStatus = updateCandidateStatus
         this.createWindow = $$("createWindow")
@@ -53,14 +53,15 @@ export class CCreateEventWindow{
 
             let newEvent = await this.eventModel.createEvent(values)
 
+            if (candidates[0] != ""){
+                for (let index = 0; index < candidates.length; index++) {
+                    const id = candidates[index];
+                    await this.eventModel.setCandidateToEvent(id, newEvent.ID)
+                }
+            }
             for (let index = 0; index < employees.length; index++) {
                 const id = employees[index];
                 await this.eventModel.setEmployeeToEvent(id, newEvent.ID)
-            }
-
-            for (let index = 0; index < candidates.length; index++) {
-                const id = candidates[index];
-                await this.eventModel.setCandidateToEvent(id, newEvent.ID)
             }
 
             this.updateCandidateStatus(newEvent.ID, CANDIDATE_STATUS.invite)

@@ -37,7 +37,11 @@ func (p *PUser) CreateUser(user *entities.User) (u *entities.User, err error) {
 
 //UpdateUser метод изменения пользователя
 func (p *PUser) UpdateUser(user *entities.User) (u *entities.User, err error) {
-	return p.userMapper.Update(user)
+	if user.Password == "" {
+		return p.userMapper.Update(user)
+	}
+	user.Password = p.getHash(user.Password)
+	return p.userMapper.UpdatePassword(user)
 }
 
 //DeleteUser метод удаления пользователя

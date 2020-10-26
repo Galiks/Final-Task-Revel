@@ -1,124 +1,53 @@
 import { User } from "../../models/entities/User.js";
 import { UserModel } from "./../../models/UserModel.js";
-import { UserWindow } from "./UserWindowView.js";
+import { UserWindowView } from "./UserWindowView.js";
 
 export class CUserWindow{
     constructor(){
-        this.userWindow = new UserWindow()
         this.userModel = new UserModel()
         this.currentUser = new User();
+        this.userWindowView = new UserWindowView()
     }
 
-    async init(){
-        this.loginWindow()
-        this.registerWindow()
-        this.loginButton = $$("loginButton")
-        this.registerButton = $$("registerButton")
-        this.userIcon = $$("userIcon")
-        this.form = {
-            login: $$("loginForm"),
-            register: $$("registerForm")
-        }
+    init(refreshDatatable){
+        this.refreshDatatable = refreshDatatable
 
-        let check = await this.userModel.check()
-        if (check != false){
-            this.currentUser = await this.userModel.getCurrentUser()
-            this.aboutWindow()
-        }
+        this.main = $$("main")
+        
+        
+        
     }
 
+    deleteWindow(user){
+        webix.ui(this.userWindowView.viewDeleteWindow(user))
+        this.deleteWindowID = $$("deleteWindow")
+        //this.deleteWindowController.init(employee, this.employeeModel, () => {this.refreshDatatable()})
+    }
 
+    updateWindow(){
+        webix.ui(this.userWindowView.viewUpdateWindow())
+        this.updateWindowID = $$("updateWindow")
+        //this.updateWindowController.init(employee, this.employeeModel, ()=>{this.refreshDatatable()})
+    }
 
-    attachEventLoginWindow(){
-        $$("loginPopupButton").attachEvent("onItemClick", async ()=>{
-            this.loginButton.disable()
-            this.registerButton.disable()
-            this.userIcon.disable()
+    aboutWindow(user){
+        webix.ui(this.userWindowView.viewAboutWindow(user))
+        this.aboutWindowID = $$("aboutWindow")
+        this.attachToEventAboutWindow()
+    }
 
-            let values = this.form.login.getValues()
-
-            let result = await this.userModel.login(values.login, values.password)
-            if (result != false) {
-                this.currentUser = await this.userModel.getCurrentUser()
-                this.userIcon.enable()
-                this.aboutWindow()
-            } else {
-                this.loginButton.enable()
-                this.registerButton.enable()
-                this.userIcon.enable()
-            }
+    attachToEventAboutWindow(){
+        $$("aboutWindowClose").attachEvent("onItemClick", ()=>{
+            this.aboutWindowID.close()
+            this.main.enable()    
         })
-    }
 
-    attachEventRegisterWindow(){
-        $$("registerPopupButton").attachEvent("onItemClick", ()=>{
-
-            this.loginButton.disable()
-            this.registerButton.disable()
-            this.userIcon.disable()
-
-            const values = this.form.register.getValues()
-            if (values.password != values.repeatPassword) {
-                webix.message("Пароли не совпадают!")
-                this.form.register.clear()
-            }
-            else{
-                this.userModel.createUser(values).then((user) =>{
-                    this.loginButton.enable()
-                    this.registerButton.enable()
-                    this.userIcon.enable()
-                })
-            }
+        this.aboutWindowID.attachEvent("onHide", ()=> {
+            this.aboutWindowID.close()
+            this.main.enable()
         })
+
+        this.aboutWindowID.show()
+        this.main.disable()
     }
-
-    attachEventAboutWindow(){
-        this.loginButton.disable()
-        this.registerButton.disable()
-        this.userIcon.define("popup", "userPopup")
-        this.userIcon.refresh()
-
-        $$("logoutButton").attachEvent("onItemClick", async ()=>{
-
-            this.loginButton.disable()
-            this.registerButton.disable()
-            this.userIcon.disable()
-
-            this.currentUser.lastVisited = new Date()
-
-            await this.userModel.updateUser(this.currentUser)
-            await this.userModel.logout()
-
-            this.currentUser = null
-
-            this.userIcon.disable()
-            this.loginButton.enable()
-            this.registerButton.enable()
-        })
-    }
-
-    loginWindow(){
-        webix.ui(this.userWindow.loginView())
-
-        this.attachEventLoginWindow()
-    }
-
-    registerWindow(){
-        webix.ui(this.userWindow.registerView())
-
-        this.attachEventRegisterWindow()
-    }
-
-    aboutWindow(){
-        webix.ui(this.userWindow.aboutUserView(this.currentUser))
-
-        this.attachEventAboutWindow()
-    }
-}
-
-
-export const USER_ROLE = {
-    user: "Пользователь",
-    moderator: "Модератор",
-    admin: "Admin"
 }
