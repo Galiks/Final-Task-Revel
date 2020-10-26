@@ -5,7 +5,7 @@
 -- Dumped from database version 13.0
 -- Dumped by pg_dump version 13.0
 
--- Started on 2020-10-23 13:52:36
+-- Started on 2020-10-26 17:34:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,12 +18,13 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+DROP DATABASE "AssessmentManagement";
 --
 -- TOC entry 3098 (class 1262 OID 16395)
 -- Name: AssessmentManagement; Type: DATABASE; Schema: -; Owner: -
 --
 
-CREATE DATABASE "AssessmentManagement" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'Russian_Russia.1251';
+CREATE DATABASE "AssessmentManagement";
 
 
 \connect "AssessmentManagement"
@@ -446,10 +447,11 @@ ALTER TABLE ONLY public."User" ALTER COLUMN id SET DEFAULT nextval('public."User
 -- Data for Name: Candidate; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (24, 'Иван', 'Иванов', 'Иванович', 'ivan.ivan@ivan.ru', '12312312312', 1);
-INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (21, 'qwe', 'qwe', 'qwe', 'qwe.qwe@eqwr.ru', '12312312312', 1);
-INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (23, 'ячс', 'ячс', 'ячс', 'zxc.zc@zxc.ru', '12312312123', 1);
-INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (22, 'asd', 'sda', 'asd', 'asd.asd@asd.ru', '12312312312', 1);
+INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (22, 'asd', 'sda', 'asd', 'asd.asd@asd.ru', '12312312312', 5);
+INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (21, 'qwe', 'qwe', 'qwe', 'qwe.qwe@eqwr.ru', '12312312312', 5);
+INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (25, 'free', 'free', 'free', 'free.free@free.ru', '12312312312', 5);
+INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (24, 'Иван', 'Иванов', 'Иванович', 'ivan.ivan@ivan.ru', '12312312312', 5);
+INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", "id_candidatesStatus") VALUES (23, 'ячс', 'ячс', 'ячс', 'zxc.zc@zxc.ru', '12312312123', 5);
 
 
 --
@@ -458,10 +460,11 @@ INSERT INTO public."Candidate" (id, "Firstname", "Lastname", "Patronymic", "Emai
 -- Data for Name: CandidateEvent; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (235, 'Не явился', 24, 68, 4);
-INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (237, 'Успешно', 23, 68, 6);
-INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (234, 'Не успешно', 21, 68, 7);
-INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (236, 'Успешно', 22, 68, 6);
+INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (258, NULL, 22, 69, 5);
+INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (257, NULL, 21, 69, 5);
+INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (256, NULL, 25, 69, 5);
+INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (255, NULL, 24, 69, 5);
+INSERT INTO public."CandidateEvent" (id, "candidatesStatusValue", id_candidate, id_event, "id_candidateStatus") VALUES (254, NULL, 23, 69, 5);
 
 
 --
@@ -486,7 +489,7 @@ INSERT INTO public."CandidatesStatus" (id, "Status") VALUES (7, 'Не успеш
 --
 
 INSERT INTO public."Employee" (id, "Firstname", "Lastname", "Patronymic", "Position", "Email", "Phone", id_user) VALUES (17, 'qwe', 'qwe', 'qwe', 'qwe', 'qwe.qwe@qwe.ru', '12321312312', NULL);
-INSERT INTO public."Employee" (id, "Firstname", "Lastname", "Patronymic", "Position", "Email", "Phone", id_user) VALUES (18, 'asd', 'asd', 'asd', 'asd', 'asd.asd@asd.ru', '12312312312', NULL);
+INSERT INTO public."Employee" (id, "Firstname", "Lastname", "Patronymic", "Position", "Email", "Phone", id_user) VALUES (20, 'zxc', 'zxc', 'zxc', 'zxc', 'zxc.zc@zxc.rqw', '12312312312', NULL);
 
 
 --
@@ -495,8 +498,9 @@ INSERT INTO public."Employee" (id, "Firstname", "Lastname", "Patronymic", "Posit
 -- Data for Name: EmployeeEvent; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."EmployeeEvent" (id, id_employee, id_event) VALUES (217, 17, 68);
-INSERT INTO public."EmployeeEvent" (id, id_employee, id_event) VALUES (218, 18, 68);
+INSERT INTO public."EmployeeEvent" (id, id_employee, id_event) VALUES (231, 17, 73);
+INSERT INTO public."EmployeeEvent" (id, id_employee, id_event) VALUES (232, 20, 73);
+INSERT INTO public."EmployeeEvent" (id, id_employee, id_event) VALUES (234, 17, 69);
 
 
 --
@@ -505,9 +509,8 @@ INSERT INTO public."EmployeeEvent" (id, id_employee, id_event) VALUES (218, 18, 
 -- Data for Name: Event; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."Event" (id, "Theme", "Beginning", "id_eventsStatus") VALUES (2, 'Meeting', '2020-10-14 05:54:25.717341', 2);
-INSERT INTO public."Event" (id, "Theme", "Beginning", "id_eventsStatus") VALUES (3, 'Совещание', '2020-10-14 05:55:07.357844', 1);
-INSERT INTO public."Event" (id, "Theme", "Beginning", "id_eventsStatus") VALUES (68, 'test', '2020-10-21 11:25:00', 4);
+INSERT INTO public."Event" (id, "Theme", "Beginning", "id_eventsStatus") VALUES (73, 'asdasd', '2020-10-26 15:29:00', 3);
+INSERT INTO public."Event" (id, "Theme", "Beginning", "id_eventsStatus") VALUES (69, 'qwe', '2020-10-25 17:47:00', 3);
 
 
 --
@@ -539,9 +542,9 @@ INSERT INTO public."Role" (id, "Role") VALUES (3, 'Пользователь');
 -- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "Login") VALUES (7, 'user', NULL, NULL, 3, 'user');
-INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "Login") VALUES (6, 'admin', '\x', '2020-10-22 13:48:48.257', 1, 'admin');
-INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "Login") VALUES (10, '098f6bcd4621d373cade4e832627b4f6', '\x', '0001-01-01 00:00:00', NULL, 'test');
+INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "Login") VALUES (10, '098f6bcd4621d373cade4e832627b4f6', '\x', '2020-10-26 16:04:40.567138', 1, 'test');
+INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "Login") VALUES (12, '9ab97e0958c6c98c44319b8d06b29c94', '\x', '2020-10-26 16:05:04.993752', 2, 'moder');
+INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "Login") VALUES (11, '21232f297a57a5a743894a0e4a801fc3', '\x', '2020-10-26 16:05:26.531304', 3, 'admin');
 
 
 --
@@ -550,7 +553,7 @@ INSERT INTO public."User" (id, "Password", "UserPhoto", "LastVisite", id_role, "
 -- Name: CandidateEvent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."CandidateEvent_id_seq"', 237, true);
+SELECT pg_catalog.setval('public."CandidateEvent_id_seq"', 258, true);
 
 
 --
@@ -559,7 +562,7 @@ SELECT pg_catalog.setval('public."CandidateEvent_id_seq"', 237, true);
 -- Name: Candidate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."Candidate_id_seq"', 24, true);
+SELECT pg_catalog.setval('public."Candidate_id_seq"', 25, true);
 
 
 --
@@ -577,7 +580,7 @@ SELECT pg_catalog.setval('public."CandidatesStatus_id_seq"', 7, true);
 -- Name: EmployeeEvent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."EmployeeEvent_id_seq"', 218, true);
+SELECT pg_catalog.setval('public."EmployeeEvent_id_seq"', 234, true);
 
 
 --
@@ -586,7 +589,7 @@ SELECT pg_catalog.setval('public."EmployeeEvent_id_seq"', 218, true);
 -- Name: Employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."Employee_id_seq"', 18, true);
+SELECT pg_catalog.setval('public."Employee_id_seq"', 20, true);
 
 
 --
@@ -595,7 +598,7 @@ SELECT pg_catalog.setval('public."Employee_id_seq"', 18, true);
 -- Name: Event_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."Event_id_seq"', 68, true);
+SELECT pg_catalog.setval('public."Event_id_seq"', 73, true);
 
 
 --
@@ -622,7 +625,7 @@ SELECT pg_catalog.setval('public."Role_id_seq"', 3, true);
 -- Name: User_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."User_id_seq"', 10, true);
+SELECT pg_catalog.setval('public."User_id_seq"', 12, true);
 
 
 --
@@ -823,7 +826,7 @@ ALTER TABLE ONLY public."User"
     ADD CONSTRAINT "User_fk0" FOREIGN KEY (id_role) REFERENCES public."Role"(id);
 
 
--- Completed on 2020-10-23 13:52:36
+-- Completed on 2020-10-26 17:34:17
 
 --
 -- PostgreSQL database dump complete
