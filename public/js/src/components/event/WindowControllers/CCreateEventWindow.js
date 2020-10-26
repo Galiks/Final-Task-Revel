@@ -71,6 +71,7 @@ export class CCreateEventWindow{
         })
 
         this.createWindow.show()
+        console.log("this.createWindow.show()")
         this.mainTab.disable()
     }
 

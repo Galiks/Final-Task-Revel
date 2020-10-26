@@ -150,20 +150,20 @@ export const USER_ACTION = {
     user: {
         emptys: null,
         emptyEvents: ["Добавить"],
-        events: ["Добавить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"],
+        events: ["Добавить", "Изменить", "В архив",{ $template:"Separator" },"Подробнее"],
         employees: ["Добавить", { $template:"Separator" },"Подробнее"],
         candidates: ["Добавить", { $template:"Separator" },"Подробнее"],
     },
     moderator: {
         emptys: ["Добавить"],
-        events: ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"],
+        events: ["Добавить","Удалить", "Изменить", "В архив",{ $template:"Separator" },"Подробнее"],
         employees: ["Добавить", "Изменить",{ $template:"Separator" },"Подробнее"],
         candidates: ["Добавить", "Изменить",{ $template:"Separator" },"Подробнее"],
         users: ["Изменить",{ $template:"Separator" },"Подробнее"] 
     },
     admin: {
         emptys: ["Добавить"],
-        events: ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"],
+        events: ["Добавить","Удалить", "Изменить", "В архив",{ $template:"Separator" },"Подробнее"],
         employees: ["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"],
         candidates: ["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"],
         users: ["Удалить", "Изменить", "Сменить пароль",{ $template:"Separator" },"Подробнее"]

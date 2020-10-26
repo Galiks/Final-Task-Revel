@@ -40,12 +40,13 @@ export class EventWindowView{
                 candidatesView,
                 ]
               },
-              { view:"select", label:"Статус", name:"status", options:[
-                EVENT_STATUS.planned,
-                EVENT_STATUS.inProgress,
-                EVENT_STATUS.finished
-              ] 
-              },
+              {view:"text", label:"Статус", name:"status", value:EVENT_STATUS.planned, readonly:true},
+              // { view:"select", label:"Статус", name:"status", options:[
+              //   EVENT_STATUS.planned,
+              //   EVENT_STATUS.inProgress,
+              //   EVENT_STATUS.finished
+              // ] 
+              // },
               { "view": "button", "css": "webix_primary", "label": "Добавить", "id":"createWindowButton", "height": 40 }
             ]
           }
@@ -108,7 +109,7 @@ export class EventWindowView{
     }
 
     viewUpdateWindow(employees, candidates, employeesMultiselectValue, candidatesMultiselectValue){
-      
+
       let employeesMultiselect =  {
         "options": employees,
         "label": "Сотрудники",
@@ -154,10 +155,8 @@ export class EventWindowView{
                     employeesMultiselect,
                     candidatesMultiselect,
                   ]},
-                  { view:"select", label:"Статус", name:"status", options:[
-                    EVENT_STATUS.planned,
-                    EVENT_STATUS.inProgress,
-                    EVENT_STATUS.finished
+                  { view:"select", label:"Статус", name:"status", id:"statusOption", options:[
+
                   ] 
                     },
                     { "view": "button", "css": "webix_primary", "label": "Изменить", "id":"updateWindowButton", "height": 38 }
@@ -206,8 +205,8 @@ export class EventWindowView{
             "view":"property",
             "elements":[
               { "label": "Информация", "type": "label" },
-              { "label": "Тема", "type": "text", "value":event.theme, "readonly":true },
-              { "label": "Время", "type":"text", "value":event.beginning, "readonly":true }
+              { "label": "Тема", "view": "text", "value":event.theme, "readonly":true, readonly:true },
+              { "label": "Время", "view":"text", "value":event.beginning, "readonly":true, readonly:true }
             ]
       }
       let aboutWindow = {
@@ -246,8 +245,8 @@ export class EventWindowView{
         "view":"property",
         "elements":[
           { "label": "Информация", "type": "label" },
-          { "label": "Тема", "type": "text", "value":event.theme, "readonly":true },
-          { "label": "Время", "type":"text", "value":event.beginning, "readonly":true }
+          { "label": "Тема", "view": "text", "value":event.theme, readonly:true },
+          { "label": "Время", "view":"text", "value":event.beginning, readonly:true }
         ]
       }
       let candidatesDatatable = {
@@ -282,7 +281,7 @@ export class EventWindowView{
             eventInformation,
             {view:"resizer"},
             candidatesDatatable,
-            { "view": "button", "css": "webix_primary", "label": "Завершить", "id":"finishWindowButton", "height": 38, "width":0}
+            { "view": "button", "css": "webix_primary", "label": "В архив", "id":"finishWindowButton", "height": 38, "width":0}
           ],
           
         },

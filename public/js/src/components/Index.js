@@ -19,62 +19,58 @@ export class Index{
       this.employeeTab.init()
       this.candidateTab.init()
       this.eventTab.init()
-      // this.userWindow.init()
-      // this.userTab.init()
     }
 
     run(){
 
-        let employees = this.employeeTab.config()
-        let candidates = this.candidateTab.config()
-        let events = this.eventTab.config() 
+      let employees = this.employeeTab.config()
+      let candidates = this.candidateTab.config()
+      let events = this.eventTab.config() 
 
-        // popup:"userPopup"
+      let userWindow = {
+          "rows": [
+              { "icon": "wxi-user", "view": "icon", "width":150, id:"userIcon" },
+              {cols : [
+                { "label": "Вход", "view": "button", "width":150, "id":"loginButton", popup:"loginPopup"},
+                { "label": "Регистрация", "view":"button", "width":150, "id":"registerButton", popup:"registerPopup"}
+              ]}
+          ]
+      }
 
-        let userWindow = {
-            "rows": [
-                { "icon": "wxi-user", "view": "icon", "width":150, id:"userIcon" },
-                {cols : [
-                  { "label": "Вход", "view": "button", "width":150, "id":"loginButton", popup:"loginPopup"},
-                  { "label": "Регистрация", "view":"button", "width":150, "id":"registerButton", popup:"registerPopup"}
-                ]}
-            ]
-        }
+      let tabbarOption = [
+        { value:'Мероприятия', id:'events'},
+        { value:'Сотрудники', id:'employees'},
+        { value:'Кандидаты', id:'candidates'}
+      ]
 
-        let tabbarOption = [
-          { value:'Мероприятия', id:'events'},
-          { value:'Сотрудники', id:'employees'},
-          { value:'Кандидаты', id:'candidates'}
-        ]
+      let cells = [
+        events,
+        employees,
+        candidates,
+      ]        
 
-        let cells = [
-          events,
-          employees,
-          candidates,
-        ]        
+      let tabbarHeader = {
+          borderless:true, view:"tabbar", id:"tabbar", value:"listView", multiview:true, options:tabbarOption
+      }
 
-        let tabbarHeader = {
-            borderless:true, view:"tabbar", id:"tabbar", value:"listView", multiview:true, options:tabbarOption
-        }
-
-        let tabbar = {
-            rows:[
-              {
-                id:"main",
-                type:"clean",
-                rows:[
-                    {cols: [
-                        tabbarHeader,
-                        userWindow,
-                    ]},
-                  {
-                    id:"maincells",
-                    cells:cells
-                  }
-                ]
-              }
-            ]
-        }
+      let tabbar = {
+          rows:[
+            {
+              id:"main",
+              type:"clean",
+              rows:[
+                  {cols: [
+                      tabbarHeader,
+                      userWindow,
+                  ]},
+                {
+                  id:"maincells",
+                  cells:cells
+                }
+              ]
+            }
+          ]
+      }
 
       webix.ui(tabbar)
 

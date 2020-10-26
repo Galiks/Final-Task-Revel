@@ -34,6 +34,7 @@ export class CEventTab{
      * @param {string} datatableName имя таблицы
      */
     refreshDatatable(datatableName){
+        this.cmenu = $$("eventcmenu")
         let getData;
         if (datatableName == "events") {
             getData = this.eventModel.getEvents()
@@ -145,7 +146,7 @@ export class CEventTab{
             else if (this.getItem(id).value == "Подробнее"){
                 controller.eventWindowController.aboutWindow(event)
             }
-            else if (this.getItem(id).value == "Завершить"){
+            else if (this.getItem(id).value == "В архив"){
                 controller.eventWindowController.finishWindow(event)
             }  
         })

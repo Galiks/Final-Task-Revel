@@ -60,14 +60,7 @@ export class CFinishEventWindow{
         let flagOnCandidateStatus = true;
         if ($$("finishWindowButton").isEnabled()) {
             if (event.status == EVENT_STATUS.finished) {
-                candidates.every(element => {
-                    if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.dontShowUp) {
-                        webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не явился")
-                        $$("finishWindowButton").disable();
-                        flagOnCandidateStatus = false;
-                        return false;
-                    }
-                });
+                flagOnCandidateStatus = isValidCandidateStatus(candidates);
                 
                 //Если кандидат не "явился", то "не успешно"
                 if (flagOnCandidateStatus) {
@@ -83,20 +76,16 @@ export class CFinishEventWindow{
                     this.refreshDatatable("events");
                     this.finishWindow.close()
                     this.mainTab.enable()
-                    // this.eventModel.updateEvent(event).then((updatingEvent) => {
-                    //     this.refreshDatatable("events");
-                    //     this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.empty)
-                    //     this.finishWindow.close()
-                    //     this.mainTab.enable()
-                    // });
                 }
                 else {
                     webix.message("Условие не выполнилось: кандидаты не завершили мероприятие");
+                    return
                 }
             }
             else {
                 webix.message("Мероприятие не закончено!")
-                $$("finishWindowButton").disable();
+                return
+                // $$("finishWindowButton").disable();
             }
         }
     }
@@ -115,5 +104,19 @@ export class CFinishEventWindow{
         }
         $$("finishCandidates").parse(candidates)
         return candidates
+    }
+}
+
+function isValidCandidateStatus(candidates) {
+    let result = candidates.every(element => {
+        if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.dontShowUp) {
+            webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не явился");
+            return true;
+        }
+    });
+    if (result){
+        return false
+    }else{
+        return true
     }
 }
