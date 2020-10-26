@@ -11,32 +11,131 @@ export class CUserWindow{
 
     init(refreshDatatable){
         this.refreshDatatable = refreshDatatable
-
-        this.main = $$("main")
-        
-        
-        
+        this.main = $$("main")     
     }
 
     deleteWindow(user){
         webix.ui(this.userWindowView.viewDeleteWindow(user))
         this.deleteWindowID = $$("deleteWindow")
-        //this.deleteWindowController.init(employee, this.employeeModel, () => {this.refreshDatatable()})
+        this.attachEventOnDeleteWindow(user)
     }
 
-    updateWindow(){
+    attachEventOnDeleteWindow(user){
+        $$("deleteWindowClose").attachEvent("onItemClick", () => {
+            this.deleteWindowID.close()
+            this.main.enable()     
+        })
+
+        this.deleteWindowID.attachEvent("onHide", ()=> {
+            this.deleteWindowID.close()
+            this.main.enable()
+        })
+
+        $$("deleteWindowButtonYes").attachEvent("onItemClick", () =>{
+            this.userModel.deleteUser(user.ID).then(()=>{
+                this.refreshDatatable()
+                this.deleteWindowID.close()
+                this.main.enable()
+            })
+        })
+        $$("deleteWindowButtonNo").attachEvent("onItemClick", () =>{
+            this.deleteWindowID.close()
+            this.main.enable()
+        })
+
+        this.deleteWindowID.show()
+        this.main.disable()
+    }
+
+    updateWindow(user){
         webix.ui(this.userWindowView.viewUpdateWindow())
         this.updateWindowID = $$("updateWindow")
-        //this.updateWindowController.init(employee, this.employeeModel, ()=>{this.refreshDatatable()})
+        this.updateForm = $$("updateForm")
+        this.attachEventOnUpdateWindow(user)
+    }
+
+    attachEventOnUpdateWindow(user){
+        this.parse(user)
+
+        $$("updateWindowButton").attachEvent("onItemClick", async ()=>{
+            if (!this.updateForm.validate()){
+                webix.message("Проверьте поля!")
+                return
+            }
+            let values = this.fetch()
+            let user = new User(values.ID, values.login, "", values.role, null, null)
+            await this.userModel.updateUser(user)
+            this.refreshDatatable()
+            this.updateWindowID.close()
+            this.main.enable() 
+        })
+
+        if (!this.updateForm.validate()){
+            webix.message("Проверьте поля!")
+            return
+        }
+
+        $$("updateWindowClose").attachEvent("onItemClick", ()=>{
+            this.updateWindowID.close()
+            this.main.enable()    
+        })
+
+        this.updateWindowID.attachEvent("onHide", ()=> {
+            this.updateWindowID.close()
+            this.main.enable()
+        })
+
+        this.updateWindowID.show()
+        this.main.disable()
+    }
+
+    changePasswordWindow(user){
+        webix.ui(this.userWindowView.viewChangePasswordWindow())
+        this.changePasswordWindowID = $$("changePasswordWindow")
+        this.changePasswordForm = $$("changePasswordForm")
+        this.attachEventOnChangePasswordWindow(user)
+    }
+
+    attachEventOnChangePasswordWindow(user){
+        this.changePasswordForm.setValues(user)
+        $$("changePasswordWindowButton").attachEvent("onItemClick", async ()=>{
+            if (!this.changePasswordForm.validate()){
+                webix.message("Проверьте поля!")
+                return
+            }
+            let values = this.changePasswordForm.getValues()
+            if (values.password != values.repeatPassword){
+                webix.message("Проверьте поля!")
+                return
+            }
+            let user = new User(values.ID, "", values.password, "", null, null)
+            await this.userModel.updateUser(user)
+            this.refreshDatatable()
+            this.changePasswordWindowID.close()
+            this.main.enable() 
+        })
+
+        $$("changePasswordWindowClose").attachEvent("onItemClick", ()=>{
+            this.changePasswordWindowID.close()
+            this.main.enable()    
+        })
+
+        this.changePasswordWindowID.attachEvent("onHide", ()=> {
+            this.changePasswordWindowID.close()
+            this.main.enable()
+        })
+
+        this.changePasswordWindowID.show()
+        this.main.disable()
     }
 
     aboutWindow(user){
         webix.ui(this.userWindowView.viewAboutWindow(user))
         this.aboutWindowID = $$("aboutWindow")
-        this.attachToEventAboutWindow()
+        this.attachEventOnAboutWindow()
     }
 
-    attachToEventAboutWindow(){
+    attachEventOnAboutWindow(){
         $$("aboutWindowClose").attachEvent("onItemClick", ()=>{
             this.aboutWindowID.close()
             this.main.enable()    
@@ -49,5 +148,13 @@ export class CUserWindow{
 
         this.aboutWindowID.show()
         this.main.disable()
+    }
+
+    fetch(){
+        return this.updateForm.getValues()
+    }
+
+    parse(value){
+        this.updateForm.setValues(value)
     }
 }

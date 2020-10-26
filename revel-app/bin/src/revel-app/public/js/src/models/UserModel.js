@@ -31,7 +31,8 @@ export class UserModel{
         }
 
         return new Promise((resolve, reject)=>{
-            resolve(response)
+            let user = new User(response.ID, response.login, response.password, response.role, response.userPhoto, this.toDate(response.lastVisited))
+            resolve(user)
         })
     }
 
@@ -60,20 +61,20 @@ export class UserModel{
             let users = []
             if (response != null) {
                 for (const item of response) {
-                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, toDate(item.lastVisited))
+                    let user = new User(item.ID, item.login, item.password, item.role, item.userPhoto, this.toDate(item.lastVisited))
                     users.push(user)
                 }
             }
             resolve(users)
         })
+    }
 
-        function toDate(ISOdate){ 
-            let date = ISOdate.split('T')
-            let time = date[1].split(':')
-            let hh = time[0]
-            let mm = time[1]
-            return date[0] + " " + hh + ":" + mm
-        }
+    toDate(ISOdate){ 
+        let date = ISOdate.split('T')
+        let time = date[1].split(':')
+        let hh = time[0]
+        let mm = time[1]
+        return date[0] + " " + hh + ":" + mm
     }
 
     /**
@@ -185,7 +186,8 @@ export class UserModel{
         }
 
         return new Promise((resolve, reject)=>{
-            resolve(response)
+            let user = new User(response.ID, response.login, response.password, response.role, response.userPhoto, this.toDate(response.lastVisited))
+            resolve(user)
         })
     }
 
@@ -243,7 +245,7 @@ export class UserModel{
                 'Content-Type':'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                ID: user.ID,
+                ID: Number(user.ID),
                 login: user.login,
                 password: user.password,
                 userPhoto: user.userPhoto,

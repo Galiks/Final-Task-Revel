@@ -13,14 +13,10 @@ export class UserWindowView{
         const body = {
           "autoheight": false,
           "view": "form",
-          rules: {
-            "email": webix.rules.isEmail,
-          },
           "id": "updateForm",
           "rows": [
             { "view": "text", "label": "Номер", "name": "ID", "type": "number", "readonly": true, labelWidth: labelWidth, hidden: true },
             { "view": "text", "label": "Логин", "name": "login", "type": "text", required:true, labelWidth: labelWidth },
-            { "view": "text", "label": "Пароль", "name": "password", "type": "text", required:true, labelWidth: labelWidth },
             { view:"select", label:"Роль", name:"role", options:[
                 USER_ROLE.user,
                 USER_ROLE.moderator,
@@ -52,6 +48,42 @@ export class UserWindowView{
         return updateWindow
     }
 
+    viewChangePasswordWindow(){
+      let labelWidth = 100
+
+        const body = {
+          "autoheight": false,
+          "view": "form",
+          "id": "changePasswordForm",
+          "rows": [
+            { "view": "text", "label": "Номер", "name": "ID", "type": "number", "readonly": true, labelWidth: labelWidth, hidden: true },
+            { "view": "text", "label": "Пароль", "name": "password", "type": "password", required:true, labelWidth: labelWidth },
+            { "view": "text", "label": "Повторите пароль", "name": "repeatPassword", "type": "password", required:true, labelWidth: labelWidth },
+            { "view": "button", "css": "webix_primary", "label": "Изменить", "id": "changePasswordWindowButton" }
+          ]
+        };
+
+        let updateWindow = {
+          view:"window",
+          height:400,
+          move:true,
+          resize: true,
+          width:300,
+          head:{
+              view:"toolbar", cols:[
+                  { view:"label", label: "Окно смены пароля" },
+                  { view:"button", label: 'Close', id:"changePasswordWindowClose" , width: 100, align: 'right'}
+                ]
+          },
+          position:"center",
+          body:body,
+          close: true,
+          id: "changePasswordWindow"
+        }
+
+        return updateWindow
+    }
+
     viewDeleteWindow(user){
         let labelWidth = 100
 
@@ -73,7 +105,6 @@ export class UserWindowView{
                 {
                     "elements": [
                         { "label": "Информация", "type": "label",labelWidth: labelWidth },
-                        { "label": "Фото", "type":"text", "value":  user.userPhoto,labelWidth: labelWidth},
                         { "label": "Логин", "type": "text", "value": user.login,labelWidth: labelWidth },
                         { "label": "Роль", "type":"text", "value": user.role,labelWidth: labelWidth },
                         { "label": "Последний визит", "type":"text", "value": user.lastVisites,labelWidth: labelWidth },
@@ -115,7 +146,7 @@ export class UserWindowView{
                 { "label": "Информация", "type": "label" },
                 { "label": "Логин", "type": "text", "value": user.login, labelWidth: labelWidth },
                 { "label": "Роль", "type":"text", "value": user.role, labelWidth: labelWidth },
-                { "label": "Последний визит", "type":"text", "value": String(user.lastVisited), labelWidth: labelWidth },
+                { "label": "Последний визит", "type":"text", "value": String(user.lastVisited), "labelWidth": labelWidth },
                 { "label": "Фото", "type":"text", "value":  user.userPhoto, labelWidth: labelWidth},
               ],
               "view": "property"

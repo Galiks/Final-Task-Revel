@@ -14,11 +14,11 @@ export class Index{
         // this.userTab = new CUserTab()
     }
 
-    init(){
+    async init(){
+      await this.userPopup.init()
       this.employeeTab.init()
       this.candidateTab.init()
       this.eventTab.init()
-      this.userPopup.init()
       // this.userWindow.init()
       // this.userTab.init()
     }
@@ -48,9 +48,9 @@ export class Index{
         ]
 
         let cells = [
+          events,
           employees,
           candidates,
-          events
         ]        
 
         let tabbarHeader = {

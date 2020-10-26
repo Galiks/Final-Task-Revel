@@ -1,4 +1,4 @@
-import { Employee } from "./../../models/entities/Employee.js";
+import { USER_ACTION } from "../user/CUserTab.js";
 
 export class EmployeeTabView{
 
@@ -8,7 +8,7 @@ export class EmployeeTabView{
             view:"contextmenu",
             id:"employeecmenu",
             //data:["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"]
-            data:["Подробнее"]
+            data:USER_ACTION.emptyDatatableForEmpty
         }
 
         webix.ui(contextmenu)

@@ -1,3 +1,5 @@
+import { USER_ACTION } from "../user/CUserTab.js"
+
 export class EventTabView{
     constructor(){
         
@@ -11,7 +13,7 @@ export class EventTabView{
             view:"contextmenu",
             id:"eventcmenu",
             //data : ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"]
-            data : ["Подробнее"]
+            data : USER_ACTION.emptyDatatableForEmpty
         }
 
         webix.ui(contextmenu)   
