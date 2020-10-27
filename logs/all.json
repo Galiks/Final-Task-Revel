@@ -438,3 +438,9 @@
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-26T21:45:48.5683328+04:00"}
 {"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-26T21:46:15.623917+04:00"}
 {"caller":"revel_logger.go:39","lvl":"ERROR","module":"app","msg":"MCandidate.Update : db.Exec (candidate), pq: значение NULL в столбце \"id_candidatesStatus\" отношения \"Candidate\" нарушает ограничение NOT NULL\n","t":"2020-10-27T01:39:52.3295856+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-27T10:02:36.4457008+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-27T10:02:36.5177021+04:00"}
+{"caller":"run.go:29","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-27T10:03:40.8988747+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-10-27T10:04:33.8643475+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-10-27T10:04:33.8713453+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-10-27T10:04:59.7202457+04:00"}

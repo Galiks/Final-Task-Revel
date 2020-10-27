@@ -82,6 +82,10 @@ export class CFinishEventWindow{
                     return
                 }
             }
+            else if (event.status == EVENT_STATUS.archive){
+                webix.message("Мероприятие уже в архиве!")
+                return
+            }
             else {
                 webix.message("Мероприятие не закончено!")
                 return
@@ -110,7 +114,7 @@ export class CFinishEventWindow{
 function isValidCandidateStatus(candidates) {
     let result = candidates.every(element => {
         //if ((element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess) && element.status != CANDIDATE_STATUS.empty) {
-        if (element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess && element.status != CANDIDATE_STATUS.empty) {
+        if (element.status != CANDIDATE_STATUS.success && element.status != CANDIDATE_STATUS.unsuccess && element.status != CANDIDATE_STATUS.dontShowUp) {
             webix.message("Статусы кандидатов должны быть: Успешно, Не успешно или Не назначен");
             return true;
         }

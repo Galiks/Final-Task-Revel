@@ -85,7 +85,7 @@ export class CUpdateEventWindow{
                 let candidatesByEvent = await this.eventModel.getCandidatesByEvent(updatingEvent.ID)
                 candidatesByEvent.forEach(candidate => {
                     if (candidate.status == CANDIDATE_STATUS.dontShowUp) {
-                        candidate.status = CANDIDATE_STATUS.empty
+                        candidate.status = CANDIDATE_STATUS.dontShowUp
                         this.candidateModel.updateCandidate(candidate)
                     }else if (candidate.status == CANDIDATE_STATUS.showUp) {
                         candidate.status = CANDIDATE_STATUS.wait
