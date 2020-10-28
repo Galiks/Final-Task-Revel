@@ -32,46 +32,14 @@ export class CEmployeeTab{
     refreshDatatable(){
         this.cmenu = $$("employeecmenu")
         this.employeeModel.getEmloyees().then(async (data)=>{
-            let user = await this.userTabController.getCurrentUser();
-            let role = ""
-            if  (user == undefined){
-                role = "Нет роли"
-            }else{
-                role = user.role
-            }
+            this.cmenu.clearAll()
             if (data.length == 0) {
-                this.cmenu.clearAll()
-                if (role == "Пользователь"){
-                    this.cmenuOption = USER_ACTION.user.emptys
-                }
-                else if (role == "Модератор"){
-                    this.cmenuOption = USER_ACTION.moderator.emptys
-                }
-                else if (role == "Администратор"){
-                    this.cmenuOption = USER_ACTION.admin.emptys
-                }
-                else{
-                    this.cmenuOption = USER_ACTION.empty.emptys
-                }
-                this.cmenu.define("data", this.cmenuOption)
+                let cmenuOption = await getCmenuOptionForEmptyDatatable.call(this)
+                this.cmenu.define("data", cmenuOption)
                 this.cmenu.refresh()
-                let empty = [new Object]
-                refreshDatatableData(empty, this)
             }else{
-                this.cmenu.clearAll()
-                if (role == "Пользователь"){
-                    this.cmenuOption = USER_ACTION.user.employees
-                }
-                else if (role == "Модератор"){
-                    this.cmenuOption = USER_ACTION.moderator.employees
-                }
-                else if (role == "Администратор"){
-                    this.cmenuOption = USER_ACTION.admin.employees
-                }
-                else{
-                    this.cmenuOption = USER_ACTION.empty.emptys
-                }
-                this.cmenu.define("data", this.cmenuOption)
+                let cmenuOption = await getCmenuOptionForDatatable.call(this);
+                this.cmenu.define("data", cmenuOption)
                 this.cmenu.refresh()
                 refreshDatatableData(data);
             }
@@ -87,6 +55,47 @@ export class CEmployeeTab{
             datatable.clearAll();
             datatable.parse(data);
             datatable.refresh();
+        }
+
+        async function getCmenuOptionForDatatable() {
+            let role = await getCurrentUserRole.call(this)
+            if (role == "Пользователь"){
+                return USER_ACTION.user.employees
+            }
+            else if (role == "Модератор"){
+                return USER_ACTION.moderator.employees
+            }
+            else if (role == "Администратор"){
+                return USER_ACTION.admin.employees
+            }
+            else{
+                return USER_ACTION.empty.emptys
+            }
+        }     
+
+        async function getCmenuOptionForEmptyDatatable() {
+            let role = await getCurrentUserRole.call(this)
+            if (role == "Пользователь"){
+                return USER_ACTION.user.emptys
+            }
+            else if (role == "Модератор"){
+                return USER_ACTION.moderator.emptys
+            }
+            else if (role == "Администратор"){
+                return USER_ACTION.admin.emptys
+            }
+            else{
+                return USER_ACTION.empty.emptys
+            }
+        }
+        
+        async function getCurrentUserRole() {
+            let user = await this.userTabController.getCurrentUser();
+            if (user == undefined) {
+                return "Нет роли";
+            } else {
+                return user.role;
+            }
         }
     }
 
@@ -115,19 +124,25 @@ export class CEmployeeTab{
             let context = this.getContext();
             let item = context.obj;
             let itemID = context.id;
-            let element = item.getItem(itemID)
+            let employee = item.getItem(itemID)
             if (this.getItem(id).value == "Добавить"){   
                 controller.employeeWindowController.createWindow()
             }
-            else if (this.getItem(id).value == "Удалить"){
-                controller.employeeWindowController.deleteWindow(element)
-            }
-            else if (this.getItem(id).value == "Изменить"){
-                controller.employeeWindowController.updateWindow(element)          
-            }
-            else if (this.getItem(id).value == "Подробнее"){
-                controller.employeeWindowController.aboutWindow(element)
-            }           
+            else{
+                if (!employee){
+                    webix.message("Нельзя выполнить данную функцию на пустом поле!")
+                    return
+                }
+                if (this.getItem(id).value == "Удалить"){
+                    controller.employeeWindowController.deleteWindow(employee)
+                }
+                else if (this.getItem(id).value == "Изменить"){
+                    controller.employeeWindowController.updateWindow(employee)          
+                }
+                else if (this.getItem(id).value == "Подробнее"){
+                    controller.employeeWindowController.aboutWindow(employee)
+                }   
+            }        
           });
     }
 }

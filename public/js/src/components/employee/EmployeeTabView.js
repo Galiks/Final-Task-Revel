@@ -7,7 +7,6 @@ export class EmployeeTabView{
         let contextmenu = {
             view:"contextmenu",
             id:"employeecmenu",
-            //data:["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"]
             data:USER_ACTION.emptyDatatableForEmpty
         }
 
@@ -27,7 +26,16 @@ export class EmployeeTabView{
             "height": 0,
             "select": true,
             "id": "employees",
-            "onContext":{}
+            onContext:{
+                webix_view:function(e, id){
+                   id = this.locate(e.target|| e.srcElement);
+                   if(!id){
+                       $$("employeecmenu").setContext({ obj:webix.$$(e)});
+                       $$("employeecmenu").show(e);
+                       webix.html.preventEvent(e);
+                   }
+               }
+            }
         }
     }
 }

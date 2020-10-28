@@ -12,7 +12,6 @@ export class EventTabView{
         let contextmenu = {
             view:"contextmenu",
             id:"eventcmenu",
-            //data : ["Добавить","Удалить", "Изменить", "Завершить",{ $template:"Separator" },"Подробнее"]
             data : USER_ACTION.emptyDatatableForEmpty
         }
 
@@ -31,6 +30,16 @@ export class EventTabView{
             "view": "datatable",
             "id":"events",
             "select":true,
+            onContext:{
+                webix_view:function(e, id){
+                   id = this.locate(e.target|| e.srcElement);
+                   if(!id){
+                       $$("eventcmenu").setContext({ obj:webix.$$(e)});
+                       $$("eventcmenu").show(e);
+                       webix.html.preventEvent(e);
+                   }
+               }
+            }
         }
     }
 }

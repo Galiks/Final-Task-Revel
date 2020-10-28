@@ -15,7 +15,6 @@ export class CandidateTabView{
         let contextmenu = {
             view:"contextmenu",
             id:"candidatecmenu",
-            // data:["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"]
             data:USER_ACTION.emptyDatatableForEmpty
         }
 
@@ -35,7 +34,16 @@ export class CandidateTabView{
             "height": 0,
             "select": true,
             "id": "candidates",
-            "onContext":{}
+            onContext:{
+                webix_view:function(e, id){
+                   id = this.locate(e.target|| e.srcElement);
+                   if(!id){
+                       $$("candidatecmenu").setContext({ obj:webix.$$(e)});
+                       $$("candidatecmenu").show(e);
+                       webix.html.preventEvent(e);
+                   }
+               }
+            }
         }
     }
 }
