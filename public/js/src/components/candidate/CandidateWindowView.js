@@ -86,10 +86,10 @@ export class CandidateWindowView{
             "rows": [
               {
                   "elements": [
-                      { "label": "Хотите удалить?", "type": "label" },
-                      { "label": "ФИО", "type": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic },
-                      { "label": "Email", "type":"text", "value": candidate.email },
-                      { "label": "Телефон", "type":"text", "value": candidate.phone },
+                      { "label": "Хотите удалить?", "type": "label", readonly:true },
+                      { "label": "ФИО", "view": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic, readonly:true },
+                      { "label": "Email", "view":"text", "value": candidate.email, readonly:true },
+                      { "label": "Телефон", "view":"text", "value": candidate.phone, readonly:true },
                     ],
                     "view": "property"
               },
@@ -181,10 +181,10 @@ export class CandidateWindowView{
           body:{
             "elements": [
               { "label": "Информация", "type": "label"},
-              { "label": "ФИО", "type": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic },
-              { "label": "Email", "type":"text", "value": candidate.email },
-              { "label": "Телефон", "type":"text", "value": candidate.phone },
-              { "label": "Статус", "type":"text", value: candidate.status}
+              { "label": "ФИО", "view": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic, readonly:true },
+              { "label": "Email", "view":"text", "value": candidate.email, readonly:true },
+              { "label": "Телефон", "view":"text", "value": candidate.phone, readonly:true },
+              { "label": "Статус", "view":"text", value: candidate.status, readonly:true}
             ],
             "view": "property"
           },

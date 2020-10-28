@@ -175,7 +175,9 @@ func (m *MCandidate) SelectFreeCandidates() (cs []*entities.Candidate, err error
 
 	query := `SELECT * 
 	FROM public."Candidate" as c
-	WHERE c.id not in (SELECT id_candidate FROM public."CandidateEvent")`
+	WHERE c.id not in (SELECT id_candidate
+						FROM public."CandidateEvent"
+						WHERE "candidatesStatusValue" is null);`
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -351,6 +353,37 @@ func (m *MCandidate) Update(candidate *entities.Candidate) (c *entities.Candidat
 	}
 
 	return c, nil
+}
+
+//UpdateStatus обновление статуса на пустое для неназначенных кандидатов
+func (m *MCandidate) UpdateStatus() error {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		fmt.Println("MCandidate.UpdateStatus : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MCandidate.UpdateStatus : helpers.GetConnector, %s\n", err)
+		return err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		fmt.Println("MCandidate.UpdateStatus : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MCandidate.UpdateStatus : connector.GetDBConnection, %s\n", err)
+		return err
+	}
+
+	defer db.Close()
+
+	query := `UPDATE public."Candidate"
+	SET "id_candidatesStatus"=1
+	WHERE id not in (SELECT id_candidate
+					FROM public."CandidateEvent")`
+
+	_, err = db.Exec(query)
+	if err != nil {
+		fmt.Println("MCandidate.UpdateStatus : db.Exec (candidate) error : ", err)
+		revel.AppLog.Errorf("MCandidate.UpdateStatus : db.Exec (candidate), %s\n", err)
+		return err
+	}
+	return nil
 }
 
 //Delete удаление кандидата

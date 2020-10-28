@@ -104,10 +104,10 @@ export class UserWindowView{
               "rows": [
                 {
                     "elements": [
-                        { "label": "Информация", "type": "label",labelWidth: labelWidth },
-                        { "label": "Логин", "type": "text", "value": user.login,labelWidth: labelWidth },
-                        { "label": "Роль", "type":"text", "value": user.role,labelWidth: labelWidth },
-                        { "label": "Последний визит", "type":"text", "value": user.lastVisites,labelWidth: labelWidth },
+                        { "label": "Хотите удалить?", "type": "label" },
+                        { "label": "Логин", "view": "text", "value": user.login,labelWidth: labelWidth, readonly:true },
+                        { "label": "Роль", "view":"text", "value": user.role,labelWidth: labelWidth, readonly:true },
+                        { "label": "Дата входа", "view":"text", "value": String(user.lastVisited),labelWidth: labelWidth, readonly:true },
                       ],
                       "view": "property"
                 },
@@ -144,10 +144,9 @@ export class UserWindowView{
             body:{
               "elements": [
                 { "label": "Информация", "type": "label" },
-                { "label": "Логин", "type": "text", "value": user.login, labelWidth: labelWidth },
-                { "label": "Роль", "type":"text", "value": user.role, labelWidth: labelWidth },
-                { "label": "Последний визит", "type":"text", "value": String(user.lastVisited), "labelWidth": labelWidth },
-                { "label": "Фото", "type":"text", "value":  user.userPhoto, labelWidth: labelWidth},
+                { "label": "Логин", "view": "text", "value": user.login, labelWidth: labelWidth, readonly:true },
+                { "label": "Роль", "view":"text", "value": user.role, labelWidth: labelWidth, readonly:true },
+                { "label": "Последний визит", "view":"text", "value": String(user.lastVisited), "labelWidth": labelWidth, readonly:true },
               ],
               "view": "property"
             },

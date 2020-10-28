@@ -228,6 +228,30 @@ export class CandidateModel{
         })
     }
 
+    async removeCandidateStatus(){
+        let request = await fetch(`/candidate/all/remove`, {
+            method: "POST"
+        })
+        if (request.status != 200){
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+    }
+
+
     /**
      * Метод удаляет кандидата по ID
      * @param {number} id ID кандидата

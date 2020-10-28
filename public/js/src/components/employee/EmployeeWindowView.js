@@ -161,10 +161,10 @@ export class EmployeeWindowView{
             body:{
               "elements": [
                 { "label": "Информация", "type": "label" },
-                { "label": "ФИО", "type": "text", "value": employee.lastname + " " + employee.firstname + " " + employee.patronymic },
-                { "label": "Должность", "type":"text", "value": employee.position },
-                { "label": "Email", "type":"text", "value": employee.email },
-                { "label": "Телефон", "type":"text", "value": employee.phone },
+                { "label": "ФИО", "view": "text", "value": employee.lastname + " " + employee.firstname + " " + employee.patronymic, required:true },
+                { "label": "Должность", "view":"text", "value": employee.position, required:true },
+                { "label": "Email", "view":"text", "value": employee.email, required:true },
+                { "label": "Телефон", "view":"text", "value": employee.phone, required:true },
               ],
               "view": "property"
             },

@@ -28,6 +28,11 @@ export class CUpdateEventWindow{
      */
     attachEventOnUpdateWindow(event){
 
+        if (event.status == EVENT_STATUS.archive){
+            webix.message("Вы не можете изменять мероприятие, которое уже находится в архиве.")
+            return
+        }
+
         this.updateWindow.attachEvent("onHide", ()=> {
             this.updateWindow.close()
             this.mainTab.enable()
@@ -66,7 +71,7 @@ export class CUpdateEventWindow{
 
             if (values.status == EVENT_STATUS.inProgress){
                 let candidates = await this.eventModel.getCandidatesByEvent(Number(values.ID))
-                if(!isValidCandidateSttus(candidates)){
+                if(!isValidCandidateStatus(candidates)){
                     return
                 }
             }
@@ -95,6 +100,7 @@ export class CUpdateEventWindow{
                 this.refreshDatatable("candidates")
                 // this.updateCandidateStatus(updatingEvent.ID, CANDIDATE_STATUS.wait)
             }
+            this.candidateModel.removeCandidateStatus()
             this.updateWindow.close()
             this.mainTab.enable()
         })
@@ -121,7 +127,7 @@ export class CUpdateEventWindow{
     }
 }
 
-function isValidCandidateSttus(candidates) {
+function isValidCandidateStatus(candidates) {
     let result = candidates.every(element => {
         if (element.status != CANDIDATE_STATUS.showUp && element.status != CANDIDATE_STATUS.dontShowUp) {
             webix.message("Статусы кандидатов должны быть: Явился или Не явился");

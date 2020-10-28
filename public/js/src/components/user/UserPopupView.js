@@ -51,11 +51,12 @@ export class UserPopupView{
             { 
               "elements": [
               { "label": "Информация", "type": "label" },
-              { "label": "Логин", "type": "text", "value": user.login },
-              { "label": "Последний визит", "type":"text", "value": user.lastVisited, "labelWidth":150 },
-              { "label": "Роль", "type":"text", "value": user.role}
+              { "label": "Логин", labelWidth:150, "view": "text", "value": user.login, readonly:true },
+              { "label": "Дата входа", labelWidth:150, "view":"text", "value": user.lastVisited, readonly:true },
+              { "label": "Роль", labelWidth:150, "view":"text", "value": user.role, readonly:true}
             ],
-              "view": "property"
+              "view": "property",
+              width:250
             },
             { view:"button", label:"Выход", id:"logoutButton"}
           ]

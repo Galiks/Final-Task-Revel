@@ -21,7 +21,6 @@ export class UserTabView{
                 { "id": "ID", "header": "Номер", "sort": "number" },
                 { "id": "login", "header": "Логин", "fillspace": true},
                 { "id": "lastVisited", "header": "Последний визит", "fillspace":true },
-                { "id": "userPhoto", "header": "Фотография", "fillspace":true, },
                 { "id": "role", "header": "Роль", "fillspace":true }
             ],
             "view": "datatable",

@@ -42,12 +42,6 @@ export class EventWindowView{
                 ]
               },
               {view:"text", label:"Статус", name:"status", value:EVENT_STATUS.planned, readonly:true},
-              // { view:"select", label:"Статус", name:"status", options:[
-              //   EVENT_STATUS.planned,
-              //   EVENT_STATUS.inProgress,
-              //   EVENT_STATUS.finished
-              // ] 
-              // },
               { "view": "button", "css": "webix_primary", "label": "Добавить", "id":"createWindowButton", "height": 40 }
             ]
           }
@@ -59,7 +53,7 @@ export class EventWindowView{
             height:300,
             move:true,
             resize: true,
-            width:1100,
+            width:1500,
             head:{
                 view:"toolbar", cols:[
                     { view:"label", label: "Окно создания" },

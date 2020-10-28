@@ -37,6 +37,7 @@ GET     /candidate/all/free                     CCandidate.GetFreeCandidates
 PUT     /candidate                              CCandidate.CreateCandidate
 POST    /candidate/:id                          CCandidate.UpdateCandidate
 DELETE  /candidate/:id                          CCandidate.DeleteCandidate
+POST    /candidate/all/remove                   CCandidate.RemoveCandidateStatus
 
 # USER
 GET     /user/all                               CUser.GetUsers

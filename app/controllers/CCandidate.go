@@ -143,6 +143,17 @@ func (controller *CCandidate) UpdateCandidate() revel.Result {
 	return controller.RenderJSON(result)
 }
 
+//RemoveCandidateStatus метод для обновления статуса на пустое для неназначенных кандидатов
+func (controller *CCandidate) RemoveCandidateStatus() revel.Result {
+	err := controller.candidateProvider.RemoveCandidateStatus()
+	if err != nil {
+		fmt.Println("CCandidate.RemoveCandidateStatus : strconv.ParseInt error : ", err)
+		revel.AppLog.Errorf("CCandidate.RemoveCandidateStatus : strconv.ParseInt, %s\n", err)
+		return controller.RenderJSON(err)
+	}
+	return controller.RenderJSON(nil)
+}
+
 //DeleteCandidate метод удаления кандидатов
 func (controller *CCandidate) DeleteCandidate() revel.Result {
 	id, err := strconv.ParseInt(controller.Params.Get("id"), 10, 64)

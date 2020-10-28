@@ -47,6 +47,11 @@ func (p *PCandidate) UpdateCandidate(candidate *entities.Candidate) (c *entities
 	return p.candidateMapper.Update(candidate)
 }
 
+//RemoveCandidateStatus метод для обновления статуса на пустое для неназначенных кандидатов
+func (p *PCandidate) RemoveCandidateStatus() error {
+	return p.candidateMapper.UpdateStatus()
+}
+
 //DeleteCandidate метод удаляет кандидата
 func (p *PCandidate) DeleteCandidate(ID int64) (err error) {
 	return p.candidateMapper.Delete(ID)
