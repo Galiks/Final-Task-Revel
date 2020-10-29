@@ -136,7 +136,7 @@ export class CEventTab{
 
     /**
      * Метод для привязки событий к контекстному меню
-     * @param {CEventTab} controller контекст класса CEventTab
+     * @param {this} controller контекст класса CEventTab
      */
     attachEventToContextMenu(controller){
         this.cmenu.attachEvent("onItemClick", function(id){

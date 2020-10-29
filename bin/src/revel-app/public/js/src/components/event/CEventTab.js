@@ -49,50 +49,19 @@ export class CEventTab{
             return
         }
         getData.then(async (data)=>{
-            let user = await this.userTabController.getCurrentUser();
-            let role = ""
-            if  (user == undefined){
-                role = "Нет роли"
-            }else{
-                role = user.role
-            }
+            this.cmenu.clearAll()
             if (data.length == 0) {
-                this.cmenu.clearAll()
-                if (role == "Пользователь"){
-                    this.cmenuOption = USER_ACTION.user.emptyEvents
-                }
-                else if (role == "Модератор"){
-                    this.cmenuOption = USER_ACTION.moderator.emptys
-                }
-                else if (role == "Администратор"){
-                    this.cmenuOption = USER_ACTION.admin.emptys
-                }
-                else{
-                    this.cmenuOption = USER_ACTION.empty.emptys
-                }
-                this.cmenu.define("data", this.cmenuOption)
-                this.cmenu.refresh()
+                let cmenuOption = await getCmenuOptionForEmptyDatatable.call(this);
+                this.cmenu.define("data", cmenuOption)
                 let empty = [new Object]
                 refreshDatatableData(datatableName, empty)
             }
             else{
-                this.cmenu.clearAll()
-                if (role == "Пользователь"){
-                    this.cmenuOption = USER_ACTION.user.events
-                }
-                else if (role == "Модератор"){
-                    this.cmenuOption = USER_ACTION.moderator.events
-                }
-                else if (role == "Администратор"){
-                    this.cmenuOption = USER_ACTION.admin.events
-                }
-                else{
-                    this.cmenuOption = USER_ACTION.empty.emptys
-                }
-                this.cmenu.define("data", this.cmenuOption)
-                this.cmenu.refresh()
+                let cmenuOption = await getCmenuOptionForDatatable.call(this);
+                this.cmenu.define("data", cmenuOption)
                 refreshDatatableData(datatableName, data);
             }
+            this.cmenu.refresh()
         })
 
         /**
@@ -105,8 +74,49 @@ export class CEventTab{
             $$(datatableName).parse(data)
             $$(datatableName).refresh()
         }
+
+        async function getCmenuOptionForDatatable() {
+            let role = await getCurrentUserRole.call(this)
+            if (role == "Пользователь") {
+                return USER_ACTION.user.events;
+            }
+            else if (role == "Модератор") {
+                return USER_ACTION.moderator.events;
+            }
+            else if (role == "Администратор") {
+                return USER_ACTION.admin.events;
+            }
+            else {
+                return USER_ACTION.empty.emptys;
+            }
+        }     
+
+        async function getCmenuOptionForEmptyDatatable() {
+            let role = await getCurrentUserRole.call(this)
+            if (role == "Пользователь") {
+                return USER_ACTION.user.emptyEvents;
+            }
+            else if (role == "Модератор") {
+                return USER_ACTION.moderator.emptys;
+            }
+            else if (role == "Администратор") {
+                return USER_ACTION.admin.emptys;
+            }
+            else {
+                return USER_ACTION.empty.emptys;
+            }
+        }
         
+        async function getCurrentUserRole() {
+            let user = await this.userTabController.getCurrentUser();
+            if (user == undefined) {
+                return "Нет роли";
+            } else {
+                return user.role;
+            }
+        }
     }
+
 
     /**
      * Метод для отрисовки главного элемента мероприятий
@@ -126,7 +136,7 @@ export class CEventTab{
 
     /**
      * Метод для привязки событий к контекстному меню
-     * @param {CEventTab} controller контекст класса CEventTab
+     * @param {this} controller контекст класса CEventTab
      */
     attachEventToContextMenu(controller){
         this.cmenu.attachEvent("onItemClick", function(id){
@@ -137,18 +147,24 @@ export class CEventTab{
             if (this.getItem(id).value == "Добавить"){             
                 controller.eventWindowController.createWindow()
             }
-            else if (this.getItem(id).value == "Удалить"){
-                controller.eventWindowController.deleteWindow(event)        
+            else{
+                if (!event){
+                    webix.message("Нельзя выполнить данную функцию на пустом поле!")
+                    return
+                }
+                if (this.getItem(id).value == "Удалить"){
+                    controller.eventWindowController.deleteWindow(event)        
+                }
+                else if (this.getItem(id).value == "Изменить"){
+                    controller.eventWindowController.updateWindow(event)
+                }
+                else if (this.getItem(id).value == "Подробнее"){
+                    controller.eventWindowController.aboutWindow(event)
+                }
+                else if (this.getItem(id).value == "В архив"){
+                    controller.eventWindowController.finishWindow(event)
+                }  
             }
-            else if (this.getItem(id).value == "Изменить"){
-                controller.eventWindowController.updateWindow(event)
-            }
-            else if (this.getItem(id).value == "Подробнее"){
-                controller.eventWindowController.aboutWindow(event)
-            }
-            else if (this.getItem(id).value == "В архив"){
-                controller.eventWindowController.finishWindow(event)
-            }  
         })
     }
 }

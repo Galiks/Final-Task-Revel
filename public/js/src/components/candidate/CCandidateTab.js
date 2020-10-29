@@ -1,7 +1,6 @@
 import { CCandidateWindow } from "./CCandidateWindow.js";
 import { CandidateTabView } from "./CandidateTabView.js";
 import { CandidateModel } from "../../models/CandidateModel.js";
-import { CUserPopup } from "../user/CUserPopup.js";
 import { CUserTab, USER_ACTION } from "../user/CUserTab.js";
 
 export class CCandidateTab{

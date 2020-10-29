@@ -47,7 +47,7 @@ export class CUserTab{
 
     /**
      * Метод для привязки событий к контекстному меню
-     * @param {CUserTab} controller контекст класса CUserTab
+     * @param {this} controller контекст класса CUserTab
      */
     attachEventToContextMenu(controller){
         this.cmenu.attachEvent("onItemClick", function(id){

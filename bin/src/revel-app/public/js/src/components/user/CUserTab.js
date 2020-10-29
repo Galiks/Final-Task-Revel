@@ -47,7 +47,7 @@ export class CUserTab{
 
     /**
      * Метод для привязки событий к контекстному меню
-     * @param {CUserTab} controller контекст класса CUserTab
+     * @param {this} controller контекст класса CUserTab
      */
     attachEventToContextMenu(controller){
         this.cmenu.attachEvent("onItemClick", function(id){
@@ -75,49 +75,18 @@ export class CUserTab{
      */
     refreshDatatable(){
         this.userModel.getUsers().then(async (data)=>{
-            let user = await this.getCurrentUser();
-            let role = ""
-            if  (user == undefined){
-                role = "Нет роли"
-            }else{
-                role = user.role
-            }
+            this.cmenu.clearAll()
             if (data.length == 0) {
-                this.cmenu.clearAll()
-                if (role == "Пользователь"){
-                    this.cmenuOption = USER_ACTION.user.emptys
-                }
-                else if (role == "Модератор"){
-                    this.cmenuOption = USER_ACTION.moderator.emptys
-                }
-                else if (role == "Администратор"){
-                    this.cmenuOption = USER_ACTION.admin.emptys
-                }
-                else{
-                    this.cmenuOption = USER_ACTION.empty.emptys
-                }
-                this.cmenu.define("data", this.cmenuOption)
-                this.cmenu.refresh()
+                let cmenuOption = await getCmenuOptionForEmptyDatatable.call(this)
+                this.cmenu.define("data", cmenuOption)
                 let empty = [new Object]
                 refreshDatatableData(empty, this)
             }else{
-                this.cmenu.clearAll()
-                if (role == "Пользователь"){
-                    this.cmenuOption = USER_ACTION.user.emptys
-                }
-                else if (role == "Модератор"){
-                    this.cmenuOption = USER_ACTION.moderator.users
-                }
-                else if (role == "Администратор"){
-                    this.cmenuOption = USER_ACTION.admin.users
-                }
-                else{
-                    this.cmenuOption = USER_ACTION.empty.emptys
-                }
-                this.cmenu.define("data", this.cmenuOption)
-                this.cmenu.refresh()
+                let cmenuOption = await getCmenuOptionForDatatable.call(this);
+                this.cmenu.define("data", cmenuOption)
                 refreshDatatableData(data, this);
             }
+            this.cmenu.refresh()
         })
 
         /**
@@ -129,6 +98,47 @@ export class CUserTab{
             controller.datatable.clearAll();
             controller.datatable.parse(data);
             controller.datatable.refresh();
+        }
+
+        async function getCmenuOptionForDatatable() {
+            let role = await getCurrentUserRole.call(this)
+            if (role == "Пользователь"){
+                return USER_ACTION.user.emptys
+            }
+            else if (role == "Модератор"){
+                return USER_ACTION.moderator.users
+            }
+            else if (role == "Администратор"){
+                return USER_ACTION.admin.users
+            }
+            else{
+                return USER_ACTION.empty.emptys
+            }
+        }     
+
+        async function getCmenuOptionForEmptyDatatable() {
+            let role = await getCurrentUserRole.call(this)
+            if (role == "Пользователь"){
+                return USER_ACTION.user.emptys
+            }
+            else if (role == "Модератор"){
+                return USER_ACTION.moderator.emptys
+            }
+            else if (role == "Администратор"){
+                return USER_ACTION.admin.emptys
+            }
+            else{
+                return USER_ACTION.empty.emptys
+            }
+        }
+        
+        async function getCurrentUserRole() {
+            let user = await this.getCurrentUser();
+            if (user == undefined) {
+                return "Нет роли";
+            } else {
+                return user.role;
+            }
         }
     }
 }
