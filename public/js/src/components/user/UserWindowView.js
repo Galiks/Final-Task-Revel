@@ -8,7 +8,7 @@ export class UserWindowView{
     }
 
     viewUpdateWindow(){
-        let labelWidth = 100
+        let labelWidth = 80
 
         const body = {
           "autoheight": false,
@@ -49,7 +49,7 @@ export class UserWindowView{
     }
 
     viewChangePasswordWindow(){
-      let labelWidth = 100
+      let labelWidth = 150
 
         const body = {
           "autoheight": false,

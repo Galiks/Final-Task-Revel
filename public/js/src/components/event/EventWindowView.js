@@ -317,7 +317,7 @@ export class EventWindowView{
             {
               "elements": [
               { "label": "Информация", "type": "label"},
-              { "label": "ФИО", "type": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic },
+              { "label": "ФИО", "view": "text", "value": candidate.lastname + " " + candidate.firstname + " " + candidate.patronymic, readonly:true },
               ],
               "view": "property"
             },
