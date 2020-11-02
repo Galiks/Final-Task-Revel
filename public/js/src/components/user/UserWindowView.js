@@ -164,8 +164,8 @@ export class UserWindowView{
         "options": [],
         "label": "Сотрудники",
         labelWidth: 90,
-        "id":"employeesMultiselect",
-        "view": "multiselect",
+        "id":"employeesSelect",
+        "view": "select",
         "height": 40
       }
 
@@ -177,7 +177,7 @@ export class UserWindowView{
           width:300,
           head:{
               view:"toolbar", cols:[
-                  { view:"label", label: "Окно информации" },
+                  { view:"label", label: "Окно назначения" },
                   { view:"button", label: 'Close', id:"setUserWindowClose" , width: 100, align: 'right'}
                 ]
           },
@@ -191,9 +191,7 @@ export class UserWindowView{
               { "label": "Последний визит", "view":"text", "value": String(user.lastVisited), "labelWidth": labelWidth, readonly:true },
             ],
             "view": "property"},
-            {
-              employeesView
-            },
+            employeesView,
             { "view": "button", "css": "webix_primary", "label": "Назначить", "id": "setUserWindowButton" }
           ]
           },

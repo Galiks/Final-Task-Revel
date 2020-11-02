@@ -15,6 +15,11 @@ func (p *PEmployee) GetEmployees() (es []*entities.Employee, err error) {
 	return p.employeeMapper.SelectAll()
 }
 
+//GetEmployeeWithoutUser метод получени сотрдуников, которые не привязаны к пользователю
+func (p *PEmployee) GetEmployeeWithoutUser() (es []*entities.Employee, err error) {
+	return p.employeeMapper.SelectWithoutUser()
+}
+
 //GetEmployeeByID метод получения сотрудника по ID
 func (p *PEmployee) GetEmployeeByID(ID int64) (e *entities.Employee, err error) {
 	return p.employeeMapper.SelectByID(ID)

@@ -1,3 +1,4 @@
+import { EmployeeModel } from "../../models/EmployeeModel.js";
 import { User } from "../../models/entities/User.js";
 import { UserModel } from "./../../models/UserModel.js";
 import { UserWindowView } from "./UserWindowView.js";
@@ -7,6 +8,7 @@ export class CUserWindow{
         this.userModel = new UserModel()
         this.currentUser = new User();
         this.userWindowView = new UserWindowView()
+        this.employeeModel = new EmployeeModel()
     }
 
     init(refreshDatatable){
@@ -150,16 +152,28 @@ export class CUserWindow{
         this.main.disable()
     }
 
-    setUserToEmployee(user){
+    async setUserToEmployee(user){
         webix.ui(this.userWindowView.viewSetUserToEmployee(user))
         this.setUserWindowID = $$("setUserWindow")
-        this.attachEventOnSetUserWindow(user)
+        await this.attachEventOnSetUserWindow(user)
     }
 
-    attachEventOnSetUserWindow(user){
+    async attachEventOnSetUserWindow(user){
+        let employees = await this.employeeModel.getEmloyeesWithoutUser()
+        let employeeOption = []
+        employees.forEach((employee)=>{
+            employeeOption.push({id:employee.ID, value:employee.lastname + ' ' + employee.firstname + ' ' + employee.patronymic})
+        })
+        $$("employeesSelect").define("options", employeeOption);
+        $$("employeesSelect").refresh();
 
-        $$("setUserWindowButton").attachEvent("onItemClick", ()=>{
-            
+        $$("setUserWindowButton").attachEvent("onItemClick", async ()=>{
+            let employeeID = $$("employeesSelect").getValue()
+            let employee = await this.employeeModel.getEmployeeByID(employeeID)
+            employee.id_user = user.ID
+            await this.employeeModel.updateEmployee(employee)
+            this.setUserWindowID.close()
+            this.main.enable()
         })
 
         $$("setUserWindowClose").attachEvent("onItemClick", ()=>{

@@ -53,10 +53,13 @@ func (e EmployeeSQL) ToEmployee() entities.Employee {
 
 //ToEmployeeSQL метод конвентирует Employee в EmployeeSQL
 func ToEmployeeSQL(e entities.Employee) EmployeeSQL {
+	fmt.Println("ToEmployeeSQL: ", e)
 	var patronymic *string = &e.Patronymic
 	var idUser *int64
 	if e.IDUser == 0 {
 		idUser = nil
+	} else {
+		idUser = &e.IDUser
 	}
 	return EmployeeSQL{
 		ID:         e.ID,
@@ -110,6 +113,52 @@ func (m *MEmployee) SelectAll() (es []*entities.Employee, err error) {
 			fmt.Println("MEmployee.SelectAll : rows.Scan error : ", err)
 			revel.AppLog.Errorf("MEmployee.SelectAll : rows.Scan, %s\n", err)
 			continue
+		}
+
+		employee := p.ToEmployee()
+
+		es = append(es, &employee)
+	}
+
+	return es, nil
+}
+
+//SelectWithoutUser получение сотрудников, которые не привязаны к пользователям
+func (m *MEmployee) SelectWithoutUser() (es []*entities.Employee, err error) {
+	connector, err := helpers.GetConnector()
+	if err != nil {
+		fmt.Println("MEmployee.SelectWithoutUser : helpers.GetConnector error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectWithoutUser : helpers.GetConnector, %s\n", err)
+		return nil, err
+	}
+	db, err := connector.GetDBConnection()
+	if err != nil {
+		fmt.Println("MEmployee.SelectWithoutUser : connector.GetDBConnection error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectWithoutUser : connector.GetDBConnection, %s\n", err)
+		return nil, err
+	}
+
+	defer db.Close()
+
+	query := `SELECT id, "Firstname", "Lastname", "Patronymic", "Position", "Email", "Phone", id_user
+	FROM public."Employee"
+	WHERE id_user is null;`
+
+	rows, err := db.Query(query)
+	if err != nil {
+		fmt.Println("MEmployee.SelectWithoutUser : db.Query error : ", err)
+		revel.AppLog.Errorf("MEmployee.SelectWithoutUser : db.Query, %s\n", err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		p := EmployeeSQL{}
+		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Position, &p.Email, &p.Phone, &p.IDUser)
+		if err != nil {
+			fmt.Println("MEmployee.SelectWithoutUser : rows.Scan error : ", err)
+			revel.AppLog.Errorf("MEmployee.SelectWithoutUser : rows.Scan, %s\n", err)
 		}
 
 		employee := p.ToEmployee()
@@ -201,6 +250,7 @@ func (m *MEmployee) SelectByID(ID int64) (e *entities.Employee, err error) {
 	p := EmployeeSQL{}
 	row.Next()
 	err = row.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Position, &p.Email, &p.Phone, &p.IDUser)
+	fmt.Println("SELECT EMPLOYEE BY ID: ", p)
 	employee := p.ToEmployee()
 	return &employee, nil
 }
@@ -274,7 +324,7 @@ func (m *MEmployee) Update(employee *entities.Employee) (e *entities.Employee, e
 	SET "Firstname"=$1, "Lastname"=$2, "Patronymic"=$3, "Position"=$4, "Email"=$5, "Phone"=$6, id_user=$7
 	WHERE id = $8;`
 
-	_, err = db.Exec(query,
+	result, err := db.Exec(query,
 		employeeSQL.Firstname,
 		employeeSQL.Lastname,
 		employeeSQL.Patronymic,
@@ -289,12 +339,17 @@ func (m *MEmployee) Update(employee *entities.Employee) (e *entities.Employee, e
 		return nil, err
 	}
 
+	fmt.Println(result)
+	fmt.Print("СТРОК ИЗМЕНЕНО: ")
+	fmt.Println(result.RowsAffected())
+
 	e, err = m.SelectByID(employee.ID)
 	if err != nil {
 		fmt.Println("MEmployee.Update : m.SelectByID error : ", err)
 		revel.AppLog.Errorf("MEmployee.Update : m.SelectByID, %s\n", err)
 		return nil, err
 	}
+	fmt.Println("Get by ID before Update: ", e)
 	return e, nil
 }
 

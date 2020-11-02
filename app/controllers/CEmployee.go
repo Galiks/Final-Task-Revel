@@ -59,6 +59,15 @@ func (controller *CEmployee) GetEmployees() revel.Result {
 	return controller.RenderJSON(employees)
 }
 
+//GetEmployeeWithoutUser метод получени сотрдуников, которые не привязаны к пользователю
+func (controller *CEmployee) GetEmployeeWithoutUser() revel.Result {
+	employees, err := controller.employeeProvider.GetEmployeeWithoutUser()
+	if err != nil {
+		return controller.RenderJSON(nil)
+	}
+	return controller.RenderJSON(employees)
+}
+
 //GetEmployeeByID метод получения сотрудника по ID
 func (controller *CEmployee) GetEmployeeByID() revel.Result {
 	id, err := strconv.ParseInt(controller.Params.Get("id"), 10, 64)

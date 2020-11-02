@@ -44,6 +44,43 @@ export class EmployeeModel{
     }
 
     /**
+     * Метод возвращает список сотрудников, которые не привязаны к пользователям, в виде массива
+     * @returns список сотрдуников в виде массива
+     */
+    async getEmloyeesWithoutUser() {
+        let request = await fetch(`/employee/user`)
+
+        if (request.status != 200){
+            if (request.status == 302){
+                webix.message("Вы не авторизованы!");
+                return
+            }else{
+                webix.message("ОШИБКА: " + request.status + " : " + request.statusText);
+                return
+            }
+        }
+
+        let response = await request.json()   
+        if (response != null && response != undefined) {
+            if (response.Severity == "ОШИБКА") {
+                webix.message(response.Message)
+                return
+            }
+        }
+
+        return new Promise((resolve, reject)=>{
+            let employees = []
+            if (response != null) {
+                for (const item of response) {
+                    let employee = new Employee(item.ID, item.firstname, item.lastname, item.patronymic, item.position, item.email, item.phone, item.id_user)
+                    employees.push(employee)
+                }
+            }
+            resolve(employees)
+        })
+    }
+
+    /**
      * Метод возвращает данные о сотрудниках в формате {ID, VALUE}, где
      * ID - ID,
      * VALUE - position + lastname + firstname + patronymic
