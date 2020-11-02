@@ -1,4 +1,4 @@
-Webix Chat v.7.4.6
+Webix Chat v.8.0.2
 ================
 
 https://webix.com

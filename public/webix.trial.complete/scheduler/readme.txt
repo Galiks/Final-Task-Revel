@@ -1,4 +1,4 @@
-Webix Scheduler v.7.4.6
+Webix Scheduler v.8.0.2
 ================
 
 https://webix.com
@@ -6,7 +6,7 @@ https://webix.com
 If you don't know where to start - check 
 
 - https://webix.com/quick-start/#!/1
-- https://docs.webix.com/desktop__scheduler.html
+- https://docs.webix.com/desktop__desktop_scheduler.html
 - https://forum.webix.com
 
 

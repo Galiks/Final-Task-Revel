@@ -150,6 +150,32 @@ export class CUserWindow{
         this.main.disable()
     }
 
+    setUserToEmployee(user){
+        webix.ui(this.userWindowView.viewSetUserToEmployee(user))
+        this.setUserWindowID = $$("setUserWindow")
+        this.attachEventOnSetUserWindow(user)
+    }
+
+    attachEventOnSetUserWindow(user){
+
+        $$("setUserWindowButton").attachEvent("onItemClick", ()=>{
+            
+        })
+
+        $$("setUserWindowClose").attachEvent("onItemClick", ()=>{
+            this.setUserWindowID.close()
+            this.main.enable()    
+        })
+
+        this.setUserWindowID.attachEvent("onHide", ()=> {
+            this.setUserWindowID.close()
+            this.main.enable()
+        })
+
+        this.setUserWindowID.show()
+        this.main.disable()
+    }
+
     fetch(){
         return this.updateForm.getValues()
     }

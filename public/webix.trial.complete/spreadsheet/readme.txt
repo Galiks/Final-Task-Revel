@@ -1,4 +1,4 @@
-Webix SpreadSheet v.7.4.6
+Webix SpreadSheet v.8.0.2
 ================
 
 https://webix.com

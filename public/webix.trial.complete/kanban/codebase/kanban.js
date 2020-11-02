@@ -1,6 +1,6 @@
 /**
  * @license
- * Webix Kanban v.7.4.6
+ * Webix Kanban v.8.0.2
  * This software is covered by Webix Trial License.
  * Usage without proper license is prohibited.
  * (c) XB Software Ltd.

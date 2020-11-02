@@ -156,4 +156,51 @@ export class UserWindowView{
 
           return aboutWindow
     }
+
+    viewSetUserToEmployee(user){
+      let labelWidth = 250
+
+      let employeesView = {
+        "options": [],
+        "label": "Сотрудники",
+        labelWidth: 90,
+        "id":"employeesMultiselect",
+        "view": "multiselect",
+        "height": 40
+      }
+
+      let setUserWindow = {
+          view:"window",
+          move:true,
+          resize: true,
+          height:300,
+          width:300,
+          head:{
+              view:"toolbar", cols:[
+                  { view:"label", label: "Окно информации" },
+                  { view:"button", label: 'Close', id:"setUserWindowClose" , width: 100, align: 'right'}
+                ]
+          },
+          position:"center",
+          body:{
+            rows:[
+            {"elements": [
+              { "label": "Информация", "type": "label" },
+              { "label": "Логин", "view": "text", "value": user.login, labelWidth: labelWidth, readonly:true },
+              { "label": "Роль", "view":"text", "value": user.role, labelWidth: labelWidth, readonly:true },
+              { "label": "Последний визит", "view":"text", "value": String(user.lastVisited), "labelWidth": labelWidth, readonly:true },
+            ],
+            "view": "property"},
+            {
+              employeesView
+            },
+            { "view": "button", "css": "webix_primary", "label": "Назначить", "id": "setUserWindowButton" }
+          ]
+          },
+          close: true,
+          id: "setUserWindow",
+      }
+
+      return setUserWindow
+    }
 }

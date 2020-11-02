@@ -4,13 +4,13 @@
     <title>External UI::Custom Views</title>
     <meta  name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
 
-    <script src="../../codebase/webix/webix.js?v=7.4.6" type="text/javascript"></script>
-    <script src="../../codebase/spreadsheet.js?v=7.4.6" type="text/javascript"></script>
+    <script src="../../codebase/webix/webix.js?v=8.0.2" type="text/javascript"></script>
+    <script src="../../codebase/spreadsheet.js?v=8.0.2" type="text/javascript"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../codebase/webix/webix.css?v=7.4.6">
-    <link rel="stylesheet" type="text/css" href="../../codebase/spreadsheet.css?v=7.4.6">
+    <link rel="stylesheet" type="text/css" href="../../codebase/webix/webix.css?v=8.0.2">
+    <link rel="stylesheet" type="text/css" href="../../codebase/spreadsheet.css?v=8.0.2">
 
-    <script src="../common/data.js?v=7.4.6"></script>
+    <script src="../common/data.js?v=8.0.2"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -26,7 +26,9 @@
         });
 
         //adding
-        s.views.register("table", (node, conf, data) => {
+        var type = "table";
+
+        s.views.register(type, (node, conf, data) => {
             const config = { view:"datatable", autoConfig:true, scroll:false};
             return webix.ui(config, node);
         }, (view, data) => {
@@ -35,7 +37,7 @@
                 view.parse(data);
         });
 
-        s.views.add(100,150,"table","B3:E7",{ width:550, height:230 });
+        s.views.add(100,150,type,"B3:E7",{ width:550, height:230 });
 
         //editing
         var d = webix.ui({
@@ -59,9 +61,14 @@
                 },
                 onHideClick: function () {
                     this.hide();
+                },
+                onHide: function(){
+                    //better focus handling
+                    s.callEvent("onUIEditStop", [d.viewid, type]);
                 }
             }
         });
+
 
         s.attachEvent("onCommand", function(obj){
             if(obj.id == "table"){
@@ -71,14 +78,24 @@
                 //save external ui id on edit window to have a possibility to check if it was removed (on onAction event)
                 d.viewid = obj.viewid;
 
+                //better focus handling
+                s.callEvent("onUIEditStart", [d.viewid, type]);
+
                 d.getBody().setValues(obj);
                 d.show();
             }
+            else if(obj.id == "close-ui-editor")
+                d.hide();
         });
 
         s.attachEvent("onAction", function(id, values){
             if(id == "add-view" && !values.newValue && d.viewid == values.row)
                 d.hide(); //hide the edit window when the external ui is removed
+        });
+
+        s.attachEvent("onUIEditStart", (id, uiType)=>{
+            if(d.isVisible() && uiType != type) //hide if any other external ui is in edit status
+                d.hide();
         });
     });
 

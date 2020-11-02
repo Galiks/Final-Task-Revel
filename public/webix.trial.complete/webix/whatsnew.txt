@@ -1,62 +1,39 @@
-Version 7.4.6 (September 2020)
-=============================
-
-### Fixes
-
-- class names for Unitlist items
-- dnd: clean DOM after drag
-
-
-Version 7.4.5 (September 2020)
-=============================
-
-### Fixes
-
-- keyboard navigation for inputs with pattern
-- regression in export to PDF with styles and document header
-- handling undefined values in Filter widget
-
-
-Version 7.4.4 (August 2020)
+Version 8.0.2 (October 2020)
 ==============================
 
 ### Fixes
 
-- CustomScroll regression
+- keyboard navigation and ARIA labels in Color Selector
+- marker position of Color Selector in complex layouts
+- Treetable: data in not cleared upon server sorting
+- Treetable: promise chaining with loadNext does not work
 
-
-Version 7.4.3 (August 2020)
+Version 8.0.1 (October 2020)
 ==============================
 
 ### Fixes
 
-- Datatable: sort marker position with excelFilter
-- Datatable: rendering date filters in IE11
-- Chart origin without specified xAxis
-- Window headHeight regression
-- correct CustomScroll resize inside another scrollable view
-- text synchronization in TextHighlight
+- Datatable: footer styling regression in Material and Mini skins
+- Datatable: text alignment regression in rotated header
+- Datatable: correct header styles for export
+- number of rows and gray scale in Colorboard
+- cursor:pointer for Colorboard items
 
-
-Version 7.4.2 (July 2020)
+Version 8.0 (October 2020)
 ==============================
 
-### Fixes
+### Major features
 
-- set focus to widgets before onItemClick is called
-- regression in removing Multitext inputs
+- New Scheduler widget
+- New Gantt widget
+- Updates for Spreadsheet
+- Horizontal mode for Timeline
+- ColorSelect and TimeBoard conrols
+- Updated ColorBoard palette
+- Overflow-Only tooltips
+- Enhanced performance for Datatable header
 
-
-Version 7.4.1 (July 2020)
-==============================
-
-### Fixes
-
-- memory leaks: mapped events and parent view reference
-- keep focus in the active Form element when Form is focused
-- sort marker disappears after Datatable is repainted
-- correct background for Window head in the Contrast skin
-
+[Full list of changes and fixes](https://docs.webix.com/desktop__whats_new_8_0.html)
 
 Version 7.4 (July 2020)
 ==============================

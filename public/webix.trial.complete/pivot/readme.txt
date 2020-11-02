@@ -1,4 +1,4 @@
-Webix Pivot v.7.4.6
+Webix Pivot v.8.0.2
 ================
 
 https://webix.com

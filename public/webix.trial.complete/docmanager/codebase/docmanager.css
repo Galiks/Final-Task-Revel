@@ -852,16 +852,6 @@ Glyphs list
   vertical-align: middle;
 }
 
-.webix_fmanager_palette .webix_color_row > div {
-  padding: 2px;
-  box-sizing: border-box;
-}
-.webix_fmanager_palette .webix_color_row > div > div {
-  box-sizing: border-box;
-  border-radius: 2px;
-  cursor: pointer;
-}
-
 .webix_fmanager_shared_list .webix_fmanager_remove_user {
   -moz-user-select: none;
   -webkit-user-select: none;

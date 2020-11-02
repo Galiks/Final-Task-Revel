@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>Custom content for header and footer</title>
-    <link rel="stylesheet" href="../../../codebase/webix.css?v=7.4.6" type="text/css" charset="utf-8">
-    <script src="../../../codebase/webix.js?v=7.4.6" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../../codebase/webix.css?v=8.0.2" type="text/css" charset="utf-8">
+    <script src="../../../codebase/webix.js?v=8.0.2" type="text/javascript" charset="utf-8"></script>
 
-    <link rel="stylesheet" type="text/css" href="../common/samples.css?v=7.4.6">
-    <script src="../common/testdata.js?v=7.4.6" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../common/samples.css?v=8.0.2">
+    <script src="../common/testdata.js?v=8.0.2" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <div class='header_comment'>Custom select for the "year" column header and average value counter for the "votes" column</div>
@@ -26,12 +26,12 @@
                     return value;
                 });
 
-                node.firstChild.innerHTML = Math.round(result/master.count());
+                node.innerHTML = Math.round(result/master.count());
             }
         }, webix.ui.datafilter.summColumn);
 
         webix.ui.datafilter.customSelect = {
-            getInputNode:function(node){ return node.firstChild?node.firstChild.firstChild : { value: null}; },
+            getInputNode:function(node){ return node?node.firstChild : { value: null}; },
             getValue:function(node){ return this.getInputNode(node).value;  },
             setValue:function(node, value){ this.getInputNode(node).value = value;  },
             refresh: function(master, node, column){  
