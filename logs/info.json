@@ -10215,3 +10215,9 @@
 {"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-11-02T15:39:08.7499886+04:00"}
 {"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-11-02T15:39:08.7499886+04:00"}
 {"caller":"revel_logger.go:29","lvl":"INFO","module":"revel","msg":"There is 0 hooks need to run ...","section":"server","t":"2020-11-02T15:39:08.7499886+04:00"}
+{"caller":"event.go:46","len":4,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-11-02T15:40:24.7187026+04:00"}
+{"caller":"event.go:46","len":4,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-11-02T15:40:24.7187026+04:00"}
+{"BuildDate":"2020-07-11","MinimumGoVersion":"\u003e= go1.12","Version":"1.0.0","caller":"revel.go:200","lvl":"INFO","module":"revel","msg":"Initialized Revel","t":"2020-11-02T15:40:24.7197012+04:00"}
+{"caller":"event.go:46","len":5,"lvl":"INFO","module":"revel","msg":"Raising event","section":"util","t":"2020-11-02T15:40:24.7207001+04:00"}
+{"caller":"revel_logger.go:29","lvl":"INFO","module":"revel","msg":"There is 9 hooks need to run ...","section":"server","t":"2020-11-02T15:40:24.7207001+04:00"}
+{"caller":"revel_logger.go:29","lvl":"INFO","module":"revel","msg":"Run the 1 hook ...","section":"util","t":"2020-11-02T15:40:24.7207001+04:00"}
