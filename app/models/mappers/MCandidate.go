@@ -11,26 +11,34 @@ import (
 
 //CandidateSQL структура для конвертации в Candidate
 type CandidateSQL struct {
-	ID         int64   `json:"ID"`
-	Firstname  string  `json:"firstname"`
-	Lastname   string  `json:"lastname"`
-	Patronymic *string `json:"patronymic"`
-	Position   string  `json:"position"`
-	Email      string  `json:"email"`
-	Phone      string  `json:"phone"`
-	Status     string  `json:"id_user"`
+	ID          int64   `json:"ID"`
+	Firstname   string  `json:"firstname"`
+	Lastname    string  `json:"lastname"`
+	Patronymic  *string `json:"patronymic"`
+	Position    string  `json:"position"`
+	Email       string  `json:"email"`
+	Phone       string  `json:"phone"`
+	Status      string  `json:"status"`
+	FinalStatus *string `json:"finalStatus"`
 }
 
 //ToCandidate метод конвентирует CandidateSQL в Candidate
 func (e CandidateSQL) ToCandidate() entities.Candidate {
 	var (
 		patronymic string
+		status     string
 	)
 
 	if e.Patronymic == nil {
 		patronymic = ""
 	} else {
 		patronymic = *e.Patronymic
+	}
+
+	if e.FinalStatus == nil {
+		status = e.Status
+	} else {
+		status = *e.FinalStatus
 	}
 
 	return entities.Candidate{
@@ -40,7 +48,7 @@ func (e CandidateSQL) ToCandidate() entities.Candidate {
 		Patronymic: patronymic,
 		Email:      e.Email,
 		Phone:      e.Phone,
-		Status:     e.Status}
+		Status:     status}
 }
 
 //ToCandidateSQL метод конвентирует Candidate в CandidateSQL
@@ -123,7 +131,7 @@ func (m *MCandidate) SelectByEventID(IDEvent int64) (cs []*entities.Candidate, e
 
 	defer db.Close()
 
-	query := `SELECT c.id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", cs."Status"
+	query := `SELECT c.id, "Firstname", "Lastname", "Patronymic", "Email", "Phone", cs."Status", ce."candidatesStatusValue"
 	FROM public."Candidate" as c
 	JOIN public."CandidateEvent" as ce ON c.id = ce.id_candidate
 	JOIN public."CandidatesStatus" as cs ON c."id_candidatesStatus" = cs.id
@@ -141,7 +149,7 @@ func (m *MCandidate) SelectByEventID(IDEvent int64) (cs []*entities.Candidate, e
 	for rows.Next() {
 		p := CandidateSQL{}
 		fmt.Println("SelectCandidatesByEventID: ", rows)
-		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Email, &p.Phone, &p.Status)
+		err := rows.Scan(&p.ID, &p.Firstname, &p.Lastname, &p.Patronymic, &p.Email, &p.Phone, &p.Status, &p.FinalStatus)
 		if err != nil {
 			fmt.Println("MCandidate.SelectByEventID : rows.Scan error : ", err)
 			revel.AppLog.Errorf("MCandidate.SelectByEventID : rows.Scan, %s\n", err)

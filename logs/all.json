@@ -510,3 +510,20 @@
 {"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-11-02T11:43:26.2356469+04:00"}
 {"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-11-02T11:43:26.2436479+04:00"}
 {"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T11:43:37.732199+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-11-02T15:19:00.0407187+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-11-02T15:19:00.0767184+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-11-02T15:20:05.7245708+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-11-02T15:20:05.732568+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-11-02T15:20:24.3870095+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-11-02T15:20:24.3969865+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:23:34.6101281+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:24:02.6850233+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:24:32.4584363+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:26:27.1226083+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:29:09.7674635+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:30:10.3082993+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-11-02T15:37:12.7727013+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-11-02T15:37:12.7847027+04:00"}
+{"caller":"run.go:34","lvl":"INFO","module":"app","msg":"Running revel server","t":"2020-11-02T15:37:59.7246678+04:00"}
+{"caller":"plugin.go:9","lvl":"INFO","module":"app","msg":"Go to /@tests to run the tests.","t":"2020-11-02T15:37:59.7336683+04:00"}
+{"caller":"CUser.go:135","lvl":"INFO","module":"app","msg":"net/http: invalid Cookie.Domain \"localhost:9000\"; dropping domain attribute","section":"system","t":"2020-11-02T15:38:30.0742054+04:00"}
