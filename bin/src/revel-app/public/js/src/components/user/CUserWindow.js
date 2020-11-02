@@ -1,3 +1,4 @@
+import { EmployeeModel } from "../../models/EmployeeModel.js";
 import { User } from "../../models/entities/User.js";
 import { UserModel } from "./../../models/UserModel.js";
 import { UserWindowView } from "./UserWindowView.js";
@@ -7,6 +8,7 @@ export class CUserWindow{
         this.userModel = new UserModel()
         this.currentUser = new User();
         this.userWindowView = new UserWindowView()
+        this.employeeModel = new EmployeeModel()
     }
 
     init(refreshDatatable){
@@ -147,6 +149,44 @@ export class CUserWindow{
         })
 
         this.aboutWindowID.show()
+        this.main.disable()
+    }
+
+    async setUserToEmployee(user){
+        webix.ui(this.userWindowView.viewSetUserToEmployee(user))
+        this.setUserWindowID = $$("setUserWindow")
+        await this.attachEventOnSetUserWindow(user)
+    }
+
+    async attachEventOnSetUserWindow(user){
+        let employees = await this.employeeModel.getEmloyeesWithoutUser()
+        let employeeOption = []
+        employees.forEach((employee)=>{
+            employeeOption.push({id:employee.ID, value:employee.lastname + ' ' + employee.firstname + ' ' + employee.patronymic})
+        })
+        $$("employeesSelect").define("options", employeeOption);
+        $$("employeesSelect").refresh();
+
+        $$("setUserWindowButton").attachEvent("onItemClick", async ()=>{
+            let employeeID = $$("employeesSelect").getValue()
+            let employee = await this.employeeModel.getEmployeeByID(employeeID)
+            employee.id_user = user.ID
+            await this.employeeModel.updateEmployee(employee)
+            this.setUserWindowID.close()
+            this.main.enable()
+        })
+
+        $$("setUserWindowClose").attachEvent("onItemClick", ()=>{
+            this.setUserWindowID.close()
+            this.main.enable()    
+        })
+
+        this.setUserWindowID.attachEvent("onHide", ()=> {
+            this.setUserWindowID.close()
+            this.main.enable()
+        })
+
+        this.setUserWindowID.show()
         this.main.disable()
     }
 

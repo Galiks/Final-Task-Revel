@@ -596,16 +596,6 @@ ul.webix_um_roleslist {
     transform: scaleX(-1) rotate(0deg);
   }
 }
-.webix_color_row > div {
-  padding: 2px;
-  box-sizing: border-box;
-}
-
-.webix_color_row > div > div {
-  box-sizing: border-box;
-  border-radius: 2px;
-}
-
 /**
 usermanager-webfont Webfont
 */

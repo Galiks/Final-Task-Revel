@@ -1,4 +1,4 @@
-Webix DocManager v.7.4.6
+Webix DocManager v.8.0.2
 ================
 
 https://webix.com

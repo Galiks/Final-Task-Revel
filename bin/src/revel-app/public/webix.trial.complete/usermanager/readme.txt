@@ -1,4 +1,4 @@
-Webix UserManager v.7.4.5
+Webix UserManager v.8.0.2
 ================
 
 https://webix.com

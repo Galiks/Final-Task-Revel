@@ -10,12 +10,6 @@
   font-weight: 500;
   src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9vAw.ttf) format('truetype');
 }
-.webix_ssheet_colorboard .webix_color_selector {
-  height: 22px !important;
-}
-.webix_ssheet_colorboard .webix_color_row > div {
-  height: 22px !important;
-}
 .webix_ssheet_color .webix_ssheet_cp_color {
   height: 3px;
 }
@@ -26,7 +20,8 @@
 .webix_ssheet_dialog .wxi-menu-down:before,
 .ssheet_chart .wxi-menu-down:before,
 .webix_ssheet_color .wxi-menu-down:before,
-.webix_ssheet_bottom_toolbar .wxi-menu-down:before {
+.webix_ssheet_bottom_toolbar .wxi-menu-down:before,
+.webix_ssheet_border_type .wxi-menu-down:before {
   font-size: 14px;
   content: "\F001";
 }
@@ -243,12 +238,11 @@
 }
 .webix_ssheet_color .webix_input_icon.wxi-menu-down {
   background-color: transparent;
-  color: #666666;
+  color: #787878;
 }
-.webix_ssheet_colorboard .webix_color_selector {
-  border: 1px solid #444;
-  height: 24px !important;
-  box-shadow: inset 0px 0px 1px 1px #fff;
+.webix_ssheet_colorboard .webix_color_row .webix_color_selected > div {
+  box-shadow: inset 0 0 0 1px #fff, 0 0 0 1px #444;
+  border: 0px;
 }
 .webix_ssheet_colorboard .webix_color_row > div {
   height: 24px !important;
@@ -258,6 +252,39 @@
 .webix_ssheet_colorboard .webix_color_row:nth-child(1),
 .webix_ssheet_colorboard .webix_color_row:nth-child(2) {
   margin-bottom: 5px;
+}
+.webix_ssheet_border_type .webix_input_icon.wxi-menu-down {
+  background-color: transparent;
+  color: #787878;
+}
+.webix_ssheet_border {
+  height: 100%;
+  position: relative;
+}
+.webix_ssheet_border:before {
+  position: absolute;
+  content: '';
+  top: 50%;
+  left: 0;
+  width: 100%;
+}
+.webix_ssheet_border.webix_ssheet_border_thin:before {
+  border-top: 1px solid #666666;
+}
+.webix_ssheet_border.webix_ssheet_border_medium:before {
+  border-top: 2px solid #666666;
+}
+.webix_ssheet_border.webix_ssheet_border_thick:before {
+  border-top: 3px solid #666666;
+}
+.webix_ssheet_border.webix_ssheet_border_dashed:before {
+  border-top: 1px dashed #666666;
+}
+.webix_ssheet_border.webix_ssheet_border_dotted:before {
+  border-top: 1px dotted #666666;
+}
+.webix_ssheet_border.webix_ssheet_border_double:before {
+  border-top: 3px double #666666;
 }
 .webix_toolbar.webix_ssheet_toolbar {
   background: #f4f4f4;
@@ -323,7 +350,8 @@
   padding: 3px 5px;
 }
 .webix_toolbar.webix_ssheet_toolbar .webix_inp_static,
-.webix_ssheet_color .webix_inp_static {
+.webix_ssheet_color .webix_inp_static,
+.webix_ssheet_border_type .webix_inp_static {
   background: #f4f4f4;
   border-color: #ccc !important;
   border-radius: 3px;
@@ -519,15 +547,13 @@
   color: #666666;
   background: #e7e7e7;
 }
-.webix_ssheet_dialog_table .webix_ss_header td {
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
 .webix_ssheet_dialog_table .webix_ss_vscroll_header {
   border-left-color: #eaf4fb;
 }
-.webix_ssheet_dialog_table .webix_hcell {
+.webix_ssheet_dialog_table .webix_ss_header .webix_hcell {
   text-align: left;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
 }
 .webix_ssheet_dialog_table .webix_cell {
   border-right-color: transparent;
@@ -886,7 +912,7 @@
 .webix_ssheet_highlight_color_7 {
   color: #9061BF;
 }
-.webix_ssheet_ui:focus {
+.webix_ssheet_ui.webix_ssheet_ui_focused {
   border-color: #3498db;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1) !important;
 }
@@ -978,15 +1004,6 @@
   border-color: #cbdeec;
   position: relative;
 }
-.sheet_column_0 .webix_ssheet_hide_row:after {
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: #555555;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
 .webix_ssheet_table .webix_cell {
   padding: 2px 0px;
   color: #666666;
@@ -1002,46 +1019,52 @@
 .webix_ssheet_table .sheet_column_0 .webix_cell {
   padding: 0 12px;
 }
-.webix_borderless .webix_column:not(.sheet_column_0) .webix_cell,
-.webix_borderless .webix_span_layer .webix_cell {
+.webix_ssheet .webix_borderless .webix_column:not(.sheet_column_0) .webix_cell,
+.webix_ssheet .webix_borderless .webix_borderless .webix_span_layer .webix_cell {
   border-color: transparent;
 }
-.webix_borderless .webix_last_topcell {
+.webix_ssheet .webix_borderless .webix_column .webix_cell.webix_last_topcell {
   border-bottom: 1px solid #d0d0d0;
 }
-.webix_ssheet_table .webix_hcell.webix_highlight,
-.webix_ssheet_table .sheet_column_0 div.webix_highlight {
-  background-color: #cce4f5;
+.webix_ssheet .webix_borderless .webix_ss_left .webix_column.webix_last > div {
+  border-right: 1px solid #d0d0d0;
 }
-.webix_ssheet_table .webix_dd_drag_column,
-.webix_ssheet_table .webix_ss_header,
-.webix_ssheet_table .webix_ss_header TD,
+.webix_ssheet_table .sheet_column_0 div.webix_highlight {
+  background: #cce4f5;
+}
 .webix_ssheet_table .webix_ss_vscroll_header {
   user-select: none;
   background: #eaf4fb;
   color: #666666;
 }
-.webix_ssheet_table .webix_ssheet_hide_column {
-  border-right-color: #555555;
-}
 .webix_ssheet_table .webix_ssheet_hide_row {
-  border-bottom-color: #555555;
+  box-shadow: inset 0 -2px 0 #555555;
 }
 .webix_ssheet_table div.webix_ss_vscroll_header {
   border-color: #cbdeec;
 }
-.webix_ssheet_table > .webix_ss_header .webix_hcell {
-  text-align: center;
-  border: 2px solid transparent;
-  padding: 0;
-  font-weight: 400;
-}
-.webix_ssheet_table > .webix_ss_header tr:last-child td {
+.webix_dtable.webix_ssheet_table > .webix_ss_header .webix_hcolumn .webix_hcell {
+  user-select: none;
+  background: #eaf4fb;
+  color: #666666;
   border-bottom: 1px solid #cbdeec;
 }
-.webix_ssheet_table > .webix_ss_header td {
-  border-right-color: #cbdeec;
-  border-bottom-color: #cbdeec;
+.webix_dtable.webix_ssheet_table > .webix_ss_header .webix_hcolumn .webix_hcell.webix_ssheet_hide_row {
+  box-shadow: inset 0 -2px 0 #555555;
+}
+.webix_dtable.webix_ssheet_table > .webix_ss_header .webix_hcolumn .webix_hcell.webix_ssheet_hide_row.webix_ssheet_hide_column {
+  box-shadow: inset 0 -2px 0 #555555, inset -2px 0 #555555;
+}
+.webix_dtable.webix_ssheet_table > .webix_ss_header .webix_hcolumn .webix_hcell.webix_highlight {
+  background: #cce4f5;
+}
+.webix_ssheet_table > .webix_ss_header .webix_hcell {
+  text-align: center;
+  border-color: #cbdeec;
+  font-weight: 400;
+}
+.webix_ssheet_table > .webix_ss_header .webix_hcell.webix_ssheet_hide_column {
+  box-shadow: inset -2px 0 #555555;
 }
 .webix_ssheet_suggest .webix_ssheet_options .webix_selected {
   background-color: transparent;
@@ -1122,7 +1145,10 @@
 a.docs {
   color: #3498db;
 }
-.webix_ssheet_table .webix_hs_left .webix_first .webix_hcell:before {
+.webix_ssheet_table .webix_hs_left .webix_hcell.webix_first {
+  padding: 2px;
+}
+.webix_ssheet_table .webix_hs_left .webix_hcell.webix_first:before {
   cursor: pointer;
   content: "";
   display: block;

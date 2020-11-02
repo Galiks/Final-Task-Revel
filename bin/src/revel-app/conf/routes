@@ -23,6 +23,7 @@ POST    /event/:eventID/candidate/:candidateID  CEvent.SetCandidateStatusToFinis
 
 # EMPLOYEE
 GET     /employee/all                           CEmployee.GetEmployees
+GET     /employee/user                          CEmployee.GetEmployeeWithoutUser
 GET     /employee/:id                           CEmployee.GetEmployeeByID
 GET     /employee/event/:id                     CEmployee.GetEmployeesByEvent
 PUT     /employee                               CEmployee.CreateEmployee

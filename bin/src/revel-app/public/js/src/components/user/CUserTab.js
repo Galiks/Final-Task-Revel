@@ -64,6 +64,9 @@ export class CUserTab{
             else if (this.getItem(id).value == "Сменить пароль"){
                 controller.userWindowController.changePasswordWindow(user)
             }
+            else if (this.getItem(id).value == "Назначить сотрудника"){
+                controller.userWindowController.setUserToEmployee(user)
+            }
             else if (this.getItem(id).value == "Подробнее"){
                 controller.userWindowController.aboutWindow(user)
             }
@@ -176,6 +179,6 @@ export const USER_ACTION = {
         events: ["Добавить","Удалить", "Изменить", "В архив",{ $template:"Separator" },"Подробнее"],
         employees: ["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"],
         candidates: ["Добавить","Удалить", "Изменить",{ $template:"Separator" },"Подробнее"],
-        users: ["Удалить", "Изменить", "Сменить пароль",{ $template:"Separator" },"Подробнее"]
+        users: ["Удалить", "Изменить", "Сменить пароль", "Назначить сотрудника",{ $template:"Separator" },"Подробнее"]
     }
 }

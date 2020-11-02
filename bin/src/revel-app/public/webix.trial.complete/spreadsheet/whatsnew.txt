@@ -1,57 +1,22 @@
 Check the full list of changes in SpreadSheet at https://docs.webix.com/spreadsheet__whats_new.html
 
-Version 7.4.6 (September 2020)
-----------------
+Version 8.0.2 (October 2020)
+------------------
 
-### Fixes
+## Fixes
 
-- reference error when shifting ranges in formulas
-- regression with highlights for index column
-- regression with cell comments
-- concatenation with & operand
+- regression with Colorpicker styling
+- borders and frozen rows/columns should be visible with disabled gridlines
 
+Version 8.0 (October 2020)
+------------------
 
-Version 7.4.5 (September 2020)
-----------------
-
-### Fixes
-
-- handle selection and focus in chart editor
-- avoid concatenation for cells with no value
-
-
-Version 7.4.4 (August 2020)
-----------------
-
-## Updates
+## Major features
 
 - number formats: red styling within brackets as a negative
-
-## Fixes
-
-- display ERROR for math references to non-existent cells
-- hidden and frozen rows behave inconsistently with multiple tabs
-
-
-Version 7.4.3 (August 2020)
-----------------
-
-## Fixes
-
-- correct external ui table styling
-- common styling for all configuration windows
-- liveEditor: correct cursor restoring after cell selection
-- ability to get external ui config
-- reset hidden columns for each tab
-- include spans when checking table rowCount and columnCount
-
-
-Version 7.4.1 (July 2020)
------------------
-
-### Fixes
-
-- chart wizard styles: alignment and margins
+- export toPDF with styles
+- "border type" option for border menu
+- "reset to default" option for row/column resize menus
 
 Version 7.4 (July 2020)
 -----------------

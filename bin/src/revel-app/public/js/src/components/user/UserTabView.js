@@ -8,7 +8,9 @@ export class UserTabView{
         let contextmenu = {
             view:"contextmenu",
             id:"usercmenu",
-            data : ["Удалить", "Изменить", "Сменить пароль",{ $template:"Separator" },"Подробнее"]
+            width: 200,
+            data: []
+            //data : ["Удалить", "Изменить", "Сменить пароль",{ $template:"Separator" },"Подробнее"]
         }
 
         webix.ui(contextmenu)   

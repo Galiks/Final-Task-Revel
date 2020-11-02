@@ -1,7 +1,7 @@
 {
   "name": "webix-kanban",
   "productTag": "kanban",
-  "version": "7.4.6",
+  "version": "8.0.2",
   "description": "Javascript Kanban for Web",
   "scripts": {
     "lint": "yarn eslint \"sources/**/*.js\"",
