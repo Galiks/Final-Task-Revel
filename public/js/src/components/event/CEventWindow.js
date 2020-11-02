@@ -41,7 +41,7 @@ export class CEventWindow{
      * @param {number} eventID ID мероприятия
      */
     async setMultiselectOptions(all, eventID) {
-        let employeeOption = await this.employeeModel.getEmployeesLikeIDValue()
+        let employeeOption = this.employeeModel.getEmployeesLikeIDValue()
         $$("employeesMultiselect").define("options", employeeOption);
         $$("employeesMultiselect").refresh();
         let candidatesOption = []
@@ -51,12 +51,12 @@ export class CEventWindow{
                 candidatesOption.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
             })
 
-            let freeCandidates = await this.candidateModel.getFreeCandidate()
+            let freeCandidates = this.candidateModel.getFreeCandidate()
             freeCandidates.forEach((candidate)=>{
                 candidatesOption.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
             })
         }else{
-            let freeCandidates = await this.candidateModel.getFreeCandidate()
+            let freeCandidates = this.candidateModel.getFreeCandidate()
             freeCandidates.forEach((candidate)=>{
                 candidatesOption.push({id:candidate.ID, value:candidate.lastname + ' ' + candidate.firstname + ' ' + candidate.patronymic})
             })
